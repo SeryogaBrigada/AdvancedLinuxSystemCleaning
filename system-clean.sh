@@ -12,6 +12,7 @@ homedir=$(xdg-user-dir HOME)
 #
 if [ -d $homedir/.mozilla/firefox/*.default ]; then
 	rm -r "$homedir/.mozilla/firefox/Crash Reports"
+        rm -r "$homedir/.mozilla/firefox/Pending Pings"
 	cd $homedir/.mozilla/firefox/*.default
 	rm -r bookmarkbackups
 	rm -r crashes
@@ -31,6 +32,7 @@ if [ -d $homedir/.mozilla/firefox/*.default ]; then
 	rm secmod.db
 	rm sessionCheckpoints.json
 	rm sessionstore.js
+	rm serviceworker.txt
 	rm SiteSecurityServiceState.txt
 	rm storage.sqlite
 	rm Telemetry.ShutdownTime.txt
