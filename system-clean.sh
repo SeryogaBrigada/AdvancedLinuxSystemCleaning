@@ -199,9 +199,6 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
 	find /etc/apt -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
 	find /etc/apt/sources.list.d -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
 
-	# Autoremove unused dependencies
-	sudo sed -i 's/\/\/Unattended-Upgrade::Remove-Unused-Dependencies "false"/Unattended-Upgrade::Remove-Unused-Dependencies "true"/g' /etc/apt/apt.conf.d/50unattended-upgrades
-
         #
         # Add necessary ppa
         #
