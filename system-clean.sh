@@ -160,7 +160,7 @@ fi
 #
 # System cache
 #
-sudo rm -rf $homedir/.cache/*
+#sudo rm -rf $homedir/.cache/*
 
 #
 # Nvidia cache
@@ -234,8 +234,8 @@ sudo dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)
 #
 # Unused libs
 #
-sudo deborphan --exclude 'kodi-pvr-iptvsimple' | xargs sudo apt-get purge -y
 sudo apt-get autoremove --purge -y
+sudo deborphan --exclude 'kodi-pvr-iptvsimple' | xargs sudo apt-get purge -y
 
 #
 # Additional cleaning with Bleachbit
