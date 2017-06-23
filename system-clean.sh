@@ -114,7 +114,6 @@ if [ -d $homedir/.config/chromium ]; then
 	rm -r "Service Worker"
 	rm -r "Extension State"
 	rm -r "Session Storage"
-	rm -r "Local Storage"
 #	rm Cookies*
 #	rm "Current Session"
 #	rm "Current Tabs"
@@ -144,6 +143,9 @@ if [ -d $homedir/.config/chromium ]; then
 	rm "Visited Links"
 	rm "Web Data"
 	rm "Web Data-journal"
+	
+	cd "Local Storage"
+	find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 
 #
