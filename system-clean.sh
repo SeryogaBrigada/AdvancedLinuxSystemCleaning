@@ -143,9 +143,20 @@ if [ -d $homedir/.config/chromium ]; then
 	rm "Visited Links"
 	rm "Web Data"
 	rm "Web Data-journal"
-	
-	cd "Local Storage"
+
+        cd "Local Storage"
 	find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
+fi
+
+#
+# New Skype for Linux
+#
+if [ -d $homedir/.config/skypeforlinux ]; then
+	cd $homedir/.config/skypeforlinux
+	rm -r "Cache"
+	rm -r "GPUCache"
+	rm -r "Local Storage"
+	rm -r "logs"
 fi
 
 #
@@ -229,15 +240,20 @@ if [ -f /usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf ]; then
 fi
 
 #
-# Old kernels
+# Fix broken packages
+#
+sudo apt-get -f install -y
+
+#
+# Remove old kernels
 #
 sudo dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get purge -y
 
 #
-# Unused libs
+# Remove unused libs
 #
-sudo apt-get autoremove --purge -y
 sudo deborphan --exclude 'kodi-pvr-iptvsimple' | xargs sudo apt-get purge -y
+sudo apt-get autoremove --purge -y
 
 #
 # Additional cleaning with Bleachbit
