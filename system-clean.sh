@@ -183,7 +183,7 @@ if [ -d $homedir/.nv ]; then
 fi
 
 #
-# Lauchpad cache
+# Launchpad cache
 #
 if [ -d $homedir/.launchpadlib ]; then
 	sudo rm -r $homedir/.launchpadlib
