@@ -13,31 +13,37 @@ homedir=$(xdg-user-dir HOME)
 if [ -d $homedir/.mozilla/firefox/*.default ]; then
 	rm -r "$homedir/.mozilla/firefox/Crash Reports"
         rm -r "$homedir/.mozilla/firefox/Pending Pings"
-	cd $homedir/.mozilla/firefox/*.default
-	rm -r bookmarkbackups
-	rm -r crashes
-	rm -r datareporting
-	rm -r minidumps
-	rm -r saved-telemetry-pings
-	rm -r sessionstore-backups
-	rm -r storage
-	rm addons.json
-	rm AlternateServices.txt
-	rm containers.json
-	rm content-prefs.sqlite
-#	rm cookies.sqlite
-	rm mimeTypes.rdf
-	rm permissions.sqlite
-	rm pluginreg.dat
-	rm secmod.db
-	rm sessionCheckpoints.json
-	rm sessionstore.js
-	rm serviceworker.txt
-	rm SiteSecurityServiceState.txt
-	rm storage.sqlite
-	rm Telemetry.ShutdownTime.txt
-	rm times.json
-	rm webappsstore.sqlite
+
+        cd $homedir/.mozilla/firefox/*.default
+	rm -rf bookmarkbackups \
+	crashes \
+	datareporting \
+	minidumps \
+	saved-telemetry-pings \
+	sessionstore-backups \
+	storage \
+        addons.* \
+	AlternateServices.* \
+	containers.* \
+	content-prefs.* \
+        handlers.* \
+	mimeTypes.* \
+	permissions.* \
+	pluginreg.* \
+	secmod.* \
+	sessionCheckpoints.* \
+	sessionstore.* \
+	serviceworker.* \
+        SecurityPreloadState.* \
+	SiteSecurityServiceState.* \
+	storage.* \
+	Telemetry.ShutdownTime.* \
+	times.* \
+	webappsstore.*
+
+#        rm cookies.*
+#        rm formhistory.*
+#        rm search.json.*
 fi
 
 #
@@ -45,47 +51,39 @@ fi
 #
 if [ -d $homedir/.config/opera* ]; then
 	cd $homedir/.config/opera*
-	rm -r "adblocker_data"
-	rm -r "Extension State"
-	rm -r "GPUCache"
-	rm -r "IndexedDB"
-	rm -r "ShaderCache"
-	rm -r "Pepper Data"
-	rm -r "Platform Notifications"
-	rm -r "Service Worker"
-	rm -r "Opera Add-ons Downloads"
-	rm autoupdate_checker.sqlite
-	rm BookmarksExtras
-	rm browser.js
-	rm "Certificate Revocation Lists"
+	rm -rf "adblocker_data" \
+	"Extension State" \
+	"GPUCache" \
+	"IndexedDB" \
+	"ShaderCache" \
+	"Pepper Data" \
+	"Platform Notifications" \
+	"Service Worker" \
+	"Opera Add-ons Downloads" \
+	autoupdate_checker.* \
+	BookmarksExtras \
+	browser.js \
+	"Certificate Revocation Lists" \
+	default_partner_content.* \
+	"Extension Cookies" \
+	"Extension Cookies-journal" \
+	Login* \
+	Network* \
+	opera_autoupdate.log \
+	oauc_pipe* \
+	previews_opt_out.* \
+	Origin* \
+	QuotaManager* \
+	Shortcuts* \
+	siteprefs.* \
+	ssdfp* \
+	TransportSecurity \
+	"Visited Links"
+
 #	rm Cookies*
-	rm "Current Session"
-	rm default_partner_content.json
-	rm "Extension Cookies"
-	rm "Extension Cookies-journal"
-#	rm History
-#	rm "History Provider Cache"
-#	rm "History-journal"
-	rm "Last Session"
-	rm "Login Data"
-	rm "Login Data-journal"
-	rm "Network Persistent State"
-	rm "Network Action Predictor"
-	rm "Network Action Predictor-journal"
-	rm opera_autoupdate.log
-	rm oauc_pipe*
-	rm previews_opt_out.db
-	rm previews_opt_out.db-journal
-	rm "Origin Bound Certs"
-	rm "Origin Bound Certs-journal"
-	rm QuotaManager
-	rm QuotaManager-journal
-	rm Shortcuts
-	rm Shortcuts-journal
-	rm siteprefs.json
-	rm ssdfp*
-	rm TransportSecurity
-	rm "Visited Links"
+#	rm History*
+#	rm Current*
+#	rm Last*
 
 	cd "Local Storage"
 	find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
@@ -96,67 +94,60 @@ fi
 #
 if [ -d $homedir/.config/chromium ]; then
 	cd $homedir/.config/chromium
-	rm -r "CertificateTransparency"
-	rm -r "Crash Reports"
-	rm -r "EVWhitelist"
-	rm -r "OriginTrials"
-	rm -r "ShaderCache"
-	rm -r "Webstore Downloads"
-	rm -r "WidevineCdm"
-	rm "Certificate Revocation Lists"
-	rm Safe*
+	rm -rf "CertificateTransparency" \
+	"Crash Reports" \
+	"EVWhitelist" \
+	"OriginTrials" \
+	"ShaderCache" \
+	"Webstore Downloads" \
+	"WidevineCdm" \
+        "SSLErrorAssistant" \
+	"Certificate Revocation Lists" \
+	Safe*
 	
 	cd Default
-	rm -r "data_reduction_proxy_leveldb"
-	rm -r "GPUCache"
-	rm -r "IndexedDB"
-	rm -r "Pepper Data"
-	rm -r "Service Worker"
-	rm -r "Extension State"
-	rm -r "Session Storage"
+	rm -rf "data_reduction_proxy_leveldb" \
+	"GPUCache" \
+	"IndexedDB" \
+        "Pepper Data" \
+	"Service Worker" \
+	"Extension State" \
+	"Session Storage" \
+	DownloadMetadata \
+        "Extension Cookies" \
+	"Extension Cookies-journal" \
+	Login* \
+	Network* \
+	Origin* \
+	previews_opt_out.* \
+	QuotaManager* \
+	"Secure Preferences" \
+	Shortcuts* \
+	"Top Sites" \
+	"Top Sites-journal" \
+	TransportSecurity \
+	"Visited Links" \
+	"Web Data" \
+	"Web Data-journal"
+
 #	rm Cookies*
-#	rm "Current Session"
-#	rm "Current Tabs"
-	rm DownloadMetadata
-#	rm History
-#	rm "History Provider Cache"
-#	rm "History-journal"
-#	rm "Last Session"
-#	rm "Last Tabs"
-	rm "Login Data"
-	rm "Login Data-journal"
-	rm "Network Action Predictor"
-	rm "Network Action Predictor-journal"
-	rm "Network Persistent State"
-	rm "Origin Bound Certs"
-	rm "Origin Bound Certs-journal"
-	rm previews_opt_out.db
-	rm previews_opt_out.db-journal
-	rm QuotaManager
-	rm QuotaManager-journal
-	rm "Secure Preferences"
-	rm Shortcuts
-	rm Shortcuts-journal
-	rm "Top Sites"
-	rm "Top Sites-journal"
-	rm TransportSecurity
-	rm "Visited Links"
-	rm "Web Data"
-	rm "Web Data-journal"
+#       rm History*
+#	rm Current*
+#       rm Last*
 
         cd "Local Storage"
 	find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 
 #
-# New Skype for Linux
+# New Skype cache
 #
 if [ -d $homedir/.config/skypeforlinux ]; then
 	cd $homedir/.config/skypeforlinux
-	rm -r "Cache"
-	rm -r "GPUCache"
-	rm -r "Local Storage"
-	rm -r "logs"
+	rm -r "Cache" \
+	"GPUCache" \
+	"Local Storage" \
+	"logs"
 fi
 
 #
@@ -190,7 +181,7 @@ if [ -d $homedir/.launchpadlib ]; then
 fi
 
 #
-# GVFS-metadata
+# GVFS-metadata (Must be disabled for Budgie)
 #
 sudo rm -rf $homedir/.local/share/gvfs-metadata/*
 
@@ -200,9 +191,8 @@ sudo rm -rf $homedir/.local/share/gvfs-metadata/*
 sudo rm -rf /var/crash/*
 
 #
-# After release upgrade
-#
-# Remove old apt sources
+# After release upgrade:
+# remove old apt sources and add necessary PPA's
 #
 find /etc/apt/sources.list.d -type f -not -name *$(lsb_release -sc)* -not -name 'opera*' -not -name 'virtualbox*' -print0 | xargs -0 sudo rm --
 find /etc/apt/apt.conf.d -name '*.ucf-old' -print0 | xargs -0 sudo rm --
@@ -212,24 +202,19 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
 	find /etc/apt -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
 	find /etc/apt/sources.list.d -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
 
-        #
-        # Add necessary ppa
-        #
-
 	# Mozilla Firefox
 	sudo add-apt-repository ppa:mozillateam/firefox-next -y
 	# LibreOffice
 	sudo add-apt-repository ppa:libreoffice/ppa -y
 	# DoubleCommander
-	#sudo add-apt-repository ppa:alexx2000/doublecmd -y
+	sudo add-apt-repository ppa:alexx2000/doublecmd -y
 	# RawTherapee
 	#sudo add-apt-repository ppa:dhor/myway -y
 	# Gimp
 	#sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
 	# OpenShot
 	#sudo add-apt-repository ppa:openshot.developers/ppa -y
-
-	# Nvidia latest drivers
+        # Nvidia latest drivers
 	#sudo add-apt-repository ppa:graphics-drivers/ppa -y
 fi
 
@@ -245,12 +230,12 @@ fi
 sudo apt-get -f install -y
 
 #
-# Remove old kernels
+# Old kernels
 #
 sudo dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get purge -y
 
 #
-# Remove unused libs
+# Unused libs
 #
 sudo deborphan --exclude 'kodi-pvr-iptvsimple' | xargs sudo apt-get purge -y
 sudo apt-get autoremove --purge -y
