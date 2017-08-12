@@ -103,7 +103,8 @@ if [ -d $homedir/.config/chromium ]; then
 	"WidevineCdm" \
         "SSLErrorAssistant" \
 	"Certificate Revocation Lists" \
-	Safe*
+	Safe* \
+	BrowserMetrics-spare.*
 	
 	cd Default
 	rm -rf "data_reduction_proxy_leveldb" \
