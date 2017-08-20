@@ -27,6 +27,7 @@ if [ -d $homedir/.mozilla/firefox/*.default ]; then
 	containers.* \
 	content-prefs.* \
         handlers.* \
+	kinto.* \
 	mimeTypes.* \
 	permissions.* \
 	pluginreg.* \
@@ -41,9 +42,9 @@ if [ -d $homedir/.mozilla/firefox/*.default ]; then
 	times.* \
 	webappsstore.*
 
-#        rm cookies.*
-#        rm formhistory.*
-#        rm search.json.*
+#	rm cookies.*
+#	rm formhistory.*
+#	rm search.json.*
 fi
 
 #
@@ -104,7 +105,7 @@ if [ -d $homedir/.config/chromium ]; then
         "SSLErrorAssistant" \
 	"Certificate Revocation Lists" \
 	Safe* \
-	BrowserMetrics-spare.*
+        BrowserMetrics-spare.*
 	
 	cd Default
 	rm -rf "data_reduction_proxy_leveldb" \
@@ -132,9 +133,9 @@ if [ -d $homedir/.config/chromium ]; then
 	"Web Data-journal"
 
 #	rm Cookies*
-#       rm History*
+#	rm History*
 #	rm Current*
-#       rm Last*
+#	rm Last*
 
         cd "Local Storage"
 	find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
