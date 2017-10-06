@@ -196,7 +196,8 @@ sudo rm -rf /var/crash/*
 # After release upgrade:
 # remove old apt sources and add necessary PPA's
 #
-find /etc/apt/sources.list.d -type f -not -name *$(lsb_release -sc)* -not -name 'opera*' -not -name 'virtualbox*' -print0 | xargs -0 sudo rm --
+find /etc/apt/sources.list.d -type f -not -name *$(lsb_release -sc)* -not -name 'skype*' \
+ -not -name 'opera*' -not -name 'virtualbox*' -print0 | xargs -0 sudo rm --
 find /etc/apt/apt.conf.d -name '*.ucf-old' -print0 | xargs -0 sudo rm --
 find /etc/apt/apt.conf.d -name '*.ucf-dist' -print0 | xargs -0 sudo rm --
 
