@@ -148,7 +148,6 @@ if [ -d $homedir/.config/skypeforlinux ]; then
     cd $homedir/.config/skypeforlinux
     rm -r "Cache" \
     "GPUCache" \
-    "Local Storage" \
     "logs"
 fi
 
