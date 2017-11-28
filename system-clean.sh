@@ -42,9 +42,9 @@ if [ -d $homedir/.mozilla/firefox/*.default ]; then
     times.* \
     webappsstore.*
 
-#   rm cookies.*
-#   rm formhistory.*
-#   rm search.json.*
+#    rm cookies.*
+#    rm formhistory.*
+#    rm search.json.*
 fi
 
 #
@@ -81,10 +81,10 @@ if [ -d $homedir/.config/opera* ]; then
     TransportSecurity \
     "Visited Links"
 
-#   rm Cookies*
-#   rm History*
-#   rm Current*
-#   rm Last*
+#    rm Cookies*
+#    rm History*
+#    rm Current*
+#    rm Last*
 
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
@@ -132,10 +132,10 @@ if [ -d $homedir/.config/chromium ]; then
     "Web Data" \
     "Web Data-journal"
 
-#   rm Cookies*
-#   rm History*
-#   rm Current*
-#   rm Last*
+#    rm Cookies*
+#    rm History*
+#    rm Current*
+#    rm Last*
 
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
@@ -204,20 +204,12 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     find /etc/apt -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
     find /etc/apt/sources.list.d -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
 
-    # Mozilla Firefox
-    sudo add-apt-repository ppa:mozillateam/firefox-next -y
     # qBittorrent
     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
-    # DoubleCommander
-    sudo add-apt-repository ppa:alexx2000/doublecmd -y
-    # RawTherapee
-    #sudo add-apt-repository ppa:dhor/myway -y
     # Gimp
     #sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
-    # OpenShot
-    #sudo add-apt-repository ppa:openshot.developers/libopenshot-daily
 fi
 
 # Fix "Device not managed" issue in Network Manager
