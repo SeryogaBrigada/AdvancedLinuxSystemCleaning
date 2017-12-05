@@ -159,7 +159,14 @@ if [ -d $homedir/.adobe ]; then
 fi
 
 if [ -d $homedir/.macromedia ]; then
-sudo rm -r $homedir/.macromedia
+    sudo rm -r $homedir/.macromedia
+fi
+
+#
+# Kodi media center
+#
+if [ -d $homedir/.kodi ]; then
+    rm -rf $homedir/.kodi/temp/*
 fi
 
 #
@@ -208,6 +215,8 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
+    # Kodi media center
+    #sudo add-apt-repository ppa:team-xbmc/ppa -y
     # Gimp
     #sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
 fi
@@ -226,12 +235,20 @@ sudo apt-get -f install -y
 #
 # Old kernels
 #
-dpkg -l 'linux-image-*' 'linux-headers-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get purge --auto-remove -y
+dpkg -l 'linux-image-*' 'linux-headers-*' \
+ | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
+ | xargs sudo apt-get purge --auto-remove -y
 
 #
 # Unused libs
 #
-sudo deborphan --exclude 'kodi-pvr-iptvsimple' | xargs sudo apt-get purge -y
+sudo deborphan --exclude=kodi-pvr-iptvsimple,kodi-inputstream-adaptive,\
+kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,kodi-audiodecoder-timidity,\
+kodi-audiodecoder-sidplay,kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,\
+kodi-audioencoder-flac,kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,\
+kodi-audioencoder-wav,kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple \
+ | xargs sudo apt-get purge -y
+
 sudo apt-get autoremove --purge -y
 
 #
