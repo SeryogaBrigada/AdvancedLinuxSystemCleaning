@@ -216,7 +216,7 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
     # Kodi media center
-    #sudo add-apt-repository ppa:team-xbmc/ppa -y
+    #sudo add-apt-repository ppa:team-xbmc/xbmc-nightly -y
     # Gimp
     #sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
 fi
@@ -243,11 +243,10 @@ dpkg -l 'linux-image-*' 'linux-headers-*' \
 # Unused libs
 #
 sudo deborphan --exclude=kodi-pvr-iptvsimple,kodi-inputstream-adaptive,\
-kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,kodi-audiodecoder-timidity,\
-kodi-audiodecoder-sidplay,kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,\
-kodi-audioencoder-flac,kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,\
-kodi-audioencoder-wav,kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple \
- | xargs sudo apt-get purge -y
+kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,kodi-audiodecoder-sidplay,\
+kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,kodi-audioencoder-flac,\
+kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,kodi-audioencoder-wav,\
+kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple | xargs sudo apt-get purge -y
 
 sudo apt-get autoremove --purge -y
 
