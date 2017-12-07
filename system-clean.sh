@@ -203,7 +203,7 @@ sudo rm -rf /var/crash/*
 # remove old apt sources and add necessary PPA's
 #
 find /etc/apt/sources.list.d -type f -not -name *$(lsb_release -sc)* -not -name 'skype*' \
- -not -name 'opera*' -not -name 'virtualbox*' -print0 | xargs -0 sudo rm --
+ -not -name 'opera*' -not -name 'virtualbox*' -not -name 'teamviewer*' -print0 | xargs -0 sudo rm --
 find /etc/apt/apt.conf.d -name '*.ucf-old' -print0 | xargs -0 sudo rm --
 find /etc/apt/apt.conf.d -name '*.ucf-dist' -print0 | xargs -0 sudo rm --
 
@@ -243,8 +243,8 @@ dpkg -l 'linux-image-*' 'linux-headers-*' \
 # Unused libs
 #
 sudo deborphan --exclude=kodi-pvr-iptvsimple,kodi-inputstream-adaptive,\
-kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,kodi-audiodecoder-sidplay,\
-kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,kodi-audioencoder-flac,\
+kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,libfluidsynth1,kodi-audiodecoder-sidplay,\
+kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,libmodplug1,kodi-audioencoder-flac,\
 kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,kodi-audioencoder-wav,\
 kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple | xargs sudo apt-get purge -y
 
