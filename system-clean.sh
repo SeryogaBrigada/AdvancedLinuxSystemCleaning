@@ -223,7 +223,7 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
     # Kodi media center
-    #sudo add-apt-repository ppa:team-xbmc/xbmc-nightly
+    #sudo add-apt-repository ppa:team-xbmc/xbmc-nightly -y
     # Gimp
     #sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
 fi
