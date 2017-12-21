@@ -194,6 +194,13 @@ fi
 sudo rm -rf $homedir/.local/share/gvfs-metadata/*
 
 #
+# WGET hosts file
+#
+if [ -d $homedir/.wget-hsts ]; then
+    rm $homedir/.wget-hsts
+fi
+
+#
 # Error messages
 #
 sudo rm -rf /var/crash/*
@@ -216,7 +223,7 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
     # Kodi media center
-    #sudo add-apt-repository ppa:team-xbmc/xbmc-nightly -y
+    #sudo add-apt-repository ppa:team-xbmc/xbmc-nightly
     # Gimp
     #sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
 fi
@@ -246,7 +253,7 @@ sudo deborphan --exclude=kodi-pvr-iptvsimple,kodi-inputstream-adaptive,\
 kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,libfluidsynth1,kodi-audiodecoder-sidplay,\
 kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,libmodplug1,kodi-audioencoder-flac,\
 kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,kodi-audioencoder-wav,\
-kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple | xargs sudo apt-get purge -y
+kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple,libp8-platform2 | xargs sudo apt-get purge -y
 
 sudo apt-get autoremove --purge -y
 
