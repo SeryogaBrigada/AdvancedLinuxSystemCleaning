@@ -43,8 +43,8 @@ if [ -d $homedir/.mozilla/firefox/*.default ]; then
     webappsstore.*
 
 #    rm cookies.*
-#    rm formhistory.*
-#    rm search.json.*
+    rm formhistory.*
+    rm search.json.*
 fi
 
 #
@@ -82,9 +82,9 @@ if [ -d $homedir/.config/opera* ]; then
     "Visited Links"
 
 #    rm Cookies*
-#    rm History*
-#    rm Current*
-#    rm Last*
+    rm History*
+    rm Current*
+    rm Last*
 
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
@@ -133,9 +133,9 @@ if [ -d $homedir/.config/chromium ]; then
     "Web Data-journal"
 
 #    rm Cookies*
-#    rm History*
-#    rm Current*
-#    rm Last*
+    rm History*
+    rm Current*
+    rm Last*
 
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
@@ -261,3 +261,5 @@ sudo apt-get autoremove --purge -y
 # Additional cleaning with Bleachbit
 #
 sudo bleachbit -c --preset
+sleep 1
+poweroff
