@@ -196,7 +196,7 @@ sudo rm -rf $homedir/.local/share/gvfs-metadata/*
 #
 # WGET hosts file
 #
-if [ -d $homedir/.wget-hsts ]; then
+if [ -f $homedir/.wget-hsts ]; then
     rm $homedir/.wget-hsts
 fi
 
@@ -263,3 +263,4 @@ sudo apt-get autoremove --purge -y
 sudo bleachbit -c --preset
 sleep 1
 poweroff
+
