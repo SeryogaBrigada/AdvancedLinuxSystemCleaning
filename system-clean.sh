@@ -169,6 +169,11 @@ if [ -d $homedir/.kodi ]; then
     rm -rf $homedir/.kodi/temp/*
 fi
 
+if [ -f $homedir/core ]; then
+    rm $homedir/core
+    rm $homedir/kodi_crashlog*.log
+fi
+
 #
 # System cache
 #
