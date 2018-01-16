@@ -177,7 +177,7 @@ fi
 #
 # System cache
 #
-find $homedir/.cache -maxdepth 1 -not -name '.cache' -not -name "fontconfig" -print0 | xargs -0 sudo rm -rf --
+sudo rm -r $homedir/.cache/*
 
 #
 # Nvidia cache
