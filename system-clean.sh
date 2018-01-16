@@ -194,6 +194,14 @@ if [ -d $homedir/.launchpadlib ]; then
 fi
 
 #
+# Wine cache
+#
+if [ -d $homedir/.wine ]; then
+    rm -rf $homedir/.wine/drive_c/users/$USER/Temp/*
+    rm -rf $homedir/.wine/drive_c/windows/temp/*
+fi
+
+#
 # GVFS-metadata (Must be disabled for Budgie)
 #
 sudo rm -rf $homedir/.local/share/gvfs-metadata/*
