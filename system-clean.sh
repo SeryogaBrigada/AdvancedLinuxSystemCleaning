@@ -98,6 +98,8 @@ if [ -d $homedir/.config/chromium ]; then
     rm -rf "CertificateTransparency" \
     "Crash Reports" \
     "EVWhitelist" \
+    "FileTypePolicies" \
+    "NativeMessagingHosts" \
     "OriginTrials" \
     "ShaderCache" \
     "Webstore Downloads" \
@@ -108,14 +110,23 @@ if [ -d $homedir/.config/chromium ]; then
     BrowserMetrics-spare.*
 
     cd Default
-    rm -rf "data_reduction_proxy_leveldb" \
+    rm -rf "blob_storage" \
+    "data_reduction_proxy_leveldb" \
+    "databases" \
+    "Download Service" \
+    "Extension State" \
+    "Feature Engagement Tracker" \
     "GPUCache" \
+    "Managed Extension Settings" \
     "IndexedDB" \
     "Pepper Data" \
+    "Platform Notifications" \
+    "Sync Data" \
+    "Sync Extension Settings" \
     "Service Worker" \
-    "Extension State" \
+    "Thumbnails" \
     "Session Storage" \
-    DownloadMetadata \
+    "DownloadMetadata" \
     "Extension Cookies" \
     "Extension Cookies-journal" \
     Login* \
@@ -127,6 +138,7 @@ if [ -d $homedir/.config/chromium ]; then
     Shortcuts* \
     "Top Sites" \
     "Top Sites-journal" \
+    "Translate Ranker Model" \
     TransportSecurity \
     "Visited Links" \
     "Web Data" \
