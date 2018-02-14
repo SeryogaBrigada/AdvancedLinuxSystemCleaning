@@ -262,7 +262,7 @@ fi
 #
 # Fix broken packages
 #
-sudo apt-get -f install -y
+sudo apt -f install -y
 
 #
 # Old kernels
@@ -280,7 +280,7 @@ kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,libmodplug1,kodi-audioencoder
 kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,kodi-audioencoder-wav,\
 kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple,libp8-platform2 | xargs sudo apt-get purge -y
 
-sudo apt-get autoremove --purge -y
+sudo apt autoremove --purge -y
 
 #
 # Additional cleaning with Bleachbit
