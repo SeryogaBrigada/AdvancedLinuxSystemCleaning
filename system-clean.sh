@@ -96,6 +96,7 @@ fi
 if [ -d $homedir/.config/chromium ]; then
     cd $homedir/.config/chromium
     rm -rf "CertificateTransparency" \
+    "CertificateRevocation" \
     "Crash Reports" \
     "EVWhitelist" \
     "FileTypePolicies" \
@@ -107,7 +108,8 @@ if [ -d $homedir/.config/chromium ]; then
     "SSLErrorAssistant" \
     "Certificate Revocation Lists" \
     Safe* \
-    BrowserMetrics-spare.*
+    BrowserMetrics-spare.* \
+    chrome_shutdown_ms.txt
 
     cd Default
     rm -rf "blob_storage" \
@@ -139,10 +141,13 @@ if [ -d $homedir/.config/chromium ]; then
     "Top Sites" \
     "Top Sites-journal" \
     "Translate Ranker Model" \
-    TransportSecurity \
+    "TransportSecurity" \
+    "Search Logos" \
     "Visited Links" \
+    "VideoDecodeStats" \
     "Web Data" \
-    "Web Data-journal"
+    "Web Data-journal" \
+    .org.chromium.Chromium.*
 
 #    rm Cookies*
     rm History*
@@ -269,7 +274,7 @@ sudo apt -f install -y
 #
 dpkg -l 'linux-image-*' 'linux-headers-*' \
  | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
- | xargs sudo apt-get purge --auto-remove -y
+ | xargs sudo apt purge --auto-remove -y
 
 #
 # Unused libs
@@ -278,7 +283,7 @@ sudo deborphan --exclude=kodi-pvr-iptvsimple,kodi-inputstream-adaptive,\
 kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,libfluidsynth1,kodi-audiodecoder-sidplay,\
 kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,libmodplug1,kodi-audioencoder-flac,\
 kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,kodi-audioencoder-wav,\
-kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple,libp8-platform2 | xargs sudo apt-get purge -y
+kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple,libp8-platform2 | xargs sudo apt purge -y
 
 sudo apt autoremove --purge -y
 
