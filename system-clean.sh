@@ -15,7 +15,8 @@ if [ -d $homedir/.mozilla/firefox/*.default ]; then
     rm -r "$homedir/.mozilla/firefox/Pending Pings"
 
     cd $homedir/.mozilla/firefox/*.default
-    rm -rf bookmarkbackups \
+    rm -rf blocklist* \
+    bookmarkbackups \
     crashes \
     datareporting \
     minidumps \
@@ -40,7 +41,8 @@ if [ -d $homedir/.mozilla/firefox/*.default ]; then
     storage.* \
     Telemetry.ShutdownTime.* \
     times.* \
-    webappsstore.*
+    webappsstore.* \
+    weave
 
 #    rm cookies.*
     rm formhistory.*
