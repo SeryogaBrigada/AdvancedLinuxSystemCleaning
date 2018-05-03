@@ -10,7 +10,7 @@ homedir=$(xdg-user-dir HOME)
 #
 # Mozilla Firefox
 #
-if [ -d $homedir/.mozilla/firefox/*.default ]; then
+if [[ -d $homedir/.mozilla/firefox/*.default ]]; then
     rm -r "$homedir/.mozilla/firefox/Crash Reports"
     rm -r "$homedir/.mozilla/firefox/Pending Pings"
 
@@ -52,7 +52,7 @@ fi
 #
 # Opera
 #
-if [ -d $homedir/.config/opera* ]; then
+if [[ -d $homedir/.config/opera* ]]; then
     cd $homedir/.config/opera*
     rm -rf "adblocker_data" \
     "Extension State" \
@@ -95,7 +95,7 @@ fi
 #
 # Chromium browser
 #
-if [ -d $homedir/.config/chromium ]; then
+if [[ -d $homedir/.config/chromium ]]; then
     cd $homedir/.config/chromium
     rm -rf "CertificateTransparency" \
     "CertificateRevocation" \
@@ -163,7 +163,7 @@ fi
 #
 # New Skype cache
 #
-if [ -d $homedir/.config/skypeforlinux ]; then
+if [[ -d $homedir/.config/skypeforlinux ]]; then
     cd $homedir/.config/skypeforlinux
     rm -r "Cache" \
     "GPUCache" \
@@ -173,22 +173,22 @@ fi
 #
 # Adobe Flash Player
 #
-if [ -d $homedir/.adobe ]; then
+if [[ -d $homedir/.adobe ]]; then
     sudo rm -r $homedir/.adobe
 fi
 
-if [ -d $homedir/.macromedia ]; then
+if [[ -d $homedir/.macromedia ]]; then
     sudo rm -r $homedir/.macromedia
 fi
 
 #
 # Kodi media center
 #
-if [ -d $homedir/.kodi ]; then
+if [[ -d $homedir/.kodi ]]; then
     rm -rf $homedir/.kodi/temp/*
 fi
 
-if [ -f $homedir/core ]; then
+if [[ -f $homedir/core ]]; then
     rm $homedir/core
     rm $homedir/kodi_crashlog*.log
 fi
@@ -201,21 +201,21 @@ sudo rm -r $homedir/.cache/*
 #
 # Nvidia cache
 #
-if [ -d $homedir/.nv ]; then
+if [[ -d $homedir/.nv ]]; then
     sudo rm -r $homedir/.nv
 fi
 
 #
 # Launchpad cache
 #
-if [ -d $homedir/.launchpadlib ]; then
+if [[ -d $homedir/.launchpadlib ]]; then
     sudo rm -r $homedir/.launchpadlib
 fi
 
 #
 # Wine cache
 #
-if [ -d $homedir/.wine ]; then
+if [[ -d $homedir/.wine ]]; then
     rm -rf $homedir/.wine/drive_c/users/$USER/Temp/*
     rm -rf $homedir/.wine/drive_c/windows/temp/*
 fi
@@ -228,7 +228,7 @@ sudo rm -rf $homedir/.local/share/gvfs-metadata/*
 #
 # WGET hosts file
 #
-if [ -f $homedir/.wget-hsts ]; then
+if [[ -f $homedir/.wget-hsts ]]; then
     rm $homedir/.wget-hsts
 fi
 
@@ -254,14 +254,12 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
-    # Kodi media center
-    #sudo add-apt-repository ppa:team-xbmc/xbmc-nightly -y
     # Gimp
     #sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
 fi
 
 # Fix "Device not managed" issue in Network Manager
-if [ -f /usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf ]; then
+if [[ -f '/usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf' ]]; then
     sudo rm /usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf
     sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 fi
@@ -274,9 +272,11 @@ sudo apt -f install -y
 #
 # Old kernels
 #
-dpkg -l 'linux-image-*' 'linux-headers-*' \
- | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
- | xargs sudo apt purge --auto-remove -y
+if [[ ! -f '/var/run/reboot-required' ]]; then
+    dpkg -l 'linux-image-*' 'linux-headers-*' \
+    | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
+    | xargs sudo apt purge --auto-remove -y
+fi
 
 #
 # Unused libs
