@@ -102,9 +102,11 @@ if [[ -d $homedir/.config/chromium ]]; then
     "Crash Reports" \
     "EVWhitelist" \
     "FileTypePolicies" \
+    "MEIPreload" \
     "NativeMessagingHosts" \
     "OriginTrials" \
     "ShaderCache" \
+    "Subresource Filter" \
     "Webstore Downloads" \
     "WidevineCdm" \
     "SSLErrorAssistant" \
@@ -149,6 +151,8 @@ if [[ -d $homedir/.config/chromium ]]; then
     "VideoDecodeStats" \
     "Web Data" \
     "Web Data-journal" \
+    "WebRTC Logs" \
+    "webrtc_event_logs" \
     .org.chromium.Chromium.*
 
 #    rm Cookies*
