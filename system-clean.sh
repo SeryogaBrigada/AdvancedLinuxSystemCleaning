@@ -10,7 +10,7 @@ homedir=$(xdg-user-dir HOME)
 #
 # Mozilla Firefox
 #
-if [[ -d $homedir/.mozilla/firefox/*.default ]]; then
+if [[ -d $homedir/.mozilla/firefox ]]; then
     rm -r "$homedir/.mozilla/firefox/Crash Reports"
     rm -r "$homedir/.mozilla/firefox/Pending Pings"
 
@@ -52,7 +52,7 @@ fi
 #
 # Opera
 #
-if [[ -d $homedir/.config/opera* ]]; then
+if [ -d $homedir/.config/opera* ]; then
     cd $homedir/.config/opera*
     rm -rf "adblocker_data" \
     "Extension State" \
