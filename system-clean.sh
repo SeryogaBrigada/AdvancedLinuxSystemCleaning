@@ -274,7 +274,7 @@ sudo apt -f install -y
 # Old kernels
 #
 if [[ ! -f '/var/run/reboot-required' ]]; then
-    dpkg -l 'linux-image-*' 'linux-headers-*' \
+    dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
     | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
     | xargs sudo apt purge --auto-remove -y
 fi
