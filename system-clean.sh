@@ -116,7 +116,8 @@ if [[ -d $homedir/.config/chromium ]]; then
     chrome_shutdown_ms.txt
 
     cd Default
-    rm -rf "blob_storage" \
+    rm -rf "Application Cache" \
+    "blob_storage" \
     "data_reduction_proxy_leveldb" \
     "databases" \
     "Download Service" \
@@ -286,7 +287,7 @@ sudo deborphan --exclude=kodi-pvr-iptvsimple,kodi-inputstream-adaptive,\
 kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,libfluidsynth1,kodi-audiodecoder-sidplay,\
 kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,libmodplug1,kodi-audioencoder-flac,\
 kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,kodi-audioencoder-wav,\
-kodi-audiodecoder-snesapu,kodi-pvr-iptvsimple,libp8-platform2 | xargs sudo apt purge --auto-remove -y
+kodi-audiodecoder-snesapu,libp8-platform2 | xargs sudo apt purge --auto-remove -y
 
 sudo apt autoremove --purge -y
 
