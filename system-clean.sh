@@ -166,6 +166,79 @@ if [[ -d $homedir/.config/chromium ]]; then
 fi
 
 #
+# Google chrome
+#
+if [[ -d $homedir/.config/google-chrome ]]; then
+    cd $homedir/.config/google-chrome
+    rm -rf "CertificateTransparency" \
+    "CertificateRevocation" \
+    "Crash Reports" \
+    "EVWhitelist" \
+    "FileTypePolicies" \
+    "MEIPreload" \
+    "NativeMessagingHosts" \
+    "OriginTrials" \
+    "ShaderCache" \
+    "Subresource Filter" \
+    "Webstore Downloads" \
+    "WidevineCdm" \
+    "SSLErrorAssistant" \
+    "Certificate Revocation Lists" \
+    Safe* \
+    BrowserMetrics-spare.* \
+    chrome_shutdown_ms.txt
+
+    cd Default
+    rm -rf "Accounts" \
+    "Application Cache" \
+    "blob_storage" \
+    "data_reduction_proxy_leveldb" \
+    "databases" \
+    "Download Service" \
+    "Extension State" \
+    "Feature Engagement Tracker" \
+    "GPUCache" \
+    "Managed Extension Settings" \
+    "IndexedDB" \
+    "Pepper Data" \
+    "Platform Notifications" \
+    "Sync Data" \
+    "Sync Extension Settings" \
+    "Service Worker" \
+    "Thumbnails" \
+    "Session Storage" \
+    "DownloadMetadata" \
+    "Extension Cookies" \
+    "Extension Cookies-journal" \
+    Login* \
+    Network* \
+    Origin* \
+    previews_opt_out.* \
+    QuotaManager* \
+    "Secure Preferences" \
+    Shortcuts* \
+    "Top Sites" \
+    "Top Sites-journal" \
+    "Translate Ranker Model" \
+    "TransportSecurity" \
+    "Search Logos" \
+    "Visited Links" \
+    "VideoDecodeStats" \
+    "Web Data" \
+    "Web Data-journal" \
+    "WebRTC Logs" \
+    "webrtc_event_logs"
+
+#    rm Cookies*
+    rm History*
+    rm Current*
+    rm Last*
+
+    cd "Local Storage"
+    find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
+fi
+
+#
 # New Skype cache
 #
 if [[ -d $homedir/.config/skypeforlinux ]]; then
@@ -243,8 +316,8 @@ sudo rm -rf /var/crash/*
 # After release upgrade:
 # remove old apt sources and add necessary PPA's
 #
-find /etc/apt/sources.list.d -type f -not -name *$(lsb_release -sc)* -not -name 'skype*' \
- -not -name 'opera*' -not -name 'virtualbox*' -not -name 'teamviewer*' -print0 | xargs -0 sudo rm --
+find /etc/apt/sources.list.d -type f -not -name *$(lsb_release -sc)* -not -name 'skype*' -not -name 'opera*' \
+ -not -name 'virtualbox*' -not -name 'teamviewer*' -not -name 'google-chrome*' -print0 | xargs -0 sudo rm --
 find /etc/apt/apt.conf.d -name '*.ucf-old' -print0 | xargs -0 sudo rm --
 find /etc/apt/apt.conf.d -name '*.ucf-dist' -print0 | xargs -0 sudo rm --
 
