@@ -154,7 +154,8 @@ if [[ -d $homedir/.config/chromium ]]; then
     "Web Data-journal" \
     "WebRTC Logs" \
     "webrtc_event_logs" \
-    .org.chromium.Chromium.*
+    .org.chromium.Chromium.* \
+    in_progress_download_metadata_store
 
 #    rm Cookies*
     rm History*
@@ -184,6 +185,7 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     "WidevineCdm" \
     "SSLErrorAssistant" \
     "Certificate Revocation Lists" \
+    "pnacl" \
     Safe* \
     BrowserMetrics-spare.* \
     chrome_shutdown_ms.txt
@@ -217,6 +219,7 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     QuotaManager* \
     "Secure Preferences" \
     Shortcuts* \
+    "Storage" \
     "Top Sites" \
     "Top Sites-journal" \
     "Translate Ranker Model" \
@@ -227,7 +230,8 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     "Web Data" \
     "Web Data-journal" \
     "WebRTC Logs" \
-    "webrtc_event_logs"
+    "webrtc_event_logs" \
+    in_progress_download_metadata_store
 
 #    rm Cookies*
     rm History*
