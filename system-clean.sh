@@ -102,9 +102,11 @@ if [[ -d $homedir/.config/chromium ]]; then
     "Crash Reports" \
     "EVWhitelist" \
     "FileTypePolicies" \
+    "InterventionPolicyDatabase" \
     "MEIPreload" \
     "NativeMessagingHosts" \
     "OriginTrials" \
+    "Policy" \
     "ShaderCache" \
     "Subresource Filter" \
     "Webstore Downloads" \
@@ -116,7 +118,9 @@ if [[ -d $homedir/.config/chromium ]]; then
     chrome_shutdown_ms.txt
 
     cd Default
-    rm -rf "Application Cache" \
+    rm -rf "Affiliation Database" \
+    "Affiliation Database-journal" \
+    "Application Cache" \
     "blob_storage" \
     "data_reduction_proxy_leveldb" \
     "databases" \
@@ -176,9 +180,11 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     "Crash Reports" \
     "EVWhitelist" \
     "FileTypePolicies" \
+    "InterventionPolicyDatabase" \
     "MEIPreload" \
     "NativeMessagingHosts" \
     "OriginTrials" \
+    "Policy" \
     "ShaderCache" \
     "Subresource Filter" \
     "Webstore Downloads" \
@@ -192,6 +198,8 @@ if [[ -d $homedir/.config/google-chrome ]]; then
 
     cd Default
     rm -rf "Accounts" \
+    "Affiliation Database" \
+    "Affiliation Database-journal" \
     "Application Cache" \
     "blob_storage" \
     "data_reduction_proxy_leveldb" \
@@ -231,6 +239,8 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     "Web Data-journal" \
     "WebRTC Logs" \
     "webrtc_event_logs" \
+    .com.google.Chrome.* \
+    page_load_capping_opt_out.* \
     in_progress_download_metadata_store
 
 #    rm Cookies*
@@ -275,7 +285,7 @@ fi
 #
 # System cache
 #
-sudo rm -r $homedir/.cache/*
+sudo rm -rf $homedir/.cache/*
 
 #
 # Nvidia cache
