@@ -115,6 +115,7 @@ if [[ -d $homedir/.config/chromium ]]; then
     "Certificate Revocation Lists" \
     Safe* \
     BrowserMetrics-spare.* \
+    .org.chromium.Chromium.* \
     chrome_shutdown_ms.txt
 
     cd Default
@@ -159,6 +160,7 @@ if [[ -d $homedir/.config/chromium ]]; then
     "WebRTC Logs" \
     "webrtc_event_logs" \
     .org.chromium.Chromium.* \
+    page_load_capping_opt_out.* \
     in_progress_download_metadata_store
 
 #    rm Cookies*
