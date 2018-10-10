@@ -341,8 +341,6 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     find /etc/apt -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
     find /etc/apt/sources.list.d -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
 
-    # qBittorrent
-    sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable -y
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
     # Gimp
@@ -372,12 +370,7 @@ fi
 #
 # Unused libs
 #
-sudo deborphan --exclude=kodi-pvr-iptvsimple,kodi-inputstream-adaptive,\
-kodi-audioencoder-lame,kodi-audiodecoder-fluidsynth,libfluidsynth1,kodi-audiodecoder-sidplay,\
-kodi-audioencoder-vorbis,kodi-audiodecoder-modplug,libmodplug1,kodi-audioencoder-flac,\
-kodi-audiodecoder-nosefart,kodi-inputstream-rtmp,kodi-audioencoder-wav,\
-kodi-audiodecoder-snesapu,libp8-platform2 | xargs sudo apt purge --auto-remove -y
-
+sudo deborphan --exclude=kodi-pvr-iptvsimple | xargs sudo apt purge --auto-remove -y
 sudo apt autoremove --purge -y
 
 #
