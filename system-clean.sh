@@ -15,7 +15,8 @@ if [[ -d $homedir/.mozilla/firefox ]]; then
     rm -r "$homedir/.mozilla/firefox/Pending Pings"
 
     cd $homedir/.mozilla/firefox/*.default
-    rm -rf blocklist* \
+    rm -rf \
+    blocklist* \
     bookmarkbackups \
     crashes \
     datareporting \
@@ -54,7 +55,8 @@ fi
 #
 if [ -d $homedir/.config/opera* ]; then
     cd $homedir/.config/opera*
-    rm -rf "adblocker_data" \
+    rm -rf \
+    "adblocker_data" \
     "Extension State" \
     "GPUCache" \
     "IndexedDB" \
@@ -97,8 +99,11 @@ fi
 #
 if [[ -d $homedir/.config/chromium ]]; then
     cd $homedir/.config/chromium
-    rm -rf "CertificateTransparency" \
+    rm -rf \
+    "BrowserMetrics" \
+    "CertificateTransparency" \
     "CertificateRevocation" \
+    "Consent To Send Stats" \
     "Crash Reports" \
     "EVWhitelist" \
     "FileTypePolicies" \
@@ -113,21 +118,29 @@ if [[ -d $homedir/.config/chromium ]]; then
     "WidevineCdm" \
     "SSLErrorAssistant" \
     "Certificate Revocation Lists" \
+    "pnacl" \
     Safe* \
     BrowserMetrics-spare.* \
     .org.chromium.Chromium.* \
     chrome_shutdown_ms.txt
 
     cd Default
-    rm -rf "Affiliation Database" \
+    rm -rf \
+    "Accounts" \
+    *.ldb \
+    *.log \
+    "Affiliation Database" \
     "Affiliation Database-journal" \
     "Application Cache" \
+    "BudgetDatabase" \
     "blob_storage" \
     "data_reduction_proxy_leveldb" \
     "databases" \
     "Download Service" \
     "Extension State" \
     "Feature Engagement Tracker" \
+    "File System" \
+    "GCM Store" \
     "GPUCache" \
     "Managed Extension Settings" \
     "IndexedDB" \
@@ -141,13 +154,18 @@ if [[ -d $homedir/.config/chromium ]]; then
     "DownloadMetadata" \
     "Extension Cookies" \
     "Extension Cookies-journal" \
+    LOCK \
+    LOG \
+    LOG.old \
     Login* \
+    MANIFEST-* \
     Network* \
     Origin* \
     previews_opt_out.* \
     QuotaManager* \
     "Secure Preferences" \
     Shortcuts* \
+    "Storage" \
     "Top Sites" \
     "Top Sites-journal" \
     "Translate Ranker Model" \
@@ -165,6 +183,7 @@ if [[ -d $homedir/.config/chromium ]]; then
 
 #    rm Cookies*
     rm History*
+    rm CURRENT
     rm Current*
     rm Last*
 
@@ -177,8 +196,11 @@ fi
 #
 if [[ -d $homedir/.config/google-chrome ]]; then
     cd $homedir/.config/google-chrome
-    rm -rf "CertificateTransparency" \
+    rm -rf \
+    "BrowserMetrics" \
+    "CertificateTransparency" \
     "CertificateRevocation" \
+    "Consent To Send Stats" \
     "Crash Reports" \
     "EVWhitelist" \
     "FileTypePolicies" \
@@ -199,16 +221,22 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     chrome_shutdown_ms.txt
 
     cd Default
-    rm -rf "Accounts" \
+    rm -rf \
+    "Accounts" \
+    *.ldb \
+    *.log \
     "Affiliation Database" \
     "Affiliation Database-journal" \
     "Application Cache" \
+    "BudgetDatabase" \
     "blob_storage" \
     "data_reduction_proxy_leveldb" \
     "databases" \
     "Download Service" \
     "Extension State" \
     "Feature Engagement Tracker" \
+    "File System" \
+    "GCM Store" \
     "GPUCache" \
     "Managed Extension Settings" \
     "IndexedDB" \
@@ -222,7 +250,11 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     "DownloadMetadata" \
     "Extension Cookies" \
     "Extension Cookies-journal" \
+    LOCK \
+    LOG \
+    LOG.old \
     Login* \
+    MANIFEST-* \
     Network* \
     Origin* \
     previews_opt_out.* \
@@ -247,6 +279,7 @@ if [[ -d $homedir/.config/google-chrome ]]; then
 
 #    rm Cookies*
     rm History*
+    rm CURRENT
     rm Current*
     rm Last*
 
@@ -259,7 +292,8 @@ fi
 #
 if [[ -d $homedir/.config/skypeforlinux ]]; then
     cd $homedir/.config/skypeforlinux
-    rm -r "Cache" \
+    rm -r \
+    "Cache" \
     "GPUCache" \
     "logs"
 fi
@@ -344,7 +378,7 @@ if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 
     # LibreOffice
     sudo add-apt-repository ppa:libreoffice/ppa -y
     # Gimp
-    #sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
+    sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
 fi
 
 # Fix "Device not managed" issue in Network Manager
@@ -362,9 +396,9 @@ sudo apt -f install -y
 # Old kernels
 #
 if [[ ! -f '/var/run/reboot-required' ]]; then
-    dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
-    | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
-    | xargs sudo apt purge --auto-remove -y
+   dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
+   | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
+   | xargs sudo apt purge --auto-remove -y
 fi
 
 #
@@ -379,4 +413,3 @@ sudo apt autoremove --purge -y
 sudo bleachbit -c --preset
 sleep 1
 poweroff
-
