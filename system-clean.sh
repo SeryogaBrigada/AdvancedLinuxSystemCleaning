@@ -7,9 +7,7 @@
 #######################################################
 homedir=$(xdg-user-dir HOME)
 
-#
 # Mozilla Firefox
-#
 if [[ -d $homedir/.mozilla/firefox ]]; then
     rm -r "$homedir/.mozilla/firefox/Crash Reports"
     rm -r "$homedir/.mozilla/firefox/Pending Pings"
@@ -50,9 +48,7 @@ if [[ -d $homedir/.mozilla/firefox ]]; then
     rm search.json.*
 fi
 
-#
 # Opera
-#
 if [ -d $homedir/.config/opera* ]; then
     cd $homedir/.config/opera*
     rm -rf \
@@ -94,9 +90,7 @@ if [ -d $homedir/.config/opera* ]; then
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 
-#
 # Chromium browser
-#
 if [[ -d $homedir/.config/chromium ]]; then
     cd $homedir/.config/chromium
     rm -rf \
@@ -191,9 +185,7 @@ if [[ -d $homedir/.config/chromium ]]; then
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 
-#
 # Google chrome
-#
 if [[ -d $homedir/.config/google-chrome ]]; then
     cd $homedir/.config/google-chrome
     rm -rf \
@@ -287,9 +279,7 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 
-#
 # New Skype cache
-#
 if [[ -d $homedir/.config/skypeforlinux ]]; then
     cd $homedir/.config/skypeforlinux
     rm -r \
@@ -298,9 +288,7 @@ if [[ -d $homedir/.config/skypeforlinux ]]; then
     "logs"
 fi
 
-#
 # Adobe Flash Player
-#
 if [[ -d $homedir/.adobe ]]; then
     sudo rm -r $homedir/.adobe
 fi
@@ -309,76 +297,58 @@ if [[ -d $homedir/.macromedia ]]; then
     sudo rm -r $homedir/.macromedia
 fi
 
-#
 # Kodi media center
-#
 if [[ -d $homedir/.kodi ]]; then
     rm -rf $homedir/.kodi/temp/*
     rm $homedir/kodi_crashlog*.log
     rm $homedir/core
 fi
 
-#
 # System cache
-#
 sudo rm -rf $homedir/.cache/*
 
-#
 # Nvidia cache
-#
 if [[ -d $homedir/.nv ]]; then
     sudo rm -r $homedir/.nv
 fi
 
-#
 # Launchpad cache
-#
 if [[ -d $homedir/.launchpadlib ]]; then
     sudo rm -r $homedir/.launchpadlib
 fi
 
-#
 # Wine cache
-#
 if [[ -d $homedir/.wine ]]; then
     rm -rf $homedir/.wine/drive_c/users/$USER/Temp/*
     rm -rf $homedir/.wine/drive_c/windows/temp/*
 fi
 
-#
 # GVFS-metadata (Must be disabled for Budgie)
-#
 sudo rm -rf $homedir/.local/share/gvfs-metadata/*
 
-#
 # WGET hosts file
-#
 if [[ -f $homedir/.wget-hsts ]]; then
     rm $homedir/.wget-hsts
 fi
 
-#
 # Error messages
-#
 sudo rm -rf /var/crash/*
 
-#
-# After release upgrade:
-# remove old apt sources and add necessary PPA's
-#
-find /etc/apt/sources.list.d -type f -not -name *$(lsb_release -sc)* -not -name 'skype*' -not -name 'opera*' \
- -not -name 'virtualbox*' -not -name 'teamviewer*' -not -name 'google-chrome*' -print0 | xargs -0 sudo rm --
-find /etc/apt/apt.conf.d -name '*.ucf-old' -print0 | xargs -0 sudo rm --
-find /etc/apt/apt.conf.d -name '*.ucf-dist' -print0 | xargs -0 sudo rm --
-
-if filecount=$(find /etc/apt -name '*.distUpgrade' | wc -l); ! [ $filecount -eq 0  ]; then
+# Remove old PPA's after release upgrade
+if files=$(find /etc/apt/sources.list.d -type f \
+ -not -name *$(lsb_release -sc)* \
+ -not -name 'skype*' \
+ -not -name 'opera*' \
+ -not -name 'virtualbox*' \
+ -not -name 'teamviewer*' \
+ -not -name 'google-chrome*'); [[ ! -z $files ]]; then
+    sudo rm $files
+    find /etc/apt/apt.conf.d -name '*.ucf-old' -print0 | xargs -0 sudo rm --
+    find /etc/apt/apt.conf.d -name '*.ucf-dist' -print0 | xargs -0 sudo rm --
     find /etc/apt -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
     find /etc/apt/sources.list.d -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
-
-    # LibreOffice
-    sudo add-apt-repository ppa:libreoffice/ppa -y
-    # Gimp
-    sudo add-apt-repository ppa:otto-kesselgulasch/gimp-edge -y
+    
+    sudo software-properties-gtk
 fi
 
 # Fix "Device not managed" issue in Network Manager
@@ -387,29 +357,21 @@ if [[ -f '/usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf' ]]; t
     sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 fi
 
-#
 # Fix broken packages
-#
 sudo apt -f install -y
 
-#
 # Old kernels
-#
 if [[ ! -f '/var/run/reboot-required' ]]; then
    dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
    | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
    | xargs sudo apt purge --auto-remove -y
 fi
 
-#
 # Unused libs
-#
 sudo deborphan --exclude=kodi-pvr-iptvsimple | xargs sudo apt purge --auto-remove -y
 sudo apt autoremove --purge -y
 
-#
 # Additional cleaning with Bleachbit
-#
 sudo bleachbit -c --preset
 sleep 1
 poweroff
