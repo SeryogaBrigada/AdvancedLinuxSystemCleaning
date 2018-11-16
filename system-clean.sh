@@ -335,20 +335,64 @@ fi
 sudo rm -rf /var/crash/*
 
 # Remove old PPA's after release upgrade
-if files=$(find /etc/apt/sources.list.d -type f \
- -not -name *$(lsb_release -sc)* \
- -not -name 'skype*' \
- -not -name 'opera*' \
- -not -name 'virtualbox*' \
- -not -name 'teamviewer*' \
- -not -name 'google-chrome*'); [[ ! -z $files ]]; then
-    sudo rm $files
-    find /etc/apt/apt.conf.d -name '*.ucf-old' -print0 | xargs -0 sudo rm --
-    find /etc/apt/apt.conf.d -name '*.ucf-dist' -print0 | xargs -0 sudo rm --
-    find /etc/apt -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
-    find /etc/apt/sources.list.d -name '*.distUpgrade' -print0 | xargs -0 sudo rm --
+if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
+    sudo rm /etc/apt/sources.list.distUpgrade
+    find /etc/apt/apt.conf.d -type f \( -name '*.ucf-old' -o -name '*.ucf-dist' \) -print0 | xargs -0 sudo rm --
+    find /etc/apt/sources.list.d -type f \( -name '*.distUpgrade' -o -name '*.dpkg-old' \) -print0 | xargs -0 sudo rm --
+    
+    find /etc/apt/sources.list.d -type f \
+     -not -name *$(lsb_release -sc)* \
+     -not -name 'skype*' \
+     -not -name 'opera*' \
+     -not -name 'virtualbox*' \
+     -not -name 'teamviewer*' \
+     -not -name 'google-chrome*' \
+     -print0 | xargs -0 sudo rm --
+     
+    rm -r $homedir/.config/pulse
+    
+    # Reinstall TeamViewer
+    [[ -d  /var/log/teamviewer13 ]] && sudo rm -r /var/log/teamviewer13;
+    [[ -d  /var/log/teamviewer14 ]] && sudo rm -r /var/log/teamviewer14;
+    sudo rm /etc/apt/sources.list.d/teamviewer.list
+    sudo apt update
+
+    if [ $(uname -m) = 'x86_64' ]; then
+        wget -P ~ https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+        sudo dpkg -i ~/teamviewer_amd64.deb
+        rm ~/teamviewer_amd64.deb
+    else
+        wget -P ~ https://download.teamviewer.com/download/linux/teamviewer_i386.deb
+        sudo dpkg -i ~/teamviewer_i386.deb
+        rm ~/teamviewer_i386.deb
+    fi
+    sudo apt -f install -y
+    
+    # Reinstall XnViewMP
+    if [ $(uname -m) = 'x86_64' ]; then
+        wget -P ~ http://download.xnview.com/XnViewMP-linux-x64.deb
+        sudo dpkg -i ~/XnViewMP-linux-x64.deb
+        rm ~/XnViewMP-linux-x64.deb
+    else
+        wget -P ~ http://download.xnview.com/XnViewMP-linux.deb
+        sudo dpkg -i ~/XnViewMP-linux.deb
+        rm ~/XnViewMP-linux.deb
+    fi
+    sudo apt -f install -y
+    xdg-mime default XnView.desktop $(grep '^image/*' /usr/share/mime/types)
+
+    # Register Evince extensions
+    if which evince >/dev/null; then
+        xdg-mime default evince.desktop `grep 'MimeType=' /usr/share/applications/evince.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
+    fi
+    
+    # Register Atril extensions
+    if which atril >/dev/null; then
+        xdg-mime default atril.desktop `grep 'MimeType=' /usr/share/applications/atril.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
+    fi
     
     sudo software-properties-gtk
+    exit
 fi
 
 # Fix "Device not managed" issue in Network Manager
