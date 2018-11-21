@@ -1,18 +1,16 @@
 #!/bin/bash
-
 #######################################################
 #
 #              Advanced system cleaning
 #
 #######################################################
-homedir=$(xdg-user-dir HOME)
 
 # Mozilla Firefox
-if [[ -d $homedir/.mozilla/firefox ]]; then
-    rm -r "$homedir/.mozilla/firefox/Crash Reports"
-    rm -r "$homedir/.mozilla/firefox/Pending Pings"
+if [[ -d ~/.mozilla/firefox ]]; then
+    rm -r "~/.mozilla/firefox/Crash Reports"
+    rm -r "~/.mozilla/firefox/Pending Pings"
 
-    cd $homedir/.mozilla/firefox/*.default
+    cd ~/.mozilla/firefox/*.default
     rm -rf \
     blocklist* \
     bookmarkbackups \
@@ -49,8 +47,8 @@ if [[ -d $homedir/.mozilla/firefox ]]; then
 fi
 
 # Opera
-if [ -d $homedir/.config/opera* ]; then
-    cd $homedir/.config/opera*
+if [ -d ~/.config/opera* ]; then
+    cd ~/.config/opera*
     rm -rf \
     "adblocker_data" \
     "Extension State" \
@@ -91,8 +89,8 @@ if [ -d $homedir/.config/opera* ]; then
 fi
 
 # Chromium browser
-if [[ -d $homedir/.config/chromium ]]; then
-    cd $homedir/.config/chromium
+if [[ -d ~/.config/chromium ]]; then
+    cd ~/.config/chromium
     rm -rf \
     "BrowserMetrics" \
     "CertificateTransparency" \
@@ -140,6 +138,7 @@ if [[ -d $homedir/.config/chromium ]]; then
     "IndexedDB" \
     "Pepper Data" \
     "Platform Notifications" \
+    "Site Characteristics Database" \
     "Sync Data" \
     "Sync Extension Settings" \
     "Service Worker" \
@@ -186,8 +185,8 @@ if [[ -d $homedir/.config/chromium ]]; then
 fi
 
 # Google chrome
-if [[ -d $homedir/.config/google-chrome ]]; then
-    cd $homedir/.config/google-chrome
+if [[ -d ~/.config/google-chrome ]]; then
+    cd ~/.config/google-chrome
     rm -rf \
     "BrowserMetrics" \
     "CertificateTransparency" \
@@ -234,6 +233,7 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     "IndexedDB" \
     "Pepper Data" \
     "Platform Notifications" \
+    "Site Characteristics Database" \
     "Sync Data" \
     "Sync Extension Settings" \
     "Service Worker" \
@@ -279,60 +279,66 @@ if [[ -d $homedir/.config/google-chrome ]]; then
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 
-# New Skype cache
-if [[ -d $homedir/.config/skypeforlinux ]]; then
-    cd $homedir/.config/skypeforlinux
-    rm -r \
-    "Cache" \
-    "GPUCache" \
-    "logs"
+# Skype cache
+if [[ -d ~/.config/skypeforlinux ]]; then
+    cd ~/.config/skypeforlinux
+    rm -r Cache GPUCache logs
 fi
 
 # Adobe Flash Player
-if [[ -d $homedir/.adobe ]]; then
-    sudo rm -r $homedir/.adobe
-fi
-
-if [[ -d $homedir/.macromedia ]]; then
-    sudo rm -r $homedir/.macromedia
-fi
+[[ -d ~/.adobe ]] && sudo rm -r ~/.adobe;
+[[ -d ~/.macromedia ]] && sudo rm -r ~/.macromedia;
 
 # Kodi media center
-if [[ -d $homedir/.kodi ]]; then
-    rm -rf $homedir/.kodi/temp/*
-    rm $homedir/kodi_crashlog*.log
-    rm $homedir/core
+if [[ -d ~/.kodi ]]; then
+    rm -rf ~/.kodi/temp/*
+    rm ~/kodi_crashlog*.log
+    rm ~/core
 fi
 
 # System cache
-sudo rm -rf $homedir/.cache/*
+sudo rm -rf ~/.cache/*
 
 # Nvidia cache
-if [[ -d $homedir/.nv ]]; then
-    sudo rm -r $homedir/.nv
-fi
+[[ -d ~/.nv ]] && sudo rm -r ~/.nv;
 
 # Launchpad cache
-if [[ -d $homedir/.launchpadlib ]]; then
-    sudo rm -r $homedir/.launchpadlib
-fi
+[[ -d ~/.launchpadlib ]] && sudo rm -r ~/.launchpadlib;
 
 # Wine cache
-if [[ -d $homedir/.wine ]]; then
-    rm -rf $homedir/.wine/drive_c/users/$USER/Temp/*
-    rm -rf $homedir/.wine/drive_c/windows/temp/*
+if [[ -d ~/.wine ]]; then
+    rm -rf ~/.wine/drive_c/users/$USER/Temp/*
+    rm -rf ~/.wine/drive_c/windows/temp/*
 fi
 
 # GVFS-metadata (Must be disabled for Budgie)
-sudo rm -rf $homedir/.local/share/gvfs-metadata/*
+sudo rm -rf ~/.local/share/gvfs-metadata/*
 
 # WGET hosts file
-if [[ -f $homedir/.wget-hsts ]]; then
-    rm $homedir/.wget-hsts
-fi
+[[ -f ~/.wget-hsts ]] && rm ~/.wget-hsts;
 
 # Error messages
 sudo rm -rf /var/crash/*
+
+# Bleachbit
+if which bleachbit >/dev/null; then
+    sudo bleachbit -c --preset
+fi
+
+#
+# ArchLinux cleaning
+#
+if which pacman >/dev/null; then
+    sudo pacman -Sc
+    sudo pacman -Rs $(pacman -Qtdq)
+    poweroff
+    exit
+fi
+
+
+#
+# Ubuntu/Debian specific cleaning
+#
 
 # Remove old PPA's after release upgrade
 if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
@@ -349,12 +355,15 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
      -not -name 'google-chrome*' \
      -print0 | xargs -0 sudo rm --
      
-    rm -r $homedir/.config/pulse
+    rm -r ~/.config/pulse
     
     # Reinstall TeamViewer
-    [[ -d  /var/log/teamviewer13 ]] && sudo rm -r /var/log/teamviewer13;
-    [[ -d  /var/log/teamviewer14 ]] && sudo rm -r /var/log/teamviewer14;
-    sudo rm /etc/apt/sources.list.d/teamviewer.list
+    sudo apt purge teamviewer -y
+    find /var/log -name 'teamviewer*' -print0 | xargs -0 sudo rm -r --
+    find ~/.local/share -name 'teamviewer*' -print0 | xargs -0 rm -r --
+    [[ -d ~/.config/teamviewer ]] && rm -r ~/.config/teamviewer;
+    [[ -f /etc/apt/sources.list.d/teamviewer.list ]] && sudo rm /etc/apt/sources.list.d/teamviewer.list;
+
     sudo apt update
 
     if [ $(uname -m) = 'x86_64' ]; then
@@ -369,6 +378,7 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     sudo apt -f install -y
     
     # Reinstall XnViewMP
+    sudo apt purge xnview -y
     if [ $(uname -m) = 'x86_64' ]; then
         wget -P ~ http://download.xnview.com/XnViewMP-linux-x64.deb
         sudo dpkg -i ~/XnViewMP-linux-x64.deb
@@ -412,10 +422,9 @@ if [[ ! -f '/var/run/reboot-required' ]]; then
 fi
 
 # Unused libs
-sudo deborphan --exclude=kodi-pvr-iptvsimple | xargs sudo apt purge --auto-remove -y
-sudo apt autoremove --purge -y
+if which deborphan >/dev/null; then
+    sudo deborphan --exclude=kodi-pvr-iptvsimple | xargs sudo apt purge --auto-remove -y
+fi
 
-# Additional cleaning with Bleachbit
-sudo bleachbit -c --preset
-sleep 1
+sudo apt autoremove --purge -y
 poweroff
