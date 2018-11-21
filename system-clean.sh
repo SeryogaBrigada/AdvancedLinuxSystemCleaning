@@ -7,8 +7,8 @@
 
 # Mozilla Firefox
 if [[ -d ~/.mozilla/firefox ]]; then
-    rm -r "~/.mozilla/firefox/Crash Reports"
-    rm -r "~/.mozilla/firefox/Pending Pings"
+    rm -r ~/.mozilla/firefox/Crash\ Reports
+    rm -r ~/.mozilla/firefox/Pending\ Pings
 
     cd ~/.mozilla/firefox/*.default
     rm -rf \
