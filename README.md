@@ -1,8 +1,4 @@
 # AdvancedLinuxSystemCleaning
-This script provide an advanced system cleaning for Ubuntu/Linux
+This script provide an advanced system cleaning for Linux.
 
-For full functionality you need to install Bleachbit and Deborphan:
-
-sudo apt-get install deborphan -y
-
-sudo apt-get install bleachbit -y
+For the complete functionality install Bleachbit (and Deborphan for Debian/Ubuntu):
