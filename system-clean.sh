@@ -329,8 +329,8 @@ fi
 # ArchLinux cleaning
 #
 if which pacman >/dev/null; then
-    sudo pacman -Sc
-    sudo pacman -Rs $(pacman -Qtdq)
+    sudo pacman -Sc -y
+    sudo pacman -Rs $(pacman -Qtdq) -y
     poweroff
     exit
 fi
@@ -400,7 +400,8 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     if which atril >/dev/null; then
         xdg-mime default atril.desktop `grep 'MimeType=' /usr/share/applications/atril.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
     fi
-    
+
+    [[ -f /etc/apt/sources.list ]] && sudo rm /etc/apt/sources.list;
     sudo software-properties-gtk
     exit
 fi
