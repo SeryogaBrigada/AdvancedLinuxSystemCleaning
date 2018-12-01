@@ -402,6 +402,7 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     fi
 
     [[ -f /etc/apt/sources.list ]] && sudo rm /etc/apt/sources.list;
+    sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
     sudo software-properties-gtk
     exit
 fi
