@@ -329,8 +329,9 @@ fi
 # ArchLinux cleaning
 #
 if which pacman >/dev/null; then
-    sudo pacman -Sc -y
-    sudo pacman -Rs $(pacman -Qtdq) -y
+    sudo pacman -Rs $(pacman -Qtdq)
+    sudo pacman -Sc
+    sleep 1
     poweroff
     exit
 fi
@@ -429,4 +430,5 @@ if which deborphan >/dev/null; then
 fi
 
 sudo apt autoremove --purge -y
+sleep 1
 poweroff
