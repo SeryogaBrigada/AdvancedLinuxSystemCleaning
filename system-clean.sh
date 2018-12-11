@@ -363,33 +363,33 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     find /var/log -name 'teamviewer*' -print0 | xargs -0 sudo rm -r --
     find ~/.local/share -name 'teamviewer*' -print0 | xargs -0 rm -r --
     [[ -d ~/.config/teamviewer ]] && rm -r ~/.config/teamviewer;
-    [[ -f /etc/apt/sources.list.d/teamviewer.list ]] && sudo rm /etc/apt/sources.list.d/teamviewer.list;
 
     sudo apt update
 
     if [ $(uname -m) = 'x86_64' ]; then
-        wget -P ~ https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-        sudo dpkg -i ~/teamviewer_amd64.deb
-        rm ~/teamviewer_amd64.deb
+        APP=teamviewer_amd64.deb
     else
-        wget -P ~ https://download.teamviewer.com/download/linux/teamviewer_i386.deb
-        sudo dpkg -i ~/teamviewer_i386.deb
-        rm ~/teamviewer_i386.deb
+        APP=teamviewer_i386.deb
     fi
+    
+    wget -P /tmp https://download.teamviewer.com/download/linux/${APP}
+    sudo dpkg -i /tmp/${APP}
+    rm /tmp/${APP}
     sudo apt -f install -y
     
     # Reinstall XnViewMP
     sudo apt purge xnview -y
     if [ $(uname -m) = 'x86_64' ]; then
-        wget -P ~ http://download.xnview.com/XnViewMP-linux-x64.deb
-        sudo dpkg -i ~/XnViewMP-linux-x64.deb
-        rm ~/XnViewMP-linux-x64.deb
+        APP=XnViewMP-linux-x64.deb
     else
-        wget -P ~ http://download.xnview.com/XnViewMP-linux.deb
-        sudo dpkg -i ~/XnViewMP-linux.deb
-        rm ~/XnViewMP-linux.deb
+        APP=XnViewMP-linux.deb
     fi
+    
+    wget -P /tmp http://download.xnview.com/${APP}
+    sudo dpkg -i /tmp/${APP}
+    rm /tmp/${APP}
     sudo apt -f install -y
+    
     xdg-mime default XnView.desktop $(grep '^image/*' /usr/share/mime/types)
 
     # Register Evince extensions
