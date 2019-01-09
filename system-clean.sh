@@ -88,105 +88,10 @@ if [ -d ~/.config/opera* ]; then
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 
-# Chromium browser
-if [[ -d ~/.config/chromium ]]; then
-    cd ~/.config/chromium
-    rm -rf \
-    "BrowserMetrics" \
-    "CertificateTransparency" \
-    "CertificateRevocation" \
-    "Consent To Send Stats" \
-    "Crash Reports" \
-    "EVWhitelist" \
-    "FileTypePolicies" \
-    "InterventionPolicyDatabase" \
-    "MEIPreload" \
-    "NativeMessagingHosts" \
-    "OriginTrials" \
-    "Policy" \
-    "ShaderCache" \
-    "Subresource Filter" \
-    "Webstore Downloads" \
-    "WidevineCdm" \
-    "SSLErrorAssistant" \
-    "Certificate Revocation Lists" \
-    "pnacl" \
-    Safe* \
-    BrowserMetrics-spare.* \
-    .org.chromium.Chromium.* \
-    chrome_shutdown_ms.txt
-
-    cd Default
-    rm -rf \
-    "Accounts" \
-    *.ldb \
-    *.log \
-    "Affiliation Database" \
-    "Affiliation Database-journal" \
-    "Application Cache" \
-    "BudgetDatabase" \
-    "blob_storage" \
-    "data_reduction_proxy_leveldb" \
-    "databases" \
-    "Download Service" \
-    "Extension State" \
-    "Feature Engagement Tracker" \
-    "File System" \
-    "GCM Store" \
-    "GPUCache" \
-    "Managed Extension Settings" \
-    "IndexedDB" \
-    "Pepper Data" \
-    "Platform Notifications" \
-    "Site Characteristics Database" \
-    "Sync Data" \
-    "Sync Extension Settings" \
-    "Service Worker" \
-    "Thumbnails" \
-    "Session Storage" \
-    "DownloadMetadata" \
-    "Extension Cookies" \
-    "Extension Cookies-journal" \
-    LOCK \
-    LOG \
-    LOG.old \
-    Login* \
-    MANIFEST-* \
-    Network* \
-    Origin* \
-    previews_opt_out.* \
-    QuotaManager* \
-    "Secure Preferences" \
-    Shortcuts* \
-    "Storage" \
-    "Top Sites" \
-    "Top Sites-journal" \
-    "Translate Ranker Model" \
-    "TransportSecurity" \
-    "Search Logos" \
-    "Visited Links" \
-    "VideoDecodeStats" \
-    "Web Data" \
-    "Web Data-journal" \
-    "WebRTC Logs" \
-    "webrtc_event_logs" \
-    .org.chromium.Chromium.* \
-    page_load_capping_opt_out.* \
-    in_progress_download_metadata_store
-
-#    rm Cookies*
-    rm History*
-    rm CURRENT
-    rm Current*
-    rm Last*
-
-    cd "Local Storage"
-    find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
-fi
-
-# Google chrome
-if [[ -d ~/.config/google-chrome ]]; then
-    cd ~/.config/google-chrome
+# Google chrome, Chromium
+function cleanChrome() {
+if [[ -d ~/.config/$1 ]]; then
+    cd ~/.config/$1
     rm -rf \
     "BrowserMetrics" \
     "CertificateTransparency" \
@@ -214,6 +119,7 @@ if [[ -d ~/.config/google-chrome ]]; then
     cd Default
     rm -rf \
     "Accounts" \
+    "AutofillStrikeDatabase" \
     *.ldb \
     *.log \
     "Affiliation Database" \
@@ -266,6 +172,7 @@ if [[ -d ~/.config/google-chrome ]]; then
     "WebRTC Logs" \
     "webrtc_event_logs" \
     .com.google.Chrome.* \
+    .org.chromium.Chromium.* \
     page_load_capping_opt_out.* \
     in_progress_download_metadata_store
 
@@ -278,6 +185,11 @@ if [[ -d ~/.config/google-chrome ]]; then
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
+}
+
+cleanChrome google-chrome
+cleanChrome google-chrome-unstable
+cleanChrome chromium
 
 # Skype cache
 if [[ -d ~/.config/skypeforlinux ]]; then
@@ -426,7 +338,7 @@ fi
 
 # Unused libs
 if which deborphan >/dev/null; then
-    sudo deborphan --exclude=kodi-pvr-iptvsimple | xargs sudo apt purge --auto-remove -y
+    sudo deborphan --exclude=kodi-pvr-iptvsimple,mesa-vulkan-drivers | xargs sudo apt purge --auto-remove -y
 fi
 
 sudo apt autoremove --purge -y
