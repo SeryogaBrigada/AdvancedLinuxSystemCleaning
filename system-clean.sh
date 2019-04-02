@@ -140,8 +140,7 @@ if [[ -d ~/.config/$1 ]]; then
     "Pepper Data" \
     "Platform Notifications" \
     "Site Characteristics Database" \
-    "Sync Data" \
-    "Sync Extension Settings" \
+    "shared_proto_db" \
     "Service Worker" \
     "Thumbnails" \
     "Session Storage" \
@@ -241,8 +240,8 @@ fi
 # ArchLinux cleaning
 #
 if which pacman >/dev/null; then
-    sudo pacman -Rs $(pacman -Qtdq)
-    sudo pacman -Sc
+    sudo pacman -Rs $(pacman -Qtdq) --noconfirm
+    sudo pacman -Sc --noconfirm
     sleep 1
     poweroff
     exit
