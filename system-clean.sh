@@ -147,6 +147,7 @@ if [[ -d ~/.config/$1 ]]; then
     "DownloadMetadata" \
     "Extension Cookies" \
     "Extension Cookies-journal" \
+    "Local Storage" \
     LOCK \
     LOG \
     LOG.old \
@@ -166,8 +167,6 @@ if [[ -d ~/.config/$1 ]]; then
     "Search Logos" \
     "Visited Links" \
     "VideoDecodeStats" \
-    "Web Data" \
-    "Web Data-journal" \
     "WebRTC Logs" \
     "webrtc_event_logs" \
     .com.google.Chrome.* \
@@ -180,9 +179,6 @@ if [[ -d ~/.config/$1 ]]; then
     rm CURRENT
     rm Current*
     rm Last*
-
-    cd "Local Storage"
-    find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
 }
 
