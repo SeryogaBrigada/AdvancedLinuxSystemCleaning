@@ -229,6 +229,7 @@ sudo rm -rf /var/crash/*
 
 # Bleachbit
 if which bleachbit >/dev/null; then
+    bleachbit -c --preset
     sudo bleachbit -c --preset
 fi
 
