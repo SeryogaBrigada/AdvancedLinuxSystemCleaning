@@ -237,8 +237,10 @@ fi
 # ArchLinux cleaning
 #
 if which pacman >/dev/null; then
+    [[ -f /var/lib/pacman/db.lck ]] && sudo rm /var/lib/pacman/db.lck;
     sudo pacman -Rs $(pacman -Qtdq) --noconfirm
     sudo pacman -Sc --noconfirm
+    sudo paccache -rk 0
     sleep 1
     poweroff
     exit
