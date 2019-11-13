@@ -9,8 +9,7 @@
 if [[ -d ~/.mozilla/firefox ]]; then
     rm -r ~/.mozilla/firefox/Crash\ Reports
     rm -r ~/.mozilla/firefox/Pending\ Pings
-
-    cd ~/.mozilla/firefox/*.default
+    cd ~/.mozilla/firefox/*.default-release
     rm -rf \
     blocklist* \
     bookmarkbackups \
@@ -42,8 +41,8 @@ if [[ -d ~/.mozilla/firefox ]]; then
     weave
 
 #    rm cookies.*
-    rm formhistory.*
-    rm search.json.*
+#    rm formhistory.*
+#    rm search.json.*
 fi
 
 # Opera
@@ -80,9 +79,9 @@ if [ -d ~/.config/opera* ]; then
     "Visited Links"
 
 #    rm Cookies*
-    rm History*
-    rm Current*
-    rm Last*
+#    rm History*
+#    rm Current*
+#    rm Last*
 
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
@@ -175,10 +174,10 @@ if [[ -d ~/.config/$1 ]]; then
     in_progress_download_metadata_store
 
 #    rm Cookies*
-    rm History*
-    rm CURRENT
-    rm Current*
-    rm Last*
+#    rm History*
+#    rm CURRENT
+#    rm Current*
+#    rm Last*
 fi
 }
 
@@ -189,7 +188,20 @@ cleanChrome chromium
 # Skype cache
 if [[ -d ~/.config/skypeforlinux ]]; then
     cd ~/.config/skypeforlinux
-    rm -r Cache GPUCache logs
+    rm -rf \
+    blob_storage \
+    Cache \
+    "Code Cache" \
+    GPUCache \
+    logs \
+    ecscache.json \
+    media-stack \
+    skylib \
+    SkypeRT \
+    LOG \
+    "Network Persistent State" \
+    QuotaManager \
+    QuotaManager-journal
 fi
 
 # Adobe Flash Player
@@ -342,3 +354,4 @@ fi
 sudo apt autoremove --purge -y
 sleep 1
 poweroff
+
