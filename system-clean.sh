@@ -18,7 +18,6 @@ if [[ -d ~/.mozilla/firefox ]]; then
     minidumps \
     saved-telemetry-pings \
     sessionstore-backups \
-    storage \
     addons.* \
     AlternateServices.* \
     containers.* \
@@ -192,7 +191,6 @@ if [[ -d ~/.config/skypeforlinux ]]; then
     blob_storage \
     Cache \
     "Code Cache" \
-    GPUCache \
     logs \
     ecscache.json \
     media-stack \
