@@ -98,6 +98,7 @@ if [[ -d ~/.config/$1 ]]; then
     "Crash Reports" \
     "EVWhitelist" \
     "FileTypePolicies" \
+    "GrShaderCache" \
     "InterventionPolicyDatabase" \
     "MEIPreload" \
     "NativeMessagingHosts" \
@@ -149,7 +150,6 @@ if [[ -d ~/.config/$1 ]]; then
     LOCK \
     LOG \
     LOG.old \
-    Login* \
     MANIFEST-* \
     Network* \
     Origin* \
