@@ -251,6 +251,7 @@ if which pacman >/dev/null; then
     sudo pacman -Rs $(pacman -Qtdq) --noconfirm
     sudo pacman -Sc --noconfirm
     sudo paccache -rk 0
+    sudo fstrim -a -v
     sleep 1
     poweroff
     exit
@@ -350,6 +351,7 @@ if which deborphan >/dev/null; then
 fi
 
 sudo apt autoremove --purge -y
+sudo fstrim -a -v
 sleep 1
 poweroff
 
