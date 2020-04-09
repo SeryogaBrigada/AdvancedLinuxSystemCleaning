@@ -96,6 +96,7 @@ if [[ -d ~/.config/$1 ]]; then
     "CertificateRevocation" \
     "Consent To Send Stats" \
     "Crash Reports" \
+    "Crowd Deny" \
     "EVWhitelist" \
     "FileTypePolicies" \
     "GrShaderCache" \
@@ -106,6 +107,7 @@ if [[ -d ~/.config/$1 ]]; then
     "Policy" \
     "ShaderCache" \
     "Subresource Filter" \
+    "TLSDeprecationConfig" \
     "Webstore Downloads" \
     "WidevineCdm" \
     "SSLErrorAssistant" \
@@ -153,8 +155,9 @@ if [[ -d ~/.config/$1 ]]; then
     MANIFEST-* \
     Network* \
     Origin* \
-    previews_opt_out.* \
     QuotaManager* \
+    "Reporting and NEL" \
+    "Reporting and NEL-journal" \
     "Secure Preferences" \
     Shortcuts* \
     "Storage" \
@@ -169,6 +172,8 @@ if [[ -d ~/.config/$1 ]]; then
     "webrtc_event_logs" \
     .com.google.Chrome.* \
     .org.chromium.Chromium.* \
+    heavy_ad_intervention_opt_out.* \
+    previews_opt_out.* \
     page_load_capping_opt_out.* \
     in_progress_download_metadata_store
 
@@ -191,9 +196,9 @@ if [[ -d ~/.config/skypeforlinux ]]; then
     blob_storage \
     Cache \
     "Code Cache" \
+    GPUCache \
     logs \
     ecscache.json \
-    media-stack \
     skylib \
     SkypeRT \
     LOG \
@@ -211,6 +216,11 @@ if [[ -d ~/.kodi ]]; then
     rm -rf ~/.kodi/temp/*
     rm ~/kodi_crashlog*.log
     rm ~/core
+fi
+
+# ccache
+if which ccache >/dev/null; then
+    sudo ccache -C
 fi
 
 # System cache
@@ -251,7 +261,7 @@ if which pacman >/dev/null; then
     sudo pacman -Rs $(pacman -Qtdq) --noconfirm
     sudo pacman -Sc --noconfirm
     sudo paccache -rk 0
-    sudo fstrim -a -v
+    sudo fstrim -av
     sleep 1
     poweroff
     exit
@@ -351,7 +361,7 @@ if which deborphan >/dev/null; then
 fi
 
 sudo apt autoremove --purge -y
-sudo fstrim -a -v
+sudo fstrim -av
 sleep 1
 poweroff
 
