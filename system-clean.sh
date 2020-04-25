@@ -196,7 +196,6 @@ if [[ -d ~/.config/skypeforlinux ]]; then
     blob_storage \
     Cache \
     "Code Cache" \
-    GPUCache \
     logs \
     ecscache.json \
     skylib \
