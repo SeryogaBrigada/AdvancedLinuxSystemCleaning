@@ -196,15 +196,22 @@ if [[ -d ~/.config/skypeforlinux ]]; then
     blob_storage \
     Cache \
     "Code Cache" \
+    CS_skylib \
+    databases \
+    GPUCache \
+    "Session Storage" \
     logs \
+    media-stack \
     ecscache.json \
     skylib \
     SkypeRT \
     LOG \
     "Network Persistent State" \
     QuotaManager \
-    QuotaManager-journal
+    QuotaManager-journal \
+    TransportSecurity
 fi
+
 
 # Adobe Flash Player
 [[ -d ~/.adobe ]] && sudo rm -r ~/.adobe;
