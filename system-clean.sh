@@ -199,7 +199,6 @@ if [[ -d ~/.config/skypeforlinux ]]; then
     CS_skylib \
     databases \
     GPUCache \
-    "Session Storage" \
     logs \
     media-stack \
     ecscache.json \
