@@ -186,6 +186,7 @@ fi
 }
 
 cleanChrome google-chrome
+cleanChrome google-chrome-beta
 cleanChrome google-chrome-unstable
 cleanChrome chromium
 
@@ -225,7 +226,7 @@ fi
 
 # ccache
 if which ccache >/dev/null; then
-    sudo ccache -C
+    ccache -C
 fi
 
 # System cache
