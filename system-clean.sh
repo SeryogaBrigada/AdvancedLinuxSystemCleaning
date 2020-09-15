@@ -1,14 +1,30 @@
 #!/bin/bash
-#######################################################
-#
-#              Advanced system cleaning
-#
-#######################################################
+
+##**************************************************************************
+##
+## Copyright (C) Sergey Kovalenko <seryoga.engineering@gmail.com>
+##
+## This file is part of Advanced Linux System Cleaning.
+## Advanced Linux System Cleaning is free software: you can redistribute
+## it and/or modify it under the terms of the GNU General Public License
+## as published by the Free Software Foundation, either version 3 of
+## the License, or (at your option) any later version.
+##
+## HVAC Controller is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+## See the GNU General Public License for more details.
+##
+## You should have received a copy of the
+## GNU General Public License along with Advanced Linux System Cleaning.
+## If not, see http://www.gnu.org/licenses/.
+##
+##**************************************************************************
 
 # Mozilla Firefox
 if [[ -d ~/.mozilla/firefox ]]; then
-    rm -r ~/.mozilla/firefox/Crash\ Reports
-    rm -r ~/.mozilla/firefox/Pending\ Pings
+    rm -r ~/.mozilla/firefox/Crash\ Reports >/dev/null 2>&1
+    rm -r ~/.mozilla/firefox/Pending\ Pings >/dev/null 2>&1
     cd ~/.mozilla/firefox/*.default-release
     rm -rf \
     blocklist* \
@@ -37,7 +53,8 @@ if [[ -d ~/.mozilla/firefox ]]; then
     Telemetry.ShutdownTime.* \
     times.* \
     webappsstore.* \
-    weave
+    weave \
+    >/dev/null 2>&1
 
 #    rm cookies.*
 #    rm formhistory.*
@@ -75,7 +92,8 @@ if [ -d ~/.config/opera* ]; then
     siteprefs.* \
     ssdfp* \
     TransportSecurity \
-    "Visited Links"
+    "Visited Links" \
+    >/dev/null 2>&1
 
 #    rm Cookies*
 #    rm History*
@@ -115,7 +133,8 @@ if [[ -d ~/.config/$1 ]]; then
     "pnacl" \
     Safe* \
     BrowserMetrics-spare.* \
-    chrome_shutdown_ms.txt
+    chrome_shutdown_ms.txt \
+    >/dev/null 2>&1
 
     cd Default
     rm -rf \
@@ -175,7 +194,8 @@ if [[ -d ~/.config/$1 ]]; then
     heavy_ad_intervention_opt_out.* \
     previews_opt_out.* \
     page_load_capping_opt_out.* \
-    in_progress_download_metadata_store
+    in_progress_download_metadata_store \
+    >/dev/null 2>&1
 
 #    rm Cookies*
 #    rm History*
@@ -209,7 +229,8 @@ if [[ -d ~/.config/skypeforlinux ]]; then
     "Network Persistent State" \
     QuotaManager \
     QuotaManager-journal \
-    TransportSecurity
+    TransportSecurity \
+    >/dev/null 2>&1
 fi
 
 
@@ -219,13 +240,13 @@ fi
 
 # Kodi media center
 if [[ -d ~/.kodi ]]; then
-    rm -rf ~/.kodi/temp/*
-    rm ~/kodi_crashlog*.log
-    rm ~/core
+    rm -rf ~/.kodi/temp/* >/dev/null 2>&1
+    rm ~/kodi_crashlog*.log >/dev/null 2>&1
+    rm ~/core >/dev/null 2>&1
 fi
 
 # ccache
-if which ccache >/dev/null; then
+if which ccache >/dev/null 2>&1; then
     ccache -C
 fi
 
@@ -240,21 +261,21 @@ sudo rm -rf ~/.cache/*
 
 # Wine cache
 if [[ -d ~/.wine ]]; then
-    rm -rf ~/.wine/drive_c/users/$USER/Temp/*
-    rm -rf ~/.wine/drive_c/windows/temp/*
+    rm -rf ~/.wine/drive_c/users/$USER/Temp/* >/dev/null 2>&1
+    rm -rf ~/.wine/drive_c/windows/temp/* >/dev/null 2>&1
 fi
 
 # GVFS-metadata (Must be disabled for Budgie)
-sudo rm -rf ~/.local/share/gvfs-metadata/*
+sudo rm -rf ~/.local/share/gvfs-metadata/* >/dev/null 2>&1
 
 # WGET hosts file
 [[ -f ~/.wget-hsts ]] && rm ~/.wget-hsts;
 
 # Error messages
-sudo rm -rf /var/crash/*
+sudo rm -rf /var/crash/* >/dev/null 2>&1
 
 # Bleachbit
-if which bleachbit >/dev/null; then
+if which bleachbit >/dev/null 2>&1; then
     bleachbit -c --preset
     sudo bleachbit -c --preset
 fi
@@ -262,9 +283,12 @@ fi
 #
 # ArchLinux cleaning
 #
-if which pacman >/dev/null; then
+if which pacman >/dev/null 2>&1; then
     [[ -f /var/lib/pacman/db.lck ]] && sudo rm /var/lib/pacman/db.lck;
-    sudo pacman -Rs $(pacman -Qtdq) --noconfirm
+    if which yay >/dev/null 2>&1; then
+        yay -Yc --noconfirm
+    fi
+    #sudo pacman -Rs $(pacman -Qtdq) --noconfirm
     sudo pacman -Sc --noconfirm
     sudo paccache -rk 0
     sudo fstrim -av
@@ -330,12 +354,12 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     xdg-mime default XnView.desktop $(grep '^image/*' /usr/share/mime/types)
 
     # Register Evince extensions
-    if which evince >/dev/null; then
+    if which evince >/dev/null 2>&1; then
         xdg-mime default evince.desktop `grep 'MimeType=' /usr/share/applications/evince.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
     fi
     
     # Register Atril extensions
-    if which atril >/dev/null; then
+    if which atril >/dev/null 2>&1; then
         xdg-mime default atril.desktop `grep 'MimeType=' /usr/share/applications/atril.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
     fi
 
@@ -362,7 +386,7 @@ if [[ ! -f '/var/run/reboot-required' ]]; then
 fi
 
 # Unused libs
-if which deborphan >/dev/null; then
+if which deborphan >/dev/null 2>&1; then
     sudo deborphan --exclude=kodi-pvr-iptvsimple,mesa-vulkan-drivers | xargs sudo apt purge --auto-remove -y
 fi
 
