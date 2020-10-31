@@ -210,10 +210,12 @@ cleanChrome google-chrome-beta
 cleanChrome google-chrome-unstable
 cleanChrome chromium
 
-# Skype cache
-if [[ -d ~/.config/skypeforlinux ]]; then
-    cd ~/.config/skypeforlinux
+function cleanMSContainer () {
+if [[ -d ~/.config/$1 ]]; then
+    cd ~/.config
+    cd "${1}"
     rm -rf \
+    "Application Cache" \
     blob_storage \
     Cache \
     "Code Cache" \
@@ -221,18 +223,25 @@ if [[ -d ~/.config/skypeforlinux ]]; then
     databases \
     GPUCache \
     logs \
+    tmp \
     media-stack \
     ecscache.json \
     skylib \
-    SkypeRT \
     LOG \
     "Network Persistent State" \
     QuotaManager \
     QuotaManager-journal \
     TransportSecurity \
+    watchdog* \
     >/dev/null 2>&1
 fi
+}
 
+# Skype
+cleanMSContainer skypeforlinux
+
+# Microsoft Teams
+cleanMSContainer "Microsoft/Microsoft Teams"
 
 # Adobe Flash Player
 [[ -d ~/.adobe ]] && sudo rm -r ~/.adobe;
@@ -281,7 +290,7 @@ if which bleachbit >/dev/null 2>&1; then
 fi
 
 #
-# ArchLinux cleaning
+# ArchLinux specific cleaning
 #
 if which pacman >/dev/null 2>&1; then
     [[ -f /var/lib/pacman/db.lck ]] && sudo rm /var/lib/pacman/db.lck;
