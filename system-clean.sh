@@ -210,7 +210,7 @@ cleanChrome google-chrome-beta
 cleanChrome google-chrome-unstable
 cleanChrome chromium
 
-function cleanMSContainer () {
+function cleanElectronContainer () {
 if [[ -d ~/.config/$1 ]]; then
     cd ~/.config
     cd "${1}"
@@ -218,16 +218,23 @@ if [[ -d ~/.config/$1 ]]; then
     "Application Cache" \
     blob_storage \
     Cache \
+    CachedData \
     "Code Cache" \
+    "Crash Reports" \
+    "exthost Crash Reports" \
     CS_skylib \
     databases \
     GPUCache \
+    "Service Worker" \
+    VideoDecodeStats \
     logs \
     tmp \
     media-stack \
     ecscache.json \
     skylib \
     LOG \
+    logs.txt \
+    old_logs_* \
     "Network Persistent State" \
     QuotaManager \
     QuotaManager-journal \
@@ -238,10 +245,13 @@ fi
 }
 
 # Skype
-cleanMSContainer skypeforlinux
+cleanElectronContainer skypeforlinux
 
 # Microsoft Teams
-cleanMSContainer "Microsoft/Microsoft Teams"
+cleanElectronContainer "Microsoft/Microsoft Teams"
+
+# Microsoft Visual Studio Code
+cleanElectronContainer "Code - OSS"
 
 # Adobe Flash Player
 [[ -d ~/.adobe ]] && sudo rm -r ~/.adobe;
