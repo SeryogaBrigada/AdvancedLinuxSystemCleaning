@@ -211,37 +211,37 @@ cleanChrome google-chrome-unstable
 cleanChrome chromium
 
 function cleanElectronContainer () {
-if [[ -d ~/.config/$1 ]]; then
-    cd ~/.config
-    cd "${1}"
-    rm -rf \
-    "Application Cache" \
-    blob_storage \
-    Cache \
-    CachedData \
-    "Code Cache" \
-    "Crash Reports" \
-    "exthost Crash Reports" \
-    CS_skylib \
-    databases \
-    GPUCache \
-    "Service Worker" \
-    VideoDecodeStats \
-    logs \
-    tmp \
-    media-stack \
-    ecscache.json \
-    skylib \
-    LOG \
-    logs.txt \
-    old_logs_* \
-    "Network Persistent State" \
-    QuotaManager \
-    QuotaManager-journal \
-    TransportSecurity \
-    watchdog* \
-    >/dev/null 2>&1
-fi
+    if [[ -d ~/.config/$1 ]]; then
+        cd ~/.config
+        cd "${1}"
+        rm -rf \
+        "Application Cache" \
+        blob_storage \
+        Cache \
+        CachedData \
+        "Code Cache" \
+        "Crash Reports" \
+        "exthost Crash Reports" \
+        CS_skylib \
+        databases \
+        GPUCache \
+        "Service Worker" \
+        VideoDecodeStats \
+        logs \
+        tmp \
+        media-stack \
+        ecscache.json \
+        skylib \
+        LOG \
+        logs.txt \
+        old_logs_* \
+        "Network Persistent State" \
+        QuotaManager \
+        QuotaManager-journal \
+        TransportSecurity \
+        watchdog* \
+        >/dev/null 2>&1
+    fi
 }
 
 # Skype
@@ -326,57 +326,38 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     sudo rm /etc/apt/sources.list.distUpgrade
     find /etc/apt/apt.conf.d -type f \( -name '*.ucf-old' -o -name '*.ucf-dist' \) -print0 | xargs -0 sudo rm --
     find /etc/apt/sources.list.d -type f \( -name '*.distUpgrade' -o -name '*.dpkg-old' \) -print0 | xargs -0 sudo rm --
-    
+
     find /etc/apt/sources.list.d -type f \
      -not -name *$(lsb_release -sc)* \
      -not -name 'skype*' \
      -not -name 'opera*' \
      -not -name 'virtualbox*' \
-     -not -name 'teamviewer*' \
      -not -name 'google-chrome*' \
      -print0 | xargs -0 sudo rm --
-     
+
     rm -r ~/.config/pulse
-    
-    # Reinstall TeamViewer
-    sudo apt purge teamviewer -y
-    find /var/log -name 'teamviewer*' -print0 | xargs -0 sudo rm -r --
-    find ~/.local/share -name 'teamviewer*' -print0 | xargs -0 rm -r --
-    [[ -d ~/.config/teamviewer ]] && rm -r ~/.config/teamviewer;
 
-    sudo apt update
+    # Upgrade XnViewMP if installed
+    if which xnviewmp >/dev/null 2>&1; then
+        sudo apt purge xnview -y
+        if [ $(uname -m) = 'x86_64' ]; then
+            APP=XnViewMP-linux-x64.deb
+        else
+            APP=XnViewMP-linux.deb
+        fi
 
-    if [ $(uname -m) = 'x86_64' ]; then
-        APP=teamviewer_amd64.deb
-    else
-        APP=teamviewer_i386.deb
+        wget -P /tmp http://download.xnview.com/${APP}
+        sudo dpkg -i /tmp/${APP}
+        rm /tmp/${APP}
+        sudo apt -f install -y
+        xdg-mime default XnView.desktop $(grep '^image/*' /usr/share/mime/types)
     fi
     
-    wget -P /tmp https://download.teamviewer.com/download/linux/${APP}
-    sudo dpkg -i /tmp/${APP}
-    rm /tmp/${APP}
-    sudo apt -f install -y
-    
-    # Reinstall XnViewMP
-    sudo apt purge xnview -y
-    if [ $(uname -m) = 'x86_64' ]; then
-        APP=XnViewMP-linux-x64.deb
-    else
-        APP=XnViewMP-linux.deb
-    fi
-    
-    wget -P /tmp http://download.xnview.com/${APP}
-    sudo dpkg -i /tmp/${APP}
-    rm /tmp/${APP}
-    sudo apt -f install -y
-    
-    xdg-mime default XnView.desktop $(grep '^image/*' /usr/share/mime/types)
-
     # Register Evince extensions
     if which evince >/dev/null 2>&1; then
         xdg-mime default evince.desktop `grep 'MimeType=' /usr/share/applications/evince.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
     fi
-    
+
     # Register Atril extensions
     if which atril >/dev/null 2>&1; then
         xdg-mime default atril.desktop `grep 'MimeType=' /usr/share/applications/atril.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
@@ -406,7 +387,7 @@ fi
 
 # Unused libs
 if which deborphan >/dev/null 2>&1; then
-    sudo deborphan --exclude=kodi-pvr-iptvsimple,mesa-vulkan-drivers | xargs sudo apt purge --auto-remove -y
+    sudo deborphan --exclude=mesa-vulkan-drivers | xargs sudo apt purge --auto-remove -y
 fi
 
 sudo apt autoremove --purge -y
