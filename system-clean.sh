@@ -252,6 +252,7 @@ cleanElectronContainer "Microsoft/Microsoft Teams"
 
 # Microsoft Visual Studio Code
 cleanElectronContainer "Code - OSS"
+cleanElectronContainer "Code"
 
 # Adobe Flash Player
 [[ -d ~/.adobe ]] && sudo rm -r ~/.adobe;
