@@ -304,6 +304,17 @@ fi
 # ArchLinux specific cleaning
 #
 if which pacman >/dev/null 2>&1; then
+    # Optimus manager
+    if which optimus-manager >/dev/null 2>&1; then
+        sudo rm -rf /var/log/optimus-manager
+    fi
+
+    # Pamac
+    if [[ -d /var/tmp/pamac ]]; then
+        sudo rm -rf /var/tmp/pamac >/dev/null 2>&1
+        sudo rm -rf /var/tmp/pamac-build-* >/dev/null 2>&1
+    fi
+
     [[ -f /var/lib/pacman/db.lck ]] && sudo rm /var/lib/pacman/db.lck;
     if which yay >/dev/null 2>&1; then
         yay -Yc --noconfirm
