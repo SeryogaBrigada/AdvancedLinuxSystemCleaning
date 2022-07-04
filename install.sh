@@ -21,9 +21,17 @@
 ##
 ##**************************************************************************
 
-[[ -f ~/system-clean.sh ]] && rm ~/system-clean.sh;
-cp system-clean.sh ~
-chmod +x ~/system-clean.sh
+if [[ -z $1 ]]; then
+    INSTALL_DIR=~
+else
+    INSTALL_DIR="${1}"
+fi
+
+echo "Installing to ${INSTALL_DIR}"
+
+[[ -f ${INSTALL_DIR}/system-clean.sh ]] && rm ${INSTALL_DIR}/system-clean.sh;
+cp system-clean.sh ${INSTALL_DIR}
+chmod +x ${INSTALL_DIR}/system-clean.sh
 
 cat << 'EOF' | sudo tee /usr/share/applications/system-clean.desktop
 [Desktop Entry]
@@ -44,7 +52,7 @@ StartupNotify=true
 Terminal=true
 EOF
 
-sudo sed -i "s|~|$(xdg-user-dir HOME)|g" /usr/share/applications/system-clean.desktop
+sudo sed -i "s|~|${INSTALL_DIR}|g" /usr/share/applications/system-clean.desktop
 cp /usr/share/applications/system-clean.desktop "$(xdg-user-dir DESKTOP)"
 chmod +x "$(xdg-user-dir DESKTOP)/system-clean.desktop"
 
