@@ -55,10 +55,6 @@ if [[ -d ~/.mozilla/firefox ]]; then
     webappsstore.* \
     weave \
     >/dev/null 2>&1
-
-#    rm cookies.*
-#    rm formhistory.*
-#    rm search.json.*
 fi
 
 # Opera
@@ -95,11 +91,6 @@ if [ -d ~/.config/opera* ]; then
     "Visited Links" \
     >/dev/null 2>&1
 
-#    rm Cookies*
-#    rm History*
-#    rm Current*
-#    rm Last*
-
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
 fi
@@ -109,31 +100,46 @@ function cleanChrome() {
 if [[ -d ~/.config/$1 ]]; then
     cd ~/.config/$1
     rm -rf \
+    "AutofillRegex" \
+    "AutofillStates" \
     "BrowserMetrics" \
     "CertificateTransparency" \
     "CertificateRevocation" \
+    "ClientSidePhishing" \
     "Consent To Send Stats" \
     "Crash Reports" \
     "Crowd Deny" \
+    "DesktopSharingHub" \
     "EVWhitelist" \
     "FileTypePolicies" \
+    "FirstPartySetsPreloaded" \
+    "Floc" \
     "GrShaderCache" \
     "InterventionPolicyDatabase" \
     "MEIPreload" \
     "NativeMessagingHosts" \
+    "OnDeviceHeadSuggestModel" \
+    "OptimizationHints" \
     "OriginTrials" \
+    "PKIMetadata" \
     "Policy" \
     "ShaderCache" \
     "Subresource Filter" \
     "TLSDeprecationConfig" \
+    "TrustTokenKeyCommitments" \
+    "UrlParamClassifications" \
     "Webstore Downloads" \
     "WidevineCdm" \
     "SSLErrorAssistant" \
     "Certificate Revocation Lists" \
+    "ZxcvbnData" \
     "pnacl" \
+    "hyphen-data" \
     Safe* \
     BrowserMetrics-spare.* \
     chrome_shutdown_ms.txt \
+    .com.google.Chrome.* \
+    persisted_first_party_sets.json \
     >/dev/null 2>&1
 
     cd Default
@@ -147,8 +153,11 @@ if [[ -d ~/.config/$1 ]]; then
     "Application Cache" \
     "BudgetDatabase" \
     "blob_storage" \
+    "commerce_subscription_db" \
+    "coupon_db" \
     "data_reduction_proxy_leveldb" \
     "databases" \
+    "DawnCache" \
     "Download Service" \
     "Extension State" \
     "Feature Engagement Tracker" \
@@ -188,7 +197,9 @@ if [[ -d ~/.config/$1 ]]; then
     "Visited Links" \
     "VideoDecodeStats" \
     "WebRTC Logs" \
+    "WebrtcVideoStats" \
     "webrtc_event_logs" \
+    optimization_guide_* \
     .com.google.Chrome.* \
     .org.chromium.Chromium.* \
     heavy_ad_intervention_opt_out.* \
@@ -196,12 +207,6 @@ if [[ -d ~/.config/$1 ]]; then
     page_load_capping_opt_out.* \
     in_progress_download_metadata_store \
     >/dev/null 2>&1
-
-#    rm Cookies*
-#    rm History*
-#    rm CURRENT
-#    rm Current*
-#    rm Last*
 fi
 }
 
@@ -220,6 +225,7 @@ function cleanElectronContainer () {
         Cache \
         CachedData \
         "Code Cache" \
+         "Crashpad"
         "Crash Reports" \
         "exthost Crash Reports" \
         CS_skylib \
@@ -406,4 +412,3 @@ sudo apt autoremove --purge -y
 sudo fstrim -av
 sleep 1
 poweroff
-
