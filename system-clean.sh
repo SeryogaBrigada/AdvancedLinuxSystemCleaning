@@ -329,7 +329,7 @@ if which pacman >/dev/null 2>&1; then
     sudo pacman -Sc --noconfirm
     sudo paccache -rk 0
     sudo fstrim -av
-    sleep 1
+    sleep 2
     poweroff
     exit
 fi
@@ -410,5 +410,5 @@ fi
 
 sudo apt autoremove --purge -y
 sudo fstrim -av
-sleep 1
+sleep 2
 poweroff
