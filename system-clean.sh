@@ -21,6 +21,11 @@
 ##
 ##**************************************************************************
 
+# Update flatpak
+if which flatpak >/dev/null 2>&1; then
+    flatpak update --noninteractive
+fi
+
 # Mozilla Firefox
 if [[ -d ~/.mozilla/firefox ]]; then
     rm -r ~/.mozilla/firefox/Crash\ Reports >/dev/null 2>&1
