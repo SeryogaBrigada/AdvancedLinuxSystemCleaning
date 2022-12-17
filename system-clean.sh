@@ -296,9 +296,6 @@ if [[ -d ~/.wine ]]; then
     rm -rf ~/.wine/drive_c/windows/temp/* >/dev/null 2>&1
 fi
 
-# GVFS-metadata (Must be disabled for Budgie)
-sudo rm -rf ~/.local/share/gvfs-metadata/* >/dev/null 2>&1
-
 # WGET hosts file
 [[ -f ~/.wget-hsts ]] && rm ~/.wget-hsts;
 
