@@ -1,27 +1,30 @@
 #!/bin/bash
 
 ##**************************************************************************
+## MIT License
 ##
 ## Copyright (C) Sergey Kovalenko <seryoga.engineering@gmail.com>
 ##
-## This file is part of Advanced Linux System Cleaning.
-## Advanced Linux System Cleaning is free software: you can redistribute
-## it and/or modify it under the terms of the GNU General Public License
-## as published by the Free Software Foundation, either version 3 of
-## the License, or (at your option) any later version.
+## Permission is hereby granted, free of charge, to any person obtaining a copy
+## of this software and associated documentation files (the "Software"), to deal
+## in the Software without restriction, including without limitation the rights
+## to use, copy, modify, merge, publish, distribute, sub-license, and/or sell
+## copies of the Software, and to permit persons to whom the Software is
+## furnished to do so, subject to the following conditions:
 ##
-## HVAC Controller is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-## See the GNU General Public License for more details.
+## The above copyright notice and this permission notice shall be included in all
+## copies or substantial portions of the Software.
 ##
-## You should have received a copy of the
-## GNU General Public License along with Advanced Linux System Cleaning.
-## If not, see http://www.gnu.org/licenses/.
-##
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+## IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+## FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+## AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+## LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+## SOFTWARE.
 ##**************************************************************************
 
-# Update flatpak
+# Update Flatpak
 if which flatpak >/dev/null 2>&1; then
     flatpak update --noninteractive
 fi
@@ -265,10 +268,6 @@ cleanElectronContainer "Microsoft/Microsoft Teams"
 cleanElectronContainer "Code - OSS"
 cleanElectronContainer "Code"
 
-# Adobe Flash Player
-[[ -d ~/.adobe ]] && sudo rm -r ~/.adobe;
-[[ -d ~/.macromedia ]] && sudo rm -r ~/.macromedia;
-
 # Kodi media center
 if [[ -d ~/.kodi ]]; then
     rm -rf ~/.kodi/temp/* >/dev/null 2>&1
@@ -286,9 +285,6 @@ sudo rm -rf ~/.cache/*
 
 # Nvidia cache
 [[ -d ~/.nv ]] && sudo rm -r ~/.nv;
-
-# Launchpad cache
-[[ -d ~/.launchpadlib ]] && sudo rm -r ~/.launchpadlib;
 
 # Wine cache
 if [[ -d ~/.wine ]]; then
@@ -308,8 +304,9 @@ if which bleachbit >/dev/null 2>&1; then
     sudo bleachbit -c --preset
 fi
 
+
 #
-# ArchLinux specific cleaning
+# Arch Linux specific cleaning
 #
 if which pacman >/dev/null 2>&1; then
     # Optimus manager
@@ -323,6 +320,7 @@ if which pacman >/dev/null 2>&1; then
         sudo rm -rf /var/tmp/pamac-build-* >/dev/null 2>&1
     fi
 
+    # Fix blocked database error
     [[ -f /var/lib/pacman/db.lck ]] && sudo rm /var/lib/pacman/db.lck;
     if which yay >/dev/null 2>&1; then
         yay -Yc --noconfirm
@@ -340,8 +338,7 @@ fi
 #
 # Ubuntu/Debian specific cleaning
 #
-
-# Remove old PPA's after release upgrade
+# Remove old PPA after release upgrade
 if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     sudo rm /etc/apt/sources.list.distUpgrade
     find /etc/apt/apt.conf.d -type f \( -name '*.ucf-old' -o -name '*.ucf-dist' \) -print0 | xargs -0 sudo rm --
@@ -355,34 +352,6 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
      -not -name 'google-chrome*' \
      -print0 | xargs -0 sudo rm --
 
-    rm -r ~/.config/pulse
-
-    # Upgrade XnViewMP if installed
-    if which xnviewmp >/dev/null 2>&1; then
-        sudo apt purge xnview -y
-        if [ $(uname -m) = 'x86_64' ]; then
-            APP=XnViewMP-linux-x64.deb
-        else
-            APP=XnViewMP-linux.deb
-        fi
-
-        wget -P /tmp http://download.xnview.com/${APP}
-        sudo dpkg -i /tmp/${APP}
-        rm /tmp/${APP}
-        sudo apt -f install -y
-        xdg-mime default XnView.desktop $(grep '^image/*' /usr/share/mime/types)
-    fi
-    
-    # Register Evince extensions
-    if which evince >/dev/null 2>&1; then
-        xdg-mime default evince.desktop `grep 'MimeType=' /usr/share/applications/evince.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
-    fi
-
-    # Register Atril extensions
-    if which atril >/dev/null 2>&1; then
-        xdg-mime default atril.desktop `grep 'MimeType=' /usr/share/applications/atril.desktop | sed -e 's/.*=//' -e 's/;/ /g'`
-    fi
-
     [[ -f /etc/apt/sources.list ]] && sudo rm /etc/apt/sources.list;
     sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
     sudo software-properties-gtk
@@ -395,6 +364,9 @@ if [[ -f '/usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf' ]]; t
     sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 fi
 
+# Launchpad cache
+[[ -d ~/.launchpadlib ]] && sudo rm -r ~/.launchpadlib;
+
 # Fix broken packages
 sudo apt -f install -y
 
@@ -406,7 +378,7 @@ if [[ ! -f '/var/run/reboot-required' ]]; then
     | xargs sudo apt purge --auto-remove -y
 fi
 
-# Unused libs
+# Remove unused packages
 if which deborphan >/dev/null 2>&1; then
     sudo deborphan | xargs sudo apt purge --auto-remove -y
 fi
