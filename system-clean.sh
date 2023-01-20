@@ -400,15 +400,15 @@ sudo apt -f install -y
 
 # Old kernels
 if [[ ! -f '/var/run/reboot-required' ]]; then
-   dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
-   | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d'\
-   | grep -v -E '*-hwe-*' \
-   | xargs sudo apt purge --auto-remove -y
+    dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
+    | sed '/^ii\|^rc/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' \
+    | grep -v -E '*-hwe-*' \
+    | xargs sudo apt purge --auto-remove -y
 fi
 
 # Unused libs
 if which deborphan >/dev/null 2>&1; then
-    sudo deborphan --exclude=mesa-vulkan-drivers | xargs sudo apt purge --auto-remove -y
+    sudo deborphan | xargs sudo apt purge --auto-remove -y
 fi
 
 sudo apt autoremove --purge -y
