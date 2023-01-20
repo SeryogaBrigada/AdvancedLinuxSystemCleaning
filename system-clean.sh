@@ -358,12 +358,6 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
     exit
 fi
 
-# Fix "Device not managed" issue in Network Manager
-if [[ -f '/usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf' ]]; then
-    sudo rm /usr/lib/NetworkManager/conf.d/10-globally-managed-devices.conf
-    sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
-fi
-
 # Launchpad cache
 [[ -d ~/.launchpadlib ]] && sudo rm -r ~/.launchpadlib;
 
