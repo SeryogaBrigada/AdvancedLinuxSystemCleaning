@@ -378,9 +378,9 @@ if [[ ! -f '/var/run/reboot-required' ]]; then
     | xargs sudo apt purge --auto-remove -y
 fi
 
-# Remove unused packages
+# Remove unused packages (but keep dotnet since it can be marked as orphan)
 if which deborphan >/dev/null 2>&1; then
-    sudo deborphan | xargs sudo apt purge --auto-remove -y
+    sudo deborphan | grep -v -E 'dotnet-*' | xargs sudo apt purge --auto-remove -y
 fi
 
 sudo apt autoremove --purge -y
