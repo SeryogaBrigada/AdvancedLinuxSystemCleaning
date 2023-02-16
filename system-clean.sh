@@ -104,7 +104,7 @@ if [ -d ~/.config/opera* ]; then
 fi
 
 # Google chrome, Chromium
-function cleanChrome() {
+function cleanChrome {
 if [[ -d ~/.config/$1 ]]; then
     cd ~/.config/$1
     rm -rf \
@@ -223,7 +223,7 @@ cleanChrome google-chrome-beta
 cleanChrome google-chrome-unstable
 cleanChrome chromium
 
-function cleanElectronContainer () {
+function cleanElectronContainer {
     if [[ -d ~/.config/$1 ]]; then
         cd ~/.config
         cd "${1}"
