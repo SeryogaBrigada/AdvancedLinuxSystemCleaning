@@ -29,7 +29,7 @@ if which apt >/dev/null 2>&1; then
     sudo apt install bleachbit deborphan -y
 elif which pacman >/dev/null 2>&1; then
     echo "Arch Linux system found"
-    sudo pacman -S bleachbit --noconfirm
+    sudo pacman -S bleachbit yay --noconfirm
 else
     echo "Not supported system. Please install bleachbit manually"
 fi
