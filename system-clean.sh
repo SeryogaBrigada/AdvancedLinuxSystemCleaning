@@ -41,7 +41,6 @@ if [[ -d ~/.mozilla/firefox ]]; then
     datareporting \
     minidumps \
     saved-telemetry-pings \
-    sessionstore-backups \
     addons.* \
     AlternateServices.* \
     containers.* \
@@ -52,8 +51,6 @@ if [[ -d ~/.mozilla/firefox ]]; then
     permissions.* \
     pluginreg.* \
     secmod.* \
-    sessionCheckpoints.* \
-    sessionstore.* \
     serviceworker.* \
     SecurityPreloadState.* \
     SiteSecurityServiceState.* \
