@@ -24,11 +24,6 @@
 ## SOFTWARE.
 ##**************************************************************************
 
-# Update Flatpak
-if which flatpak >/dev/null 2>&1; then
-    flatpak update --noninteractive
-fi
-
 # Mozilla Firefox
 if [[ -d ~/.mozilla/firefox ]]; then
     rm -r ~/.mozilla/firefox/Crash\ Reports >/dev/null 2>&1
@@ -264,6 +259,11 @@ cleanElectronContainer "Microsoft/Microsoft Teams"
 # Microsoft Visual Studio Code
 cleanElectronContainer "Code - OSS"
 cleanElectronContainer "Code"
+
+# Simple Screen Recorder
+if [[ -d ~/.ssr/logs ]]; then
+    rm -rf ~/.ssr/logs/* >/dev/null 2>&1
+fi
 
 # Kodi media center
 if [[ -d ~/.kodi ]]; then
