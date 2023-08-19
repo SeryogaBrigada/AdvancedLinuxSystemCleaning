@@ -35,4 +35,3 @@ echo "Uninstalling from ${INSTALL_DIR}"
 [[ -f ${INSTALL_DIR}/system-clean.sh ]] && rm ${INSTALL_DIR}/system-clean.sh;
 [[ -f /usr/share/applications/system-clean.desktop ]] && sudo rm /usr/share/applications/system-clean.desktop;
 [[ -f "$(xdg-user-dir DESKTOP)/system-clean.desktop" ]] && rm "$(xdg-user-dir DESKTOP)/system-clean.desktop";
-

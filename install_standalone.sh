@@ -58,4 +58,3 @@ EOF
 sudo sed -i "s|~|${INSTALL_DIR}|g" /usr/share/applications/system-clean.desktop
 cp /usr/share/applications/system-clean.desktop "$(xdg-user-dir DESKTOP)"
 chmod +x "$(xdg-user-dir DESKTOP)/system-clean.desktop"
-
