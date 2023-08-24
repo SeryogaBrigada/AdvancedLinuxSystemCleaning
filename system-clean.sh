@@ -24,38 +24,62 @@
 ## SOFTWARE.
 ##**************************************************************************
 
+function cleanFirefoxProfile {
+    if [[ -d $1 ]]; then
+        cd "$1"
+        rm -rf \
+        blocklist* \
+        bookmarkbackups \
+        crashes \
+        datareporting \
+        minidumps \
+        saved-telemetry-pings \
+        addons.* \
+        AlternateServices.* \
+        containers.* \
+        content-prefs.* \
+        handlers.* \
+        kinto.* \
+        mimeTypes.* \
+        permissions.* \
+        pluginreg.* \
+        secmod.* \
+        serviceworker.* \
+        SecurityPreloadState.* \
+        SiteSecurityServiceState.* \
+        storage.* \
+        Telemetry.ShutdownTime.* \
+        times.* \
+        webappsstore.* \
+        weave \
+        >/dev/null 2>&1
+        cd ..
+    fi
+}
+
+function cleanFirefox {
+    # 1 argument - path to profile
+    # 2 argument - path to cache directory
+    if [[ -d $1 ]]; then
+        cd "$1"
+        rm -r "Crash Reports" >/dev/null 2>&1
+        rm -r "Pending Pings" >/dev/null 2>&1
+        # Get a list of profiles directories
+        for dir in */; do
+            # Remove trailing "/" from the directory name
+            dir=${dir%*/}
+            cleanFirefoxProfile $dir
+        done
+    fi
+
+    [[ -d $2/mozilla ]] && rm -r "$2/mozilla";
+    [[ -d $2/fontconfig ]] && rm -r "$2/fontconfig";
+    [[ -d $2/nvidia ]] && rm -r "$2/nvidia";
+}
+
 # Mozilla Firefox
-if [[ -d ~/.mozilla/firefox ]]; then
-    rm -r ~/.mozilla/firefox/Crash\ Reports >/dev/null 2>&1
-    rm -r ~/.mozilla/firefox/Pending\ Pings >/dev/null 2>&1
-    cd ~/.mozilla/firefox/*.default-release
-    rm -rf \
-    blocklist* \
-    bookmarkbackups \
-    crashes \
-    datareporting \
-    minidumps \
-    saved-telemetry-pings \
-    addons.* \
-    AlternateServices.* \
-    containers.* \
-    content-prefs.* \
-    handlers.* \
-    kinto.* \
-    mimeTypes.* \
-    permissions.* \
-    pluginreg.* \
-    secmod.* \
-    serviceworker.* \
-    SecurityPreloadState.* \
-    SiteSecurityServiceState.* \
-    storage.* \
-    Telemetry.ShutdownTime.* \
-    times.* \
-    webappsstore.* \
-    weave \
-    >/dev/null 2>&1
-fi
+cleanFirefox ~/.mozilla/firefox ~/.cache
+cleanFirefox ~/snap/firefox/common/.mozilla/firefox ~/snap/firefox/common/.cache
 
 # Opera
 if [ -d ~/.config/opera* ]; then
