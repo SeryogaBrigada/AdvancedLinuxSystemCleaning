@@ -27,32 +27,30 @@
 function cleanFirefoxProfile {
     if [[ -d $1 ]]; then
         cd "$1"
-        rm -rf \
-        blocklist* \
-        bookmarkbackups \
-        crashes \
-        datareporting \
-        minidumps \
-        saved-telemetry-pings \
-        addons.* \
-        AlternateServices.* \
-        containers.* \
-        content-prefs.* \
-        handlers.* \
-        kinto.* \
-        mimeTypes.* \
-        permissions.* \
-        pluginreg.* \
-        secmod.* \
-        serviceworker.* \
-        SecurityPreloadState.* \
-        SiteSecurityServiceState.* \
-        storage.* \
-        Telemetry.ShutdownTime.* \
-        times.* \
-        webappsstore.* \
-        weave \
-        >/dev/null 2>&1
+        rm -rf >/dev/null 2>&1 blocklist*
+        rm -rf >/dev/null 2>&1 bookmarkbackups
+        rm -rf >/dev/null 2>&1 crashes
+        rm -rf >/dev/null 2>&1 datareporting
+        rm -rf >/dev/null 2>&1 minidumps
+        rm -rf >/dev/null 2>&1 saved-telemetry-pings
+        rm -rf >/dev/null 2>&1 addons.*
+        rm -rf >/dev/null 2>&1 AlternateServices.*
+        rm -rf >/dev/null 2>&1 containers.*
+        rm -rf >/dev/null 2>&1 content-prefs.*
+        rm -rf >/dev/null 2>&1 handlers.*
+        rm -rf >/dev/null 2>&1 kinto.*
+        rm -rf >/dev/null 2>&1 mimeTypes.*
+        rm -rf >/dev/null 2>&1 permissions.*
+        rm -rf >/dev/null 2>&1 pluginreg.*
+        rm -rf >/dev/null 2>&1 secmod.*
+        rm -rf >/dev/null 2>&1 serviceworker.*
+        rm -rf >/dev/null 2>&1 SecurityPreloadState.*
+        rm -rf >/dev/null 2>&1 SiteSecurityServiceState.*
+        rm -rf >/dev/null 2>&1 storage.* \
+        rm -rf >/dev/null 2>&1 Telemetry.ShutdownTime.*
+        rm -rf >/dev/null 2>&1 times.* \
+        rm -rf >/dev/null 2>&1 webappsstore.*
+        rm -rf >/dev/null 2>&1 weave
         cd ..
     fi
 }
@@ -62,8 +60,8 @@ function cleanFirefox {
     # 2 argument - path to cache directory
     if [[ -d $1 ]]; then
         cd "$1"
-        rm -r "Crash Reports" >/dev/null 2>&1
-        rm -r "Pending Pings" >/dev/null 2>&1
+        rm -rf >/dev/null 2>&1 "Crash Reports"
+        rm -rf >/dev/null 2>&1 "Pending Pings"
         # Get a list of profiles directories
         for dir in */; do
             # Remove trailing "/" from the directory name
@@ -72,9 +70,9 @@ function cleanFirefox {
         done
     fi
 
-    [[ -d $2/mozilla ]] && rm -r "$2/mozilla";
-    [[ -d $2/fontconfig ]] && rm -r "$2/fontconfig";
-    [[ -d $2/nvidia ]] && rm -r "$2/nvidia";
+    [[ -d $2/mozilla ]] && rm -rf "$2/mozilla";
+    [[ -d $2/fontconfig ]] && rm -rf "$2/fontconfig";
+    [[ -d $2/nvidia ]] && rm -rf "$2/nvidia";
 }
 
 # Mozilla Firefox
@@ -84,36 +82,34 @@ cleanFirefox ~/snap/firefox/common/.mozilla/firefox ~/snap/firefox/common/.cache
 # Opera
 if [ -d ~/.config/opera* ]; then
     cd ~/.config/opera*
-    rm -rf \
-    "adblocker_data" \
-    "Extension State" \
-    "GPUCache" \
-    "IndexedDB" \
-    "ShaderCache" \
-    "Pepper Data" \
-    "Platform Notifications" \
-    "Service Worker" \
-    "Opera Add-ons Downloads" \
-    autoupdate_checker.* \
-    BookmarksExtras \
-    browser.js \
-    "Certificate Revocation Lists" \
-    default_partner_content.* \
-    "Extension Cookies" \
-    "Extension Cookies-journal" \
-    Login* \
-    Network* \
-    opera_autoupdate.log \
-    oauc_pipe* \
-    previews_opt_out.* \
-    Origin* \
-    QuotaManager* \
-    Shortcuts* \
-    siteprefs.* \
-    ssdfp* \
-    TransportSecurity \
-    "Visited Links" \
-    >/dev/null 2>&1
+    rm -rf >/dev/null 2>&1 adblocker_data
+    rm -rf >/dev/null 2>&1 "Extension State"
+    rm -rf >/dev/null 2>&1 GPUCache
+    rm -rf >/dev/null 2>&1 IndexedDB
+    rm -rf >/dev/null 2>&1 ShaderCache
+    rm -rf >/dev/null 2>&1 "Pepper Data"
+    rm -rf >/dev/null 2>&1 "Platform Notifications"
+    rm -rf >/dev/null 2>&1 "Service Worker"
+    rm -rf >/dev/null 2>&1 "Opera Add-ons Downloads"
+    rm -rf >/dev/null 2>&1 autoupdate_checker.*
+    rm -rf >/dev/null 2>&1 BookmarksExtras
+    rm -rf >/dev/null 2>&1 browser.js
+    rm -rf >/dev/null 2>&1 "Certificate Revocation Lists"
+    rm -rf >/dev/null 2>&1 default_partner_content.*
+    rm -rf >/dev/null 2>&1 "Extension Cookies"
+    rm -rf >/dev/null 2>&1 "Extension Cookies-journal"
+    rm -rf >/dev/null 2>&1 Login*
+    rm -rf >/dev/null 2>&1 Network*
+    rm -rf >/dev/null 2>&1 opera_autoupdate.log
+    rm -rf >/dev/null 2>&1 oauc_pipe*
+    rm -rf >/dev/null 2>&1 previews_opt_out.*
+    rm -rf >/dev/null 2>&1 Origin*
+    rm -rf >/dev/null 2>&1 QuotaManager*
+    rm -rf >/dev/null 2>&1 Shortcuts*
+    rm -rf >/dev/null 2>&1 siteprefs.*
+    rm -rf >/dev/null 2>&1 ssdfp*
+    rm -rf >/dev/null 2>&1 TransportSecurity
+    rm -rf >/dev/null 2>&1 "Visited Links"
 
     cd "Local Storage"
     find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
@@ -123,114 +119,110 @@ fi
 function cleanChrome {
 if [[ -d ~/.config/$1 ]]; then
     cd ~/.config/$1
-    rm -rf \
-    "AutofillRegex" \
-    "AutofillStates" \
-    "BrowserMetrics" \
-    "CertificateTransparency" \
-    "CertificateRevocation" \
-    "ClientSidePhishing" \
-    "Consent To Send Stats" \
-    "Crash Reports" \
-    "Crowd Deny" \
-    "DesktopSharingHub" \
-    "EVWhitelist" \
-    "FileTypePolicies" \
-    "FirstPartySetsPreloaded" \
-    "Floc" \
-    "GrShaderCache" \
-    "InterventionPolicyDatabase" \
-    "MEIPreload" \
-    "NativeMessagingHosts" \
-    "OnDeviceHeadSuggestModel" \
-    "OptimizationHints" \
-    "OriginTrials" \
-    "PKIMetadata" \
-    "Policy" \
-    "ShaderCache" \
-    "Subresource Filter" \
-    "TLSDeprecationConfig" \
-    "TrustTokenKeyCommitments" \
-    "UrlParamClassifications" \
-    "Webstore Downloads" \
-    "WidevineCdm" \
-    "SSLErrorAssistant" \
-    "Certificate Revocation Lists" \
-    "ZxcvbnData" \
-    "pnacl" \
-    "hyphen-data" \
-    Safe* \
-    BrowserMetrics-spare.* \
-    chrome_shutdown_ms.txt \
-    .com.google.Chrome.* \
-    persisted_first_party_sets.json \
-    >/dev/null 2>&1
+    rm -rf >/dev/null 2>&1 AutofillRegex
+    rm -rf >/dev/null 2>&1 AutofillStates
+    rm -rf >/dev/null 2>&1 BrowserMetrics
+    rm -rf >/dev/null 2>&1 CertificateTransparency
+    rm -rf >/dev/null 2>&1 CertificateRevocation
+    rm -rf >/dev/null 2>&1 ClientSidePhishing
+    rm -rf >/dev/null 2>&1 "Consent To Send Stats"
+    rm -rf >/dev/null 2>&1 "Crash Reports"
+    rm -rf >/dev/null 2>&1 "Crowd Deny"
+    rm -rf >/dev/null 2>&1 DesktopSharingHub
+    rm -rf >/dev/null 2>&1 EVWhitelist
+    rm -rf >/dev/null 2>&1 FileTypePolicies
+    rm -rf >/dev/null 2>&1 FirstPartySetsPreloaded
+    rm -rf >/dev/null 2>&1 Floc
+    rm -rf >/dev/null 2>&1 GrShaderCache
+    rm -rf >/dev/null 2>&1 InterventionPolicyDatabase
+    rm -rf >/dev/null 2>&1 MEIPreload
+    rm -rf >/dev/null 2>&1 NativeMessagingHosts
+    rm -rf >/dev/null 2>&1 OnDeviceHeadSuggestModel
+    rm -rf >/dev/null 2>&1 OptimizationHints
+    rm -rf >/dev/null 2>&1 OriginTrials
+    rm -rf >/dev/null 2>&1 PKIMetadata
+    rm -rf >/dev/null 2>&1 Policy
+    rm -rf >/dev/null 2>&1 ShaderCache
+    rm -rf >/dev/null 2>&1 "Subresource Filter"
+    rm -rf >/dev/null 2>&1 TLSDeprecationConfig
+    rm -rf >/dev/null 2>&1 TrustTokenKeyCommitments
+    rm -rf >/dev/null 2>&1 UrlParamClassifications
+    rm -rf >/dev/null 2>&1 "Webstore Downloads"
+    rm -rf >/dev/null 2>&1 WidevineCdm
+    rm -rf >/dev/null 2>&1 SSLErrorAssistant
+    rm -rf >/dev/null 2>&1 "Certificate Revocation Lists"
+    rm -rf >/dev/null 2>&1 ZxcvbnData
+    rm -rf >/dev/null 2>&1 pnacl
+    rm -rf >/dev/null 2>&1 hyphen-data
+    rm -rf >/dev/null 2>&1 Safe*
+    rm -rf >/dev/null 2>&1 BrowserMetrics-spare.*
+    rm -rf >/dev/null 2>&1 chrome_shutdown_ms.txt
+    rm -rf >/dev/null 2>&1 .com.google.Chrome.*
+    rm -rf >/dev/null 2>&1 persisted_first_party_sets.json
 
     cd Default
-    rm -rf \
-    "Accounts" \
-    "AutofillStrikeDatabase" \
-    *.ldb \
-    *.log \
-    "Affiliation Database" \
-    "Affiliation Database-journal" \
-    "Application Cache" \
-    "BudgetDatabase" \
-    "blob_storage" \
-    "commerce_subscription_db" \
-    "coupon_db" \
-    "data_reduction_proxy_leveldb" \
-    "databases" \
-    "DawnCache" \
-    "Download Service" \
-    "Extension State" \
-    "Feature Engagement Tracker" \
-    "File System" \
-    "GCM Store" \
-    "GPUCache" \
-    "Managed Extension Settings" \
-    "IndexedDB" \
-    "Pepper Data" \
-    "Platform Notifications" \
-    "Site Characteristics Database" \
-    "shared_proto_db" \
-    "Service Worker" \
-    "Thumbnails" \
-    "Session Storage" \
-    "DownloadMetadata" \
-    "Extension Cookies" \
-    "Extension Cookies-journal" \
-    "Local Storage" \
-    LOCK \
-    LOG \
-    LOG.old \
-    MANIFEST-* \
-    Network* \
-    Origin* \
-    QuotaManager* \
-    "Reporting and NEL" \
-    "Reporting and NEL-journal" \
-    "Secure Preferences" \
-    Shortcuts* \
-    "Storage" \
-    "Top Sites" \
-    "Top Sites-journal" \
-    "Translate Ranker Model" \
-    "TransportSecurity" \
-    "Search Logos" \
-    "Visited Links" \
-    "VideoDecodeStats" \
-    "WebRTC Logs" \
-    "WebrtcVideoStats" \
-    "webrtc_event_logs" \
-    optimization_guide_* \
-    .com.google.Chrome.* \
-    .org.chromium.Chromium.* \
-    heavy_ad_intervention_opt_out.* \
-    previews_opt_out.* \
-    page_load_capping_opt_out.* \
-    in_progress_download_metadata_store \
-    >/dev/null 2>&1
+    rm -rf >/dev/null 2>&1 Accounts
+    rm -rf >/dev/null 2>&1 AutofillStrikeDatabase
+    rm -rf >/dev/null 2>&1 *.ldb
+    rm -rf >/dev/null 2>&1 *.log
+    rm -rf >/dev/null 2>&1 "Affiliation Database"
+    rm -rf >/dev/null 2>&1 "Affiliation Database-journal"
+    rm -rf >/dev/null 2>&1 "Application Cache"
+    rm -rf >/dev/null 2>&1 BudgetDatabase
+    rm -rf >/dev/null 2>&1 blob_storage
+    rm -rf >/dev/null 2>&1 commerce_subscription_db
+    rm -rf >/dev/null 2>&1 coupon_db
+    rm -rf >/dev/null 2>&1 "data_reduction_proxy_leveldb"
+    rm -rf >/dev/null 2>&1 databases
+    rm -rf >/dev/null 2>&1 DawnCache
+    rm -rf >/dev/null 2>&1 "Download Service"
+    rm -rf >/dev/null 2>&1 "Extension State"
+    rm -rf >/dev/null 2>&1 "Feature Engagement Tracker"
+    rm -rf >/dev/null 2>&1 "File System"
+    rm -rf >/dev/null 2>&1 "GCM Store"
+    rm -rf >/dev/null 2>&1 GPUCache
+    rm -rf >/dev/null 2>&1 "Managed Extension Settings"
+    rm -rf >/dev/null 2>&1 IndexedDB
+    rm -rf >/dev/null 2>&1 "Pepper Data"
+    rm -rf >/dev/null 2>&1 "Platform Notifications"
+    rm -rf >/dev/null 2>&1 "Site Characteristics Database"
+    rm -rf >/dev/null 2>&1 shared_proto_db
+    rm -rf >/dev/null 2>&1 "Service Worker"
+    rm -rf >/dev/null 2>&1 Thumbnails
+    rm -rf >/dev/null 2>&1 "Session Storage"
+    rm -rf >/dev/null 2>&1 DownloadMetadata
+    rm -rf >/dev/null 2>&1 "Extension Cookies"
+    rm -rf >/dev/null 2>&1 "Extension Cookies-journal"
+    rm -rf >/dev/null 2>&1 "Local Storage"
+    rm -rf >/dev/null 2>&1 LOCK
+    rm -rf >/dev/null 2>&1 LOG
+    rm -rf >/dev/null 2>&1 LOG.old
+    rm -rf >/dev/null 2>&1 MANIFEST-*
+    rm -rf >/dev/null 2>&1 Network*
+    rm -rf >/dev/null 2>&1 Origin*
+    rm -rf >/dev/null 2>&1 QuotaManager*
+    rm -rf >/dev/null 2>&1 "Reporting and NEL"
+    rm -rf >/dev/null 2>&1 "Reporting and NEL-journal"
+    rm -rf >/dev/null 2>&1 "Secure Preferences"
+    rm -rf >/dev/null 2>&1 Shortcuts*
+    rm -rf >/dev/null 2>&1 Storage
+    rm -rf >/dev/null 2>&1 "Top Sites"
+    rm -rf >/dev/null 2>&1 "Top Sites-journal"
+    rm -rf >/dev/null 2>&1 "Translate Ranker Model"
+    rm -rf >/dev/null 2>&1 TransportSecurity
+    rm -rf >/dev/null 2>&1 "Search Logos"
+    rm -rf >/dev/null 2>&1 "Visited Links"
+    rm -rf >/dev/null 2>&1 "VideoDecodeStats"
+    rm -rf >/dev/null 2>&1 "WebRTC Logs"
+    rm -rf >/dev/null 2>&1 "WebrtcVideoStats"
+    rm -rf >/dev/null 2>&1 "webrtc_event_logs"
+    rm -rf >/dev/null 2>&1 optimization_guide_*
+    rm -rf >/dev/null 2>&1 .com.google.Chrome.*
+    rm -rf >/dev/null 2>&1 .org.chromium.Chromium.*
+    rm -rf >/dev/null 2>&1 heavy_ad_intervention_opt_out.*
+    rm -rf >/dev/null 2>&1 previews_opt_out.*
+    rm -rf >/dev/null 2>&1 page_load_capping_opt_out.*
+    rm -rf >/dev/null 2>&1 in_progress_download_metadata_store
 fi
 }
 
@@ -243,34 +235,32 @@ function cleanElectronContainer {
     if [[ -d ~/.config/$1 ]]; then
         cd ~/.config
         cd "${1}"
-        rm -rf \
-        "Application Cache" \
-        blob_storage \
-        Cache \
-        CachedData \
-        "Code Cache" \
-         "Crashpad"
-        "Crash Reports" \
-        "exthost Crash Reports" \
-        CS_skylib \
-        databases \
-        GPUCache \
-        "Service Worker" \
-        VideoDecodeStats \
-        logs \
-        tmp \
-        media-stack \
-        ecscache.json \
-        skylib \
-        LOG \
-        logs.txt \
-        old_logs_* \
-        "Network Persistent State" \
-        QuotaManager \
-        QuotaManager-journal \
-        TransportSecurity \
-        watchdog* \
-        >/dev/null 2>&1
+        rm -rf >/dev/null 2>&1 "Application Cache"
+        rm -rf >/dev/null 2>&1 blob_storage
+        rm -rf >/dev/null 2>&1 Cache
+        rm -rf >/dev/null 2>&1 CachedData
+        rm -rf >/dev/null 2>&1 "Code Cache"
+        rm -rf >/dev/null 2>&1 Crashpad
+        rm -rf >/dev/null 2>&1 "Crash Reports"
+        rm -rf >/dev/null 2>&1 "exthost Crash Reports"
+        rm -rf >/dev/null 2>&1 CS_skylib
+        rm -rf >/dev/null 2>&1 databases
+        rm -rf >/dev/null 2>&1 GPUCache
+        rm -rf >/dev/null 2>&1 "Service Worker"
+        rm -rf >/dev/null 2>&1 VideoDecodeStats
+        rm -rf >/dev/null 2>&1 logs
+        rm -rf >/dev/null 2>&1 tmp
+        rm -rf >/dev/null 2>&1 media-stack
+        rm -rf >/dev/null 2>&1 ecscache.json
+        rm -rf >/dev/null 2>&1 skylib
+        rm -rf >/dev/null 2>&1 LOG
+        rm -rf >/dev/null 2>&1 logs.txt
+        rm -rf >/dev/null 2>&1 old_logs_*
+        rm -rf >/dev/null 2>&1 "Network Persistent State"
+        rm -rf >/dev/null 2>&1 QuotaManager
+        rm -rf >/dev/null 2>&1 QuotaManager-journal
+        rm -rf >/dev/null 2>&1 TransportSecurity
+        rm -rf >/dev/null 2>&1 watchdog*
     fi
 }
 
@@ -287,14 +277,14 @@ cleanElectronContainer "Code"
 
 # Simple Screen Recorder
 if [[ -d ~/.ssr/logs ]]; then
-    rm -rf ~/.ssr/logs/* >/dev/null 2>&1
+    rm -rf >/dev/null 2>&1 ~/.ssr/logs/*
 fi
 
 # Kodi media center
 if [[ -d ~/.kodi ]]; then
-    rm -rf ~/.kodi/temp/* >/dev/null 2>&1
-    rm ~/kodi_crashlog*.log >/dev/null 2>&1
-    rm ~/core >/dev/null 2>&1
+    rm -rf >/dev/null 2>&1 ~/.kodi/temp/*
+    rm -rf >/dev/null 2>&1 ~/kodi_crashlog*.log
+    rm -rf >/dev/null 2>&1 ~/core
 fi
 
 # ccache
@@ -303,22 +293,22 @@ if which ccache >/dev/null 2>&1; then
 fi
 
 # System cache
-sudo rm -rf ~/.cache/*
+sudo rm -rf >/dev/null 2>&1 ~/.cache/*
 
 # Nvidia cache
-[[ -d ~/.nv ]] && sudo rm -r ~/.nv;
+[[ -d ~/.nv ]] && sudo rm -rf ~/.nv;
 
 # Wine cache
 if [[ -d ~/.wine ]]; then
-    rm -rf ~/.wine/drive_c/users/$USER/Temp/* >/dev/null 2>&1
-    rm -rf ~/.wine/drive_c/windows/temp/* >/dev/null 2>&1
+    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/users/$USER/Temp/*
+    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/windows/temp/*
 fi
 
 # WGET hosts file
-[[ -f ~/.wget-hsts ]] && rm ~/.wget-hsts;
+[[ -f ~/.wget-hsts ]] && rm -f ~/.wget-hsts;
 
 # Error messages
-sudo rm -rf /var/crash/* >/dev/null 2>&1
+sudo rm -rf >/dev/null 2>&1 /var/crash/*
 
 # Bleachbit
 if which bleachbit >/dev/null 2>&1; then
@@ -333,13 +323,13 @@ fi
 if which pacman >/dev/null 2>&1; then
     # Optimus manager
     if which optimus-manager >/dev/null 2>&1; then
-        sudo rm -rf /var/log/optimus-manager
+        sudo rm -rf >/dev/null 2>&1 /var/log/optimus-manager
     fi
 
     # Pamac
     if [[ -d /var/tmp/pamac ]]; then
-        sudo rm -rf /var/tmp/pamac >/dev/null 2>&1
-        sudo rm -rf /var/tmp/pamac-build-* >/dev/null 2>&1
+        sudo rm -rf >/dev/null 2>&1 /var/tmp/pamac
+        sudo rm -rf >/dev/null 2>&1 /var/tmp/pamac-build-*
     fi
 
     # Fix blocked database error
@@ -381,7 +371,7 @@ if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
 fi
 
 # Launchpad cache
-[[ -d ~/.launchpadlib ]] && sudo rm -r ~/.launchpadlib;
+[[ -d ~/.launchpadlib ]] && sudo rm -rf ~/.launchpadlib;
 
 # Fix broken packages
 sudo apt -f install -y
