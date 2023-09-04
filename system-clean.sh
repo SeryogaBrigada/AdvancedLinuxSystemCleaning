@@ -281,6 +281,7 @@ cleanElectronContainer skypeforlinux
 cleanElectronContainer "Microsoft/Microsoft Teams"
 
 # Microsoft Visual Studio Code
+cleanElectronContainer "Code - Insiders"
 cleanElectronContainer "Code - OSS"
 cleanElectronContainer "Code"
 
