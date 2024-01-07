@@ -287,6 +287,12 @@ if [[ -d ~/.kodi ]]; then
     rm -rf >/dev/null 2>&1 ~/core
 fi
 
+# HandBrake
+if [[ -d ~/.config/ghb/ ]]; then
+    rm -rf >/dev/null 2>&1 ~/.config/ghb/EncodeLogs/*
+    rm -rf >/dev/null 2>&1 ~/.config/ghb/Activity.log.*
+fi
+
 # ccache
 if which ccache >/dev/null 2>&1; then
     ccache -C
