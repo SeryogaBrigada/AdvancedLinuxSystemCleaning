@@ -327,6 +327,19 @@ fi
 # Arch Linux specific cleaning
 #
 if which pacman >/dev/null 2>&1; then
+    if [[ -f /etc/pacman.d/mirrorlist.pacnew ]] then
+        sudo rm /etc/pacman.d/mirrorlist
+        sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist
+    fi
+
+    # Endveavour OS old mirrors
+    if [[ -f /etc/pacman.d/endeavouros-mirrorlist.pacnew ]] then
+        sudo rm /etc/pacman.d/endeavouros-mirrorlist
+        sudo mv /etc/pacman.d/endeavouros-mirrorlist.pacnew /etc/pacman.d/endeavouros-mirrorlist
+    fi
+
+    find /etc/pacman.d -maxdepth 1 -type f \( -name 'endeavouros-mirrorlist.*' -o -name '*.bak' \) -print0 | xargs -0 sudo rm --
+
     # Optimus manager
     if which optimus-manager >/dev/null 2>&1; then
         sudo rm -rf >/dev/null 2>&1 /var/log/optimus-manager
@@ -346,56 +359,56 @@ if which pacman >/dev/null 2>&1; then
     #sudo pacman -Rs $(pacman -Qtdq) --noconfirm
     sudo pacman -Sc --noconfirm
     sudo paccache -rk 0
-    sudo fstrim -av
-    sleep 2
-    poweroff
-    exit
 fi
 
 
 #
 # Ubuntu/Debian specific cleaning
 #
-# Remove old PPA after release upgrade
-if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
-    sudo rm /etc/apt/sources.list.distUpgrade
-    find /etc/apt/apt.conf.d -type f \( -name '*.ucf-old' -o -name '*.ucf-dist' \) -print0 | xargs -0 sudo rm --
-    find /etc/apt/sources.list.d -type f \( -name '*.distUpgrade' -o -name '*.dpkg-old' \) -print0 | xargs -0 sudo rm --
+if which apt >/dev/null 2>&1; then
+    # Remove old PPA after release upgrade
+    if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
+        sudo rm /etc/apt/sources.list.distUpgrade
+        find /etc/apt/apt.conf.d -type f \( -name '*.ucf-old' -o -name '*.ucf-dist' \) -print0 | xargs -0 sudo rm --
+        find /etc/apt/sources.list.d -type f \( -name '*.distUpgrade' -o -name '*.dpkg-old' \) -print0 | xargs -0 sudo rm --
 
-    find /etc/apt/sources.list.d -type f \
-     -not -name *$(lsb_release -sc)* \
-     -not -name 'skype*' \
-     -not -name 'opera*' \
-     -not -name 'virtualbox*' \
-     -not -name 'google-chrome*' \
-     -print0 | xargs -0 sudo rm --
+        find /etc/apt/sources.list.d -type f \
+         -not -name *$(lsb_release -sc)* \
+         -not -name 'skype*' \
+         -not -name 'opera*' \
+         -not -name 'virtualbox*' \
+         -not -name 'google-chrome*' \
+         -print0 | xargs -0 sudo rm --
 
-    [[ -f /etc/apt/sources.list ]] && sudo rm /etc/apt/sources.list;
-    sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
-    sudo software-properties-gtk
-    exit
+        [[ -f /etc/apt/sources.list ]] && sudo rm /etc/apt/sources.list;
+        sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+        sudo software-properties-gtk
+        exit
+    fi
+
+    # Launchpad cache
+    [[ -d ~/.launchpadlib ]] && sudo rm -rf ~/.launchpadlib;
+
+    # Fix broken packages
+    sudo apt -f install -y
+
+    # Old kernels
+    if [[ ! -f '/var/run/reboot-required' ]]; then
+        dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
+        | sed '/^ii\|^rc/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' \
+        | grep -v -E '*-hwe-*' \
+        | xargs sudo apt purge --auto-remove -y
+    fi
+
+    # Remove unused packages (but keep dotnet since it can be marked as orphan)
+    if which deborphan >/dev/null 2>&1; then
+        sudo deborphan | grep -v -E 'dotnet-*' | xargs sudo apt purge --auto-remove -y
+    fi
+
+    sudo apt autoremove --purge -y
 fi
 
-# Launchpad cache
-[[ -d ~/.launchpadlib ]] && sudo rm -rf ~/.launchpadlib;
-
-# Fix broken packages
-sudo apt -f install -y
-
-# Old kernels
-if [[ ! -f '/var/run/reboot-required' ]]; then
-    dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
-    | sed '/^ii\|^rc/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' \
-    | grep -v -E '*-hwe-*' \
-    | xargs sudo apt purge --auto-remove -y
-fi
-
-# Remove unused packages (but keep dotnet since it can be marked as orphan)
-if which deborphan >/dev/null 2>&1; then
-    sudo deborphan | grep -v -E 'dotnet-*' | xargs sudo apt purge --auto-remove -y
-fi
-
-sudo apt autoremove --purge -y
+# Final actions
 sudo fstrim -av
 sleep 2
 poweroff
