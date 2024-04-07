@@ -38,18 +38,6 @@ sudo rm -r /root/.config/bleachbit
 sudo mkdir /root/.config/bleachbit
 cat << 'EOF' | sudo tee /root/.config/bleachbit/bleachbit.ini
 [bleachbit]
-auto_hide = True
-check_beta = False
-check_online_updates = True
-dark_mode = True
-debug = False
-delete_confirmation = True
-exit_done = False
-remember_geometry = True
-shred = False
-units_iec = False
-window_fullscreen = False
-window_maximized = False
 first_start = True
 
 [hashpath]
@@ -63,18 +51,15 @@ en = True
 ru = True
 
 [tree]
-bash = True
-bash.history = True
 journald = True
 journald.clean = True
-system.clipboard = True
-system = True
-system.trash = True
-system.tmp = True
 system.cache = True
-system.desktop_entry = True
+system = True
+system.clipboard = True
 system.recent_documents = True
 system.rotated_logs = True
+system.tmp = True
+system.trash = True
 
 EOF
 
