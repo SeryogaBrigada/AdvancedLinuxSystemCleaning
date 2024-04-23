@@ -35,7 +35,7 @@ else
 fi
 
 sudo rm -r /root/.config/bleachbit
-sudo mkdir /root/.config/bleachbit
+sudo mkdir -p /root/.config/bleachbit
 cat << 'EOF' | sudo tee /root/.config/bleachbit/bleachbit.ini
 [bleachbit]
 first_start = True
