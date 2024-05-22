@@ -44,11 +44,12 @@ function cleanFirefoxProfile {
         rm -rf >/dev/null 2>&1 pluginreg.*
         rm -rf >/dev/null 2>&1 secmod.*
         rm -rf >/dev/null 2>&1 serviceworker.*
+        rm -rf >/dev/null 2>&1 sessionstore-logs
         rm -rf >/dev/null 2>&1 SecurityPreloadState.*
         rm -rf >/dev/null 2>&1 SiteSecurityServiceState.*
-        rm -rf >/dev/null 2>&1 storage.* \
+        rm -rf >/dev/null 2>&1 storage.*
         rm -rf >/dev/null 2>&1 Telemetry.ShutdownTime.*
-        rm -rf >/dev/null 2>&1 times.* \
+        rm -rf >/dev/null 2>&1 times.*
         rm -rf >/dev/null 2>&1 webappsstore.*
         rm -rf >/dev/null 2>&1 weave
         cd ..
@@ -410,5 +411,11 @@ fi
 
 # Final actions
 sudo fstrim -av
+
+# Do not power off if DO_NOT_POWEROFF variable is set
+if [ ! -z $DO_NOT_POWEROFF ]; then
+    exit
+fi
+
 sleep 2
 poweroff
