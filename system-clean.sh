@@ -160,6 +160,16 @@ if [[ -d ~/.config/$1 ]]; then
     rm -rf >/dev/null 2>&1 chrome_shutdown_ms.txt
     rm -rf >/dev/null 2>&1 .com.google.Chrome.*
     rm -rf >/dev/null 2>&1 persisted_first_party_sets.json
+    rm -rf >/dev/null 2>&1 *_crx_cache
+    rm -rf >/dev/null 2>&1 GraphiteDawnCache
+    rm -rf >/dev/null 2>&1 "Local Traces"
+    rm -rf >/dev/null 2>&1 optimization_guide_model_store
+    rm -rf >/dev/null 2>&1 PrivacySandboxAttestationsPreloaded
+    rm -rf >/dev/null 2>&1 screen_ai
+    rm -rf >/dev/null 2>&1 segmentation_platform
+    rm -rf >/dev/null 2>&1 TpcdMetadata
+    rm -rf >/dev/null 2>&1 Variations
+    rm -rf >/dev/null 2>&1 first_party_sets*
 
     cd Default
     rm -rf >/dev/null 2>&1 Accounts
@@ -175,7 +185,7 @@ if [[ -d ~/.config/$1 ]]; then
     rm -rf >/dev/null 2>&1 coupon_db
     rm -rf >/dev/null 2>&1 "data_reduction_proxy_leveldb"
     rm -rf >/dev/null 2>&1 databases
-    rm -rf >/dev/null 2>&1 DawnCache
+    rm -rf >/dev/null 2>&1 Dawn*Cache
     rm -rf >/dev/null 2>&1 "Download Service"
     rm -rf >/dev/null 2>&1 "Extension State"
     rm -rf >/dev/null 2>&1 "Feature Engagement Tracker"
@@ -224,6 +234,22 @@ if [[ -d ~/.config/$1 ]]; then
     rm -rf >/dev/null 2>&1 previews_opt_out.*
     rm -rf >/dev/null 2>&1 page_load_capping_opt_out.*
     rm -rf >/dev/null 2>&1 in_progress_download_metadata_store
+    rm -rf >/dev/null 2>&1 chrome_cart_db
+    rm -rf >/dev/null 2>&1 discounts_db
+    rm -rf >/dev/null 2>&1 feedv2
+    rm -rf >/dev/null 2>&1 parcel_tracking_db
+    rm -rf >/dev/null 2>&1 PersistentOriginTrials
+    rm -rf >/dev/null 2>&1 "Segmentation Platform"
+    rm -rf >/dev/null 2>&1 "Sync Data"
+    rm -rf >/dev/null 2>&1 "Trust Tokens"
+    rm -rf >/dev/null 2>&1 "Trust Tokens-journal"
+    rm -rf >/dev/null 2>&1 SharedStorage*
+    rm -rf >/dev/null 2>&1 PrivateAggregation*
+    rm -rf >/dev/null 2>&1 "Safe Browsing Cookies"
+    rm -rf >/dev/null 2>&1 "Safe Browsing Cookies-journal"
+    rm -rf >/dev/null 2>&1 "SCT Auditing Pending Reports"
+    rm -rf >/dev/null 2>&1 DIPS*
+    rm -rf >/dev/null 2>&1 BrowsingTopics*
 fi
 }
 
