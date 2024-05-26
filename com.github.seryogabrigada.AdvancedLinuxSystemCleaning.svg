@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="512" height="512" version="1.1" viewBox="0 0 135.47 135.47" xmlns="http://www.w3.org/2000/svg">
+ <path d="m0.382 32.85 16.406 92.673c6.1774 7.1817 27.074 9.5618 50.947 9.5618 23.872-5.4e-4 44.766-2.3806 50.943-9.5618l16.406-92.673h-101.89z" fill="#c11616" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".76401"/>
+ <g transform="matrix(8.0084 0 0 8.2823 -183.75 56.243)">
+  <ellipse cx="31.41" cy="-2.8244" rx="8.4176" ry="1.4913" stroke-width=".31731"/>
+  <g transform="matrix(1.4132 0 0 1.0795 19.787 -5.9411)" stroke="#000" stroke-width=".021042">
+   <path d="m5.4689-0.17518v2.9182a2.7506 0.61056 0 0 0 2.7502 0.6103 2.7506 0.61056 0 0 0 2.7507-0.6103v-2.9182z" fill="#373e48"/>
+   <ellipse cx="8.2195" cy="-.1659" rx="2.7506" ry=".61056"/>
+  </g>
+ </g>
+ <g transform="matrix(11.078 0 0 9.8078 131.5 -7.7528)" fill="#67ff6d" stroke="#000" stroke-width=".030968">
+  <path d="m-6.3304 8.0662c-0.87976 0.25528-1.525 1.0807-1.525 2.051 0 1.1719 0.94084 2.1306 2.0996 2.1306s2.0996-0.95875 2.0996-2.1306c0-0.97063-0.64588-1.796-1.526-2.051v0.55759c0.58356 0.23273 0.99632 0.81053 0.99632 1.4934 0 0.89093-0.70227 1.6015-1.5699 1.6015s-1.5704-0.71052-1.5704-1.6015c0-0.6825 0.41282-1.2599 0.9958-1.4929z" color="#000000"/>
+  <rect x="-6.1153" y="7.7221" width=".71917" height="1.7326"/>
+ </g>
+ <g transform="matrix(8 0 0 8 1.3149e-6 5.7801e-5)" stroke="#000" stroke-linecap="round" stroke-linejoin="round">
+  <rect transform="matrix(.99718 .075077 -.078929 .99688 0 0)" x="2.9065" y="5.4526" width="5.368" height="2.7625" ry=".77346" stroke-width=".15663"/>
+  <rect transform="matrix(-.99718 .075077 .078929 .99688 0 0)" x="-13.956" y="6.7225" width="5.368" height="2.7625" ry=".77346" stroke-width=".15663"/>
+  <path d="m9.2038 7.4338a0.8363 0.25952 0 0 1-0.75783 0.1363 0.8363 0.25952 0 0 1-0.73408-0.14829" fill="none" stroke-width=".1504"/>
+ </g>
+ <path d="m94.108 110.51a30.455 22.267 0 0 1-26.375 11.134 30.455 22.267 0 0 1-26.375-11.134" fill="none" stroke="#000" stroke-linejoin="round" stroke-width="3.175" style="paint-order:normal"/>
+</svg>

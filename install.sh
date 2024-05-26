@@ -24,13 +24,16 @@
 ## SOFTWARE.
 ##**************************************************************************
 
-# Uninstall script
-[[ -f /usr/bin/advanced-system-cleaning ]] && sudo rm /usr/bin/advanced-system-cleaning;
-# Uninstall desktop shortcut
-[[ -f /usr/share/applications/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.desktop ]] && sudo rm /usr/share/applications/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.desktop;
-[[ -f "$(xdg-user-dir DESKTOP)/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.desktop" ]] && rm "$(xdg-user-dir DESKTOP)/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.desktop";
-# Uninstall icon
-[[ -f /usr/share/pixmaps/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.svg ]] && sudo rm /usr/share/pixmaps/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.svg;
-# Uninstall license file
-[[ -d /usr/share/licenses/advanced-system-cleaning ]] && sudo rm -r /usr/share/licenses/advanced-system-cleaning;
-
+# Script
+sudo cp advanced-system-cleaning /usr/bin/
+sudo chmod 755 /usr/bin/advanced-system-cleaning
+# Desktop shortcut
+sudo cp com.github.seryogabrigada.AdvancedLinuxSystemCleaning.desktop /usr/share/applications/
+sudo chmod 644 /usr/share/applications/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.desktop
+# Icon
+sudo cp com.github.seryogabrigada.AdvancedLinuxSystemCleaning.svg /usr/share/pixmaps/
+sudo chmod 644 /usr/share/pixmaps/com.github.seryogabrigada.AdvancedLinuxSystemCleaning.svg
+# License file
+sudo mkdir -p /usr/share/licenses/advanced-system-cleaning
+sudo cp LICENSE /usr/share/licenses/advanced-system-cleaning
+sudo chmod 644 /usr/share/licenses/advanced-system-cleaning/LICENSE

@@ -3,7 +3,7 @@
 ##**************************************************************************
 ## MIT License
 ##
-## Copyright (C) Sergey Kovalenko <seryoga.engineering@gmail.com>
+## Copyright (C) 2016-2024 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
@@ -24,37 +24,7 @@
 ## SOFTWARE.
 ##**************************************************************************
 
-if [[ -z $1 ]]; then
-    INSTALL_DIR=~
-else
-    INSTALL_DIR="${1}"
-fi
-
-echo "Installing to ${INSTALL_DIR}"
-
-[[ -f ${INSTALL_DIR}/system-clean.sh ]] && rm ${INSTALL_DIR}/system-clean.sh;
-cp system-clean.sh ${INSTALL_DIR}
-chmod +x ${INSTALL_DIR}/system-clean.sh
-
-cat << 'EOF' | sudo tee /usr/share/applications/system-clean.desktop
-[Desktop Entry]
-Version=1.0
-Encoding=UTF-8
-Type=Application
-Name=System Cleanup
-Name[ru]=Очистка системы
-Comment=System Cleanup
-Comment[ru]=Очистка системы
-GenericName=System Cleanup
-GenericName[ru]=Очистка системы
-Exec=~/system-clean.sh
-Icon=bleachbit
-Categories=GTK;System;
-Keywords=clean;performances;free;privacy;
-StartupNotify=true
-Terminal=true
-EOF
-
-sudo sed -i "s|~|${INSTALL_DIR}|g" /usr/share/applications/system-clean.desktop
-cp /usr/share/applications/system-clean.desktop "$(xdg-user-dir DESKTOP)"
-chmod +x "$(xdg-user-dir DESKTOP)/system-clean.desktop"
+[[ -f ~/system-clean.sh ]] && rm ~/system-clean.sh;
+[[ -f /usr/share/applications/system-clean.desktop ]] && sudo rm /usr/share/applications/system-clean.desktop;
+[[ -f "$(xdg-user-dir DESKTOP)/system-clean.desktop" ]] && rm "$(xdg-user-dir DESKTOP)/system-clean.desktop";
+sudo rm -r /root/.config/bleachbit

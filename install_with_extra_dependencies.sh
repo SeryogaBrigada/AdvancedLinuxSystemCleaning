@@ -3,7 +3,7 @@
 ##**************************************************************************
 ## MIT License
 ##
-## Copyright (C) Sergey Kovalenko <seryoga.engineering@gmail.com>
+## Copyright (C) 2016-2024 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
@@ -29,74 +29,12 @@ if which apt >/dev/null 2>&1; then
     sudo apt install bleachbit deborphan -y
 elif which pacman >/dev/null 2>&1; then
     echo "Arch Linux system found"
-    sudo pacman -S bleachbit yay --noconfirm
+    sudo pacman -S --noconfirm --needed bleachbit yay
 else
     echo "Not supported system. Please install bleachbit manually"
 fi
 
-sudo rm -r /root/.config/bleachbit
-sudo mkdir -p /root/.config/bleachbit
-cat << 'EOF' | sudo tee /root/.config/bleachbit/bleachbit.ini
-[bleachbit]
-first_start = True
-
-[hashpath]
-
-[list/shred_drives]
-0 = /root/.cache
-1 = /tmp
-
-[preserve_languages]
-en = True
-ru = True
-
-[tree]
-journald = True
-journald.clean = True
-system.cache = True
-system = True
-system.clipboard = True
-system.recent_documents = True
-system.rotated_logs = True
-system.tmp = True
-system.trash = True
-
-EOF
-
-if [[ -z $1 ]]; then
-    INSTALL_DIR=~
-else
-    INSTALL_DIR="${1}"
-fi
-
-echo "Installing to ${INSTALL_DIR}"
-
-[[ -f ${INSTALL_DIR}/system-clean.sh ]] && rm ${INSTALL_DIR}/system-clean.sh;
-cp system-clean.sh ${INSTALL_DIR}
-chmod +x ${INSTALL_DIR}/system-clean.sh
-
-cat << 'EOF' | sudo tee /usr/share/applications/system-clean.desktop
-[Desktop Entry]
-Version=1.0
-Encoding=UTF-8
-Type=Application
-Name=System Cleanup
-Name[ru]=Очистка системы
-Comment=System Cleanup
-Comment[ru]=Очистка системы
-GenericName=System Cleanup
-GenericName[ru]=Очистка системы
-Exec=~/system-clean.sh
-Icon=bleachbit
-Categories=GTK;System;
-Keywords=clean;performances;free;privacy;
-StartupNotify=true
-Terminal=true
-EOF
-
-sudo sed -i "s|~|${INSTALL_DIR}|g" /usr/share/applications/system-clean.desktop
-cp /usr/share/applications/system-clean.desktop "$(xdg-user-dir DESKTOP)"
-chmod +x "$(xdg-user-dir DESKTOP)/system-clean.desktop"
+source install.sh
 
 if which bleachbit >/dev/null 2>&1; then
     echo "Setup user defined options"

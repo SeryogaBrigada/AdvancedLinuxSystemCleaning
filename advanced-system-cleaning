@@ -3,7 +3,7 @@
 ##**************************************************************************
 ## MIT License
 ##
-## Copyright (C) Sergey Kovalenko <seryoga.engineering@gmail.com>
+## Copyright (C) 2016-2024 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,74 @@
 ## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 ##**************************************************************************
+VERSION=1.0.0
 
-function cleanFirefoxProfile {
+# The command line help
+function display_help () {
+    echo "Usage: $0 [OPTION]" >&2
+    echo "Available options:"
+    echo "    -c, --clean-only      perform cleaning and exit"
+    echo "    -h, --help            display help and exit"
+    echo "    -v, --version         display version"
+    echo "Default behavior (without options): clean and shutdown."
+    exit
+}
+
+function display_version () {
+    echo "advanced-system-cleaning (Advanced Linux System Cleaning) version $VERSION"
+    echo "Copyright (C) 2016-2024 Sergey Kovalenko <seryoga.engineering@gmail.com>"
+    echo "This is free software under MIT license."
+    echo "In case of issue please report to <https://github.com/SeryogaBrigada/AdvancedLinuxSystemCleaning/issues>"
+    exit
+}
+
+# Process arguments
+while :
+do
+    case "$1" in
+        -c | --clean-only)
+            CLEAN_ONLY=1
+            shift
+            break
+            ;;
+        -h | --help)
+            display_help
+            exit 0
+            ;;
+        -v | --version)
+            display_version
+            exit 0
+            ;;
+        -*)
+            echo "Error: Unknown option: $1" >&2
+            display_help
+            exit 1
+            ;;
+        *)  # No options
+            break
+            ;;
+    esac
+done
+
+echo "######################################################################"
+echo "                    Advanced Linux System Cleaning"
+echo "######################################################################"
+
+function get_free_space () {
+    local LIST_OF_STORAGES=$(cat /proc/mounts | awk '{print $1}' | grep /dev)
+    local TOTAL_FREE_SPACE
+    for STORAGE in $LIST_OF_STORAGES
+        do
+            local DEV_FREE_SPACE=$(df $STORAGE | tail -n1 | awk '{print $4}')
+            let TOTAL_FREE_SPACE=$TOTAL_FREE_SPACE+$DEV_FREE_SPACE
+        done
+    echo $TOTAL_FREE_SPACE
+}
+
+# Get available space at the beginning
+FREE_SPACE_AT_START=$(get_free_space)
+
+function clean_firefox_profile () {
     if [[ -d $1 ]]; then
         cd "$1"
         rm -rf >/dev/null 2>&1 blocklist*
@@ -56,7 +122,7 @@ function cleanFirefoxProfile {
     fi
 }
 
-function cleanFirefox {
+function clean_firefox {
     # 1 argument - path to profile
     # 2 argument - path to cache directory
     if [[ -d $1 ]]; then
@@ -67,7 +133,7 @@ function cleanFirefox {
         for dir in */; do
             # Remove trailing "/" from the directory name
             dir=${dir%*/}
-            cleanFirefoxProfile $dir
+            clean_firefox_profile $dir
         done
     fi
 
@@ -77,8 +143,8 @@ function cleanFirefox {
 }
 
 # Mozilla Firefox
-cleanFirefox ~/.mozilla/firefox ~/.cache
-cleanFirefox ~/snap/firefox/common/.mozilla/firefox ~/snap/firefox/common/.cache
+clean_firefox ~/.mozilla/firefox ~/.cache
+clean_firefox ~/snap/firefox/common/.mozilla/firefox ~/snap/firefox/common/.cache
 
 # Opera
 if [ -d ~/.config/opera* ]; then
@@ -113,11 +179,11 @@ if [ -d ~/.config/opera* ]; then
     rm -rf >/dev/null 2>&1 "Visited Links"
 
     cd "Local Storage"
-    find . -type f -not -name 'chrome*' -print0 | xargs -0 rm --
+    find . -type f -not -name 'chrome*' -print0 | xargs -0 rm -- >/dev/null 2>&1
 fi
 
 # Google chrome, Chromium
-function cleanChrome {
+function clean_chrome () {
 if [[ -d ~/.config/$1 ]]; then
     cd ~/.config/$1
     rm -rf >/dev/null 2>&1 AutofillRegex
@@ -253,12 +319,12 @@ if [[ -d ~/.config/$1 ]]; then
 fi
 }
 
-cleanChrome google-chrome
-cleanChrome google-chrome-beta
-cleanChrome google-chrome-unstable
-cleanChrome chromium
+clean_chrome google-chrome
+clean_chrome google-chrome-beta
+clean_chrome google-chrome-unstable
+clean_chrome chromium
 
-function cleanElectronContainer {
+function clean_electron_container () {
     if [[ -d ~/.config/$1 ]]; then
         cd ~/.config
         cd "${1}"
@@ -292,15 +358,15 @@ function cleanElectronContainer {
 }
 
 # Skype
-cleanElectronContainer skypeforlinux
+clean_electron_container skypeforlinux
 
 # Microsoft Teams
-cleanElectronContainer "Microsoft/Microsoft Teams"
+clean_electron_container "Microsoft/Microsoft Teams"
 
 # Microsoft Visual Studio Code
-cleanElectronContainer "Code - Insiders"
-cleanElectronContainer "Code - OSS"
-cleanElectronContainer "Code"
+clean_electron_container "Code - Insiders"
+clean_electron_container "Code - OSS"
+clean_electron_container "Code"
 
 # Simple Screen Recorder
 if [[ -d ~/.ssr/logs ]]; then
@@ -315,9 +381,21 @@ if [[ -d ~/.kodi ]]; then
 fi
 
 # HandBrake
-if [[ -d ~/.config/ghb/ ]]; then
+if [[ -d ~/.config/ghb ]]; then
     rm -rf >/dev/null 2>&1 ~/.config/ghb/EncodeLogs/*
     rm -rf >/dev/null 2>&1 ~/.config/ghb/Activity.log.*
+fi
+
+# Nvidia
+[[ -d ~/.nv ]] && sudo rm -rf ~/.nv;
+
+# WGET hosts file
+[[ -f ~/.wget-hsts ]] && rm -f ~/.wget-hsts;
+
+# Wine
+if [[ -d ~/.wine ]]; then
+    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/users/$USER/Temp/*
+    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/windows/temp/*
 fi
 
 # ccache
@@ -325,28 +403,42 @@ if which ccache >/dev/null 2>&1; then
     ccache -C
 fi
 
-# System cache
-sudo rm -rf >/dev/null 2>&1 ~/.cache/*
-
-# Nvidia cache
-[[ -d ~/.nv ]] && sudo rm -rf ~/.nv;
-
-# Wine cache
-if [[ -d ~/.wine ]]; then
-    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/users/$USER/Temp/*
-    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/windows/temp/*
+# Optimus manager
+if sudo ls /var/log/optimus-manager >/dev/null 2>&1; then
+    sudo rm -rf >/dev/null 2>&1 /var/log/optimus-manager/*
 fi
 
-# WGET hosts file
-[[ -f ~/.wget-hsts ]] && rm -f ~/.wget-hsts;
+# System cache
+for USER_CACHE in $(sudo ls ~/.cache)
+do
+    echo "Deleting ~/.cache/$USER_CACHE"
+    sudo rm -rf ~/.cache/$USER_CACHE
+done
+
+for ROOT_CACHE in $(sudo ls /root/.cache)
+do
+    echo "Deleting /root/.cache/$ROOT_CACHE"
+    sudo rm -rf /root/.cache/$ROOT_CACHE
+done
+
+# System journal
+if which journalctl >/dev/null 2>&1; then
+    sudo journalctl --vacuum-time=1s
+fi
+
+# System temp
+for TMP_FILE in $(sudo ls /tmp)
+do
+    echo "Deleting /tmp/$TMP_FILE"
+    sudo rm -rf /tmp/$TMP_FILE
+done
+
+# Old logs
+sudo find /var/log -type f -name *.old -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
 
 # Error messages
-sudo rm -rf >/dev/null 2>&1 /var/crash/*
-
-# Bleachbit
-if which bleachbit >/dev/null 2>&1; then
-    bleachbit -c --preset
-    sudo bleachbit -c --preset
+if [[ -d /var/crash ]]; then
+    sudo rm -rf >/dev/null 2>&1 /var/crash/*
 fi
 
 
@@ -355,22 +447,17 @@ fi
 #
 if which pacman >/dev/null 2>&1; then
     if [[ -f /etc/pacman.d/mirrorlist.pacnew ]] then
-        sudo rm /etc/pacman.d/mirrorlist
+        sudo rm >/dev/null 2>&1 /etc/pacman.d/mirrorlist
         sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist
     fi
 
     # Endveavour OS old mirrors
     if [[ -f /etc/pacman.d/endeavouros-mirrorlist.pacnew ]] then
-        sudo rm /etc/pacman.d/endeavouros-mirrorlist
+        sudo rm >/dev/null 2>&1 /etc/pacman.d/endeavouros-mirrorlist
         sudo mv /etc/pacman.d/endeavouros-mirrorlist.pacnew /etc/pacman.d/endeavouros-mirrorlist
     fi
 
-    find /etc/pacman.d -maxdepth 1 -type f \( -name 'endeavouros-mirrorlist.*' -o -name '*.bak' \) -print0 | xargs -0 sudo rm --
-
-    # Optimus manager
-    if which optimus-manager >/dev/null 2>&1; then
-        sudo rm -rf >/dev/null 2>&1 /var/log/optimus-manager
-    fi
+    find /etc/pacman.d -maxdepth 1 -type f \( -name 'endeavouros-mirrorlist.*' -o -name '*.bak' \) -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
 
     # Pamac
     if [[ -d /var/tmp/pamac ]]; then
@@ -380,6 +467,8 @@ if which pacman >/dev/null 2>&1; then
 
     # Fix blocked database error
     [[ -f /var/lib/pacman/db.lck ]] && sudo rm /var/lib/pacman/db.lck;
+
+    # Yay
     if which yay >/dev/null 2>&1; then
         yay -Yc --noconfirm
     fi
@@ -396,8 +485,8 @@ if which apt >/dev/null 2>&1; then
     # Remove old PPA after release upgrade
     if [[ -f /etc/apt/sources.list.distUpgrade ]]; then
         sudo rm /etc/apt/sources.list.distUpgrade
-        find /etc/apt/apt.conf.d -type f \( -name '*.ucf-old' -o -name '*.ucf-dist' \) -print0 | xargs -0 sudo rm --
-        find /etc/apt/sources.list.d -type f \( -name '*.distUpgrade' -o -name '*.dpkg-old' \) -print0 | xargs -0 sudo rm --
+        find /etc/apt/apt.conf.d -type f \( -name '*.ucf-old' -o -name '*.ucf-dist' \) -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
+        find /etc/apt/sources.list.d -type f \( -name '*.distUpgrade' -o -name '*.dpkg-old' \) -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
 
         find /etc/apt/sources.list.d -type f \
          -not -name *$(lsb_release -sc)* \
@@ -405,7 +494,7 @@ if which apt >/dev/null 2>&1; then
          -not -name 'opera*' \
          -not -name 'virtualbox*' \
          -not -name 'google-chrome*' \
-         -print0 | xargs -0 sudo rm --
+         -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
 
         [[ -f /etc/apt/sources.list ]] && sudo rm /etc/apt/sources.list;
         sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
@@ -420,7 +509,7 @@ if which apt >/dev/null 2>&1; then
     sudo apt -f install -y
 
     # Old kernels
-    if [[ ! -f '/var/run/reboot-required' ]]; then
+    if [[ ! -f /var/run/reboot-required ]]; then
         dpkg -l 'linux-image-*' 'linux-headers-*' 'linux-modules-*' \
         | sed '/^ii\|^rc/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' \
         | grep -v -E '*-hwe-*' \
@@ -435,11 +524,28 @@ if which apt >/dev/null 2>&1; then
     sudo apt autoremove --purge -y
 fi
 
-# Final actions
+
+# Use Bleachbit if available
+if which bleachbit >/dev/null 2>&1; then
+    bleachbit -c --preset
+    sudo bleachbit -c --preset
+fi
+
+# TRIM
 sudo fstrim -av
 
-# Do not power off if DO_NOT_POWEROFF variable is set
-if [ ! -z $DO_NOT_POWEROFF ]; then
+# Calculate result
+FREE_SPACE_AT_END=$(get_free_space)
+let SAVED_SPACE=$FREE_SPACE_AT_END-$FREE_SPACE_AT_START
+# Do not display negative number
+SAVED_SPACE=${SAVED_SPACE#-}
+echo
+echo "######################################################################"
+echo "                   Recovered storage space: $(numfmt --from=iec --to=iec ${SAVED_SPACE}K)"
+echo "######################################################################"
+
+# Do not shutdown if CLEAN_ONLY variable is set
+if [ ! -z $CLEAN_ONLY ]; then
     exit
 fi
 
