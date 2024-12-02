@@ -23,7 +23,7 @@
 ## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 ##**************************************************************************
-VERSION=1.0.0
+VERSION=1.0.1
 
 # The command line help
 function display_help () {
@@ -446,18 +446,8 @@ fi
 # Arch Linux specific cleaning
 #
 if which pacman >/dev/null 2>&1; then
-    if [[ -f /etc/pacman.d/mirrorlist.pacnew ]] then
-        sudo rm >/dev/null 2>&1 /etc/pacman.d/mirrorlist
-        sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist
-    fi
-
-    # Endveavour OS old mirrors
-    if [[ -f /etc/pacman.d/endeavouros-mirrorlist.pacnew ]] then
-        sudo rm >/dev/null 2>&1 /etc/pacman.d/endeavouros-mirrorlist
-        sudo mv /etc/pacman.d/endeavouros-mirrorlist.pacnew /etc/pacman.d/endeavouros-mirrorlist
-    fi
-
-    find /etc/pacman.d -maxdepth 1 -type f \( -name 'endeavouros-mirrorlist.*' -o -name '*.bak' \) -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
+    # Old mirrorlists
+    find /etc/pacman.d -maxdepth 1 -type f \( -name '*.bak' \) -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
 
     # Pamac
     if [[ -d /var/tmp/pamac ]]; then
