@@ -37,15 +37,20 @@ The advanced algorithm helps maintain your privacy when using most common web br
 - yay (AUR package manager)
 
 Also the application performs the next actions if needed:
-  - updates pacman mirrorlist from mirrorlist.pacnew
-  - updates Endveavour OS mirrorlist from endeavouros-mirrorlist.pacnew
-  - unlocks blocked pacman database
-  - removes old PPA after release upgrade (Ubuntu)
-  - removes old kernels (Ubuntu)
-  - removes unused packages
+  - update pacman mirrorlist from mirrorlist.pacnew
+  - update Endveavour OS mirrorlist from endeavouros-mirrorlist.pacnew
+  - unlock blocked pacman database
+  - remove old PPA after release upgrade (Ubuntu)
+  - remove old kernels (Ubuntu)
+  - remove unused packages
   - TRIM operation for SSD/NVME drives
 
 # Installation
+
+The program is available in [AUR](https://aur.archlinux.org/packages/advanced-linux-system-cleaning):
+```
+yay -S advanced-linux-system-cleaning
+```
 
 There are two helper scripts to install the application manually:
 - `install.sh` - this script installs the script, desktop shortcut and icon
