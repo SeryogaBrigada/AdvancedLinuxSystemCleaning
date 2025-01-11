@@ -3,7 +3,7 @@
 ##**************************************************************************
 ## MIT License
 ##
-## Copyright (C) 2016-2024 Sergey Kovalenko <seryoga.engineering@gmail.com>
+## Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 ## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 ##**************************************************************************
-VERSION=1.0.1
+VERSION=1.0.2
 
 # The command line help
 function display_help () {
@@ -93,14 +93,19 @@ FREE_SPACE_AT_START=$(get_free_space)
 function clean_firefox_profile () {
     if [[ -d $1 ]]; then
         cd "$1"
+        rm -rf >/dev/null 2>&1 addonStartup.json.lz4
+        rm -rf >/dev/null 2>&1 bounce-tracking-protection.sqlite
         rm -rf >/dev/null 2>&1 blocklist*
+        rm -rf >/dev/null 2>&1 broadcast-listeners.json
         rm -rf >/dev/null 2>&1 bookmarkbackups
         rm -rf >/dev/null 2>&1 crashes
         rm -rf >/dev/null 2>&1 datareporting
+        rm -rf >/dev/null 2>&1 domain_to_categories.*
         rm -rf >/dev/null 2>&1 minidumps
         rm -rf >/dev/null 2>&1 saved-telemetry-pings
         rm -rf >/dev/null 2>&1 addons.*
         rm -rf >/dev/null 2>&1 AlternateServices.*
+        rm -rf >/dev/null 2>&1 ExperimentStoreData.*
         rm -rf >/dev/null 2>&1 containers.*
         rm -rf >/dev/null 2>&1 content-prefs.*
         rm -rf >/dev/null 2>&1 handlers.*
@@ -113,6 +118,9 @@ function clean_firefox_profile () {
         rm -rf >/dev/null 2>&1 sessionstore-logs
         rm -rf >/dev/null 2>&1 SecurityPreloadState.*
         rm -rf >/dev/null 2>&1 SiteSecurityServiceState.*
+        rm -rf >/dev/null 2>&1 protections.sqlite
+        rm -rf >/dev/null 2>&1 search.*
+        rm -rf >/dev/null 2>&1 shield-preference-experiments.*
         rm -rf >/dev/null 2>&1 storage.*
         rm -rf >/dev/null 2>&1 Telemetry.ShutdownTime.*
         rm -rf >/dev/null 2>&1 times.*
@@ -196,9 +204,11 @@ if [[ -d ~/.config/$1 ]]; then
     rm -rf >/dev/null 2>&1 "Crash Reports"
     rm -rf >/dev/null 2>&1 "Crowd Deny"
     rm -rf >/dev/null 2>&1 DesktopSharingHub
+    rm -rf >/dev/null 2>&1 DeferredBrowserMetrics
     rm -rf >/dev/null 2>&1 EVWhitelist
     rm -rf >/dev/null 2>&1 FileTypePolicies
     rm -rf >/dev/null 2>&1 FirstPartySetsPreloaded
+    rm -rf >/dev/null 2>&1 "Fingerprinting Protection Filter"
     rm -rf >/dev/null 2>&1 Floc
     rm -rf >/dev/null 2>&1 GrShaderCache
     rm -rf >/dev/null 2>&1 InterventionPolicyDatabase
@@ -391,6 +401,9 @@ fi
 
 # WGET hosts file
 [[ -f ~/.wget-hsts ]] && rm -f ~/.wget-hsts;
+
+# GNU parallel
+[[ -d ~/.parallel ]] && rm -rf ~/.parallel;
 
 # Wine
 if [[ -d ~/.wine ]]; then
