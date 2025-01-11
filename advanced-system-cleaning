@@ -23,7 +23,7 @@
 ## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 ##**************************************************************************
-VERSION=1.0.2
+VERSION=1.0.3
 
 # The command line help
 function display_help () {
@@ -38,7 +38,7 @@ function display_help () {
 
 function display_version () {
     echo "advanced-system-cleaning (Advanced Linux System Cleaning) version $VERSION"
-    echo "Copyright (C) 2016-2024 Sergey Kovalenko <seryoga.engineering@gmail.com>"
+    echo "Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>"
     echo "This is free software under MIT license."
     echo "In case of issue please report to <https://github.com/SeryogaBrigada/AdvancedLinuxSystemCleaning/issues>"
     exit
@@ -119,7 +119,6 @@ function clean_firefox_profile () {
         rm -rf >/dev/null 2>&1 SecurityPreloadState.*
         rm -rf >/dev/null 2>&1 SiteSecurityServiceState.*
         rm -rf >/dev/null 2>&1 protections.sqlite
-        rm -rf >/dev/null 2>&1 search.*
         rm -rf >/dev/null 2>&1 shield-preference-experiments.*
         rm -rf >/dev/null 2>&1 storage.*
         rm -rf >/dev/null 2>&1 Telemetry.ShutdownTime.*

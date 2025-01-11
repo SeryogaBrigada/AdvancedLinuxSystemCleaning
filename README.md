@@ -27,6 +27,7 @@ The advanced algorithm helps maintain your privacy when using most common web br
 - [Wine](https://www.winehq.org/)
 - [Ccache](https://ccache.dev/)
 - [Optimus manager](https://github.com/Askannz/optimus-manager)
+- GNU parallel (sshlogin cache)
 - System cache
 - System journal
 - System temp (/tmp)
@@ -57,9 +58,10 @@ There are two helper scripts to install the application manually:
 - `install_with_extra_dependencies.sh` - this script also installs extra dependencies (bleachbit and deborphan for Debian/Ubuntu) and opens `bleachbit` to allow the User to select extra options
 
 # Uninstall
-
-Use `uninstall.sh` to uninstall a manually installed application.
-> **Note:** To uninstall the old version of this application (which was installed in HOME) use `uninstall_old_version.sh`.
+```
+yay -R advanced-linux-system-cleaning
+```
+To uninstall a manually installed application use `uninstall.sh`.
 
 # License
 
