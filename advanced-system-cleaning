@@ -23,7 +23,7 @@
 ## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 ##**************************************************************************
-VERSION=1.0.3
+VERSION=1.0.4
 
 # The command line help
 function display_help () {
@@ -93,7 +93,6 @@ FREE_SPACE_AT_START=$(get_free_space)
 function clean_firefox_profile () {
     if [[ -d $1 ]]; then
         cd "$1"
-        rm -rf >/dev/null 2>&1 addonStartup.json.lz4
         rm -rf >/dev/null 2>&1 bounce-tracking-protection.sqlite
         rm -rf >/dev/null 2>&1 blocklist*
         rm -rf >/dev/null 2>&1 broadcast-listeners.json
