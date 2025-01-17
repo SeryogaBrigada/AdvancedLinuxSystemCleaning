@@ -4,7 +4,7 @@
 ## Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ## SPDX-License-Identifier: MIT
 ##**************************************************************************
-VERSION=1.0.4
+VERSION=1.0.5
 
 # The command line help
 function display_help () {
@@ -73,6 +73,7 @@ FREE_SPACE_AT_START=$(get_free_space)
 
 function clean_firefox_profile () {
     if [[ -d $1 ]]; then
+        echo "Cleaning Firefox profile $1"
         cd "$1"
         rm -rf >/dev/null 2>&1 bounce-tracking-protection.sqlite
         rm -rf >/dev/null 2>&1 blocklist*
@@ -94,6 +95,7 @@ function clean_firefox_profile () {
         rm -rf >/dev/null 2>&1 permissions.*
         rm -rf >/dev/null 2>&1 pluginreg.*
         rm -rf >/dev/null 2>&1 secmod.*
+        rm -rf >/dev/null 2>&1 security_state
         rm -rf >/dev/null 2>&1 serviceworker.*
         rm -rf >/dev/null 2>&1 sessionstore-logs
         rm -rf >/dev/null 2>&1 SecurityPreloadState.*
@@ -133,46 +135,12 @@ function clean_firefox {
 clean_firefox ~/.mozilla/firefox ~/.cache
 clean_firefox ~/snap/firefox/common/.mozilla/firefox ~/snap/firefox/common/.cache
 
-# Opera
-if [ -d ~/.config/opera* ]; then
-    cd ~/.config/opera*
-    rm -rf >/dev/null 2>&1 adblocker_data
-    rm -rf >/dev/null 2>&1 "Extension State"
-    rm -rf >/dev/null 2>&1 GPUCache
-    rm -rf >/dev/null 2>&1 IndexedDB
-    rm -rf >/dev/null 2>&1 ShaderCache
-    rm -rf >/dev/null 2>&1 "Pepper Data"
-    rm -rf >/dev/null 2>&1 "Platform Notifications"
-    rm -rf >/dev/null 2>&1 "Service Worker"
-    rm -rf >/dev/null 2>&1 "Opera Add-ons Downloads"
-    rm -rf >/dev/null 2>&1 autoupdate_checker.*
-    rm -rf >/dev/null 2>&1 BookmarksExtras
-    rm -rf >/dev/null 2>&1 browser.js
-    rm -rf >/dev/null 2>&1 "Certificate Revocation Lists"
-    rm -rf >/dev/null 2>&1 default_partner_content.*
-    rm -rf >/dev/null 2>&1 "Extension Cookies"
-    rm -rf >/dev/null 2>&1 "Extension Cookies-journal"
-    rm -rf >/dev/null 2>&1 Login*
-    rm -rf >/dev/null 2>&1 Network*
-    rm -rf >/dev/null 2>&1 opera_autoupdate.log
-    rm -rf >/dev/null 2>&1 oauc_pipe*
-    rm -rf >/dev/null 2>&1 previews_opt_out.*
-    rm -rf >/dev/null 2>&1 Origin*
-    rm -rf >/dev/null 2>&1 QuotaManager*
-    rm -rf >/dev/null 2>&1 Shortcuts*
-    rm -rf >/dev/null 2>&1 siteprefs.*
-    rm -rf >/dev/null 2>&1 ssdfp*
-    rm -rf >/dev/null 2>&1 TransportSecurity
-    rm -rf >/dev/null 2>&1 "Visited Links"
-
-    cd "Local Storage"
-    find . -type f -not -name 'chrome*' -print0 | xargs -0 rm -- >/dev/null 2>&1
-fi
-
-# Google chrome, Chromium
+# Chromium and derivatives
 function clean_chrome () {
 if [[ -d ~/.config/$1 ]]; then
+    echo "Cleaning $1"
     cd ~/.config/$1
+    rm -rf >/dev/null 2>&1 AmountExtractionHeuristicRegexes
     rm -rf >/dev/null 2>&1 AutofillRegex
     rm -rf >/dev/null 2>&1 AutofillStates
     rm -rf >/dev/null 2>&1 BrowserMetrics
@@ -226,85 +194,89 @@ if [[ -d ~/.config/$1 ]]; then
     rm -rf >/dev/null 2>&1 Variations
     rm -rf >/dev/null 2>&1 first_party_sets*
 
-    cd Default
-    rm -rf >/dev/null 2>&1 Accounts
-    rm -rf >/dev/null 2>&1 AutofillStrikeDatabase
-    rm -rf >/dev/null 2>&1 *.ldb
-    rm -rf >/dev/null 2>&1 *.log
-    rm -rf >/dev/null 2>&1 "Affiliation Database"
-    rm -rf >/dev/null 2>&1 "Affiliation Database-journal"
-    rm -rf >/dev/null 2>&1 "Application Cache"
-    rm -rf >/dev/null 2>&1 BudgetDatabase
-    rm -rf >/dev/null 2>&1 blob_storage
-    rm -rf >/dev/null 2>&1 commerce_subscription_db
-    rm -rf >/dev/null 2>&1 coupon_db
-    rm -rf >/dev/null 2>&1 "data_reduction_proxy_leveldb"
-    rm -rf >/dev/null 2>&1 databases
-    rm -rf >/dev/null 2>&1 Dawn*Cache
-    rm -rf >/dev/null 2>&1 "Download Service"
-    rm -rf >/dev/null 2>&1 "Extension State"
-    rm -rf >/dev/null 2>&1 "Feature Engagement Tracker"
-    rm -rf >/dev/null 2>&1 "File System"
-    rm -rf >/dev/null 2>&1 "GCM Store"
-    rm -rf >/dev/null 2>&1 GPUCache
-    rm -rf >/dev/null 2>&1 "Managed Extension Settings"
-    rm -rf >/dev/null 2>&1 IndexedDB
-    rm -rf >/dev/null 2>&1 "Pepper Data"
-    rm -rf >/dev/null 2>&1 "Platform Notifications"
-    rm -rf >/dev/null 2>&1 "Site Characteristics Database"
-    rm -rf >/dev/null 2>&1 shared_proto_db
-    rm -rf >/dev/null 2>&1 "Service Worker"
-    rm -rf >/dev/null 2>&1 Thumbnails
-    rm -rf >/dev/null 2>&1 "Session Storage"
-    rm -rf >/dev/null 2>&1 DownloadMetadata
-    rm -rf >/dev/null 2>&1 "Extension Cookies"
-    rm -rf >/dev/null 2>&1 "Extension Cookies-journal"
-    rm -rf >/dev/null 2>&1 "Local Storage"
-    rm -rf >/dev/null 2>&1 LOCK
-    rm -rf >/dev/null 2>&1 LOG
-    rm -rf >/dev/null 2>&1 LOG.old
-    rm -rf >/dev/null 2>&1 MANIFEST-*
-    rm -rf >/dev/null 2>&1 Network*
-    rm -rf >/dev/null 2>&1 Origin*
-    rm -rf >/dev/null 2>&1 QuotaManager*
-    rm -rf >/dev/null 2>&1 "Reporting and NEL"
-    rm -rf >/dev/null 2>&1 "Reporting and NEL-journal"
-    rm -rf >/dev/null 2>&1 "Secure Preferences"
-    rm -rf >/dev/null 2>&1 Shortcuts*
-    rm -rf >/dev/null 2>&1 Storage
-    rm -rf >/dev/null 2>&1 "Top Sites"
-    rm -rf >/dev/null 2>&1 "Top Sites-journal"
-    rm -rf >/dev/null 2>&1 "Translate Ranker Model"
-    rm -rf >/dev/null 2>&1 TransportSecurity
-    rm -rf >/dev/null 2>&1 "Search Logos"
-    rm -rf >/dev/null 2>&1 "Visited Links"
-    rm -rf >/dev/null 2>&1 "VideoDecodeStats"
-    rm -rf >/dev/null 2>&1 "WebRTC Logs"
-    rm -rf >/dev/null 2>&1 "WebrtcVideoStats"
-    rm -rf >/dev/null 2>&1 "webrtc_event_logs"
-    rm -rf >/dev/null 2>&1 optimization_guide_*
-    rm -rf >/dev/null 2>&1 .com.google.Chrome.*
-    rm -rf >/dev/null 2>&1 .org.chromium.Chromium.*
-    rm -rf >/dev/null 2>&1 heavy_ad_intervention_opt_out.*
-    rm -rf >/dev/null 2>&1 previews_opt_out.*
-    rm -rf >/dev/null 2>&1 page_load_capping_opt_out.*
-    rm -rf >/dev/null 2>&1 in_progress_download_metadata_store
-    rm -rf >/dev/null 2>&1 chrome_cart_db
-    rm -rf >/dev/null 2>&1 discounts_db
-    rm -rf >/dev/null 2>&1 feedv2
-    rm -rf >/dev/null 2>&1 parcel_tracking_db
-    rm -rf >/dev/null 2>&1 PersistentOriginTrials
-    rm -rf >/dev/null 2>&1 "Segmentation Platform"
-    rm -rf >/dev/null 2>&1 "Sync Data"
-    rm -rf >/dev/null 2>&1 "Trust Tokens"
-    rm -rf >/dev/null 2>&1 "Trust Tokens-journal"
-    rm -rf >/dev/null 2>&1 SharedStorage*
-    rm -rf >/dev/null 2>&1 PrivateAggregation*
-    rm -rf >/dev/null 2>&1 "Safe Browsing Cookies"
-    rm -rf >/dev/null 2>&1 "Safe Browsing Cookies-journal"
-    rm -rf >/dev/null 2>&1 "SCT Auditing Pending Reports"
-    rm -rf >/dev/null 2>&1 DIPS*
-    rm -rf >/dev/null 2>&1 BrowsingTopics*
+    if [[ -d Default ]]; then
+        cd Default
+        rm -rf >/dev/null 2>&1 ads_service
+        rm -rf >/dev/null 2>&1 Accounts
+        rm -rf >/dev/null 2>&1 AutofillStrikeDatabase
+        rm -rf >/dev/null 2>&1 *.ldb
+        rm -rf >/dev/null 2>&1 *.log
+        rm -rf >/dev/null 2>&1 "Affiliation Database"
+        rm -rf >/dev/null 2>&1 "Affiliation Database-journal"
+        rm -rf >/dev/null 2>&1 "Application Cache"
+        rm -rf >/dev/null 2>&1 BudgetDatabase
+        rm -rf >/dev/null 2>&1 blob_storage
+        rm -rf >/dev/null 2>&1 commerce_subscription_db
+        rm -rf >/dev/null 2>&1 coupon_db
+        rm -rf >/dev/null 2>&1 discounts_db
+        rm -rf >/dev/null 2>&1 "data_reduction_proxy_leveldb"
+        rm -rf >/dev/null 2>&1 databases
+        rm -rf >/dev/null 2>&1 Dawn*Cache
+        rm -rf >/dev/null 2>&1 "Download Service"
+        rm -rf >/dev/null 2>&1 "Extension State"
+        rm -rf >/dev/null 2>&1 "Feature Engagement Tracker"
+        rm -rf >/dev/null 2>&1 "File System"
+        rm -rf >/dev/null 2>&1 "GCM Store"
+        rm -rf >/dev/null 2>&1 GPUCache
+        rm -rf >/dev/null 2>&1 "Managed Extension Settings"
+        rm -rf >/dev/null 2>&1 IndexedDB
+        rm -rf >/dev/null 2>&1 "Pepper Data"
+        rm -rf >/dev/null 2>&1 "Platform Notifications"
+        rm -rf >/dev/null 2>&1 "Site Characteristics Database"
+        rm -rf >/dev/null 2>&1 shared_proto_db
+        rm -rf >/dev/null 2>&1 "Service Worker"
+        rm -rf >/dev/null 2>&1 Thumbnails
+        rm -rf >/dev/null 2>&1 "Session Storage"
+        rm -rf >/dev/null 2>&1 DownloadMetadata
+        rm -rf >/dev/null 2>&1 "Extension Cookies"
+        rm -rf >/dev/null 2>&1 "Extension Cookies-journal"
+        rm -rf >/dev/null 2>&1 "Local Storage"
+        rm -rf >/dev/null 2>&1 LOCK
+        rm -rf >/dev/null 2>&1 LOG
+        rm -rf >/dev/null 2>&1 LOG.old
+        rm -rf >/dev/null 2>&1 MANIFEST-*
+        rm -rf >/dev/null 2>&1 Network*
+        rm -rf >/dev/null 2>&1 Origin*
+        rm -rf >/dev/null 2>&1 QuotaManager*
+        rm -rf >/dev/null 2>&1 "Reporting and NEL"
+        rm -rf >/dev/null 2>&1 "Reporting and NEL-journal"
+        rm -rf >/dev/null 2>&1 "Secure Preferences"
+        rm -rf >/dev/null 2>&1 Shortcuts*
+        rm -rf >/dev/null 2>&1 Storage
+        rm -rf >/dev/null 2>&1 "Top Sites"
+        rm -rf >/dev/null 2>&1 "Top Sites-journal"
+        rm -rf >/dev/null 2>&1 "Translate Ranker Model"
+        rm -rf >/dev/null 2>&1 TransportSecurity
+        rm -rf >/dev/null 2>&1 "Search Logos"
+        rm -rf >/dev/null 2>&1 "Visited Links"
+        rm -rf >/dev/null 2>&1 "VideoDecodeStats"
+        rm -rf >/dev/null 2>&1 "WebRTC Logs"
+        rm -rf >/dev/null 2>&1 "WebrtcVideoStats"
+        rm -rf >/dev/null 2>&1 "webrtc_event_logs"
+        rm -rf >/dev/null 2>&1 optimization_guide_*
+        rm -rf >/dev/null 2>&1 .com.google.Chrome.*
+        rm -rf >/dev/null 2>&1 .org.chromium.Chromium.*
+        rm -rf >/dev/null 2>&1 heavy_ad_intervention_opt_out.*
+        rm -rf >/dev/null 2>&1 previews_opt_out.*
+        rm -rf >/dev/null 2>&1 page_load_capping_opt_out.*
+        rm -rf >/dev/null 2>&1 in_progress_download_metadata_store
+        rm -rf >/dev/null 2>&1 chrome_cart_db
+        rm -rf >/dev/null 2>&1 discounts_db
+        rm -rf >/dev/null 2>&1 feedv2
+        rm -rf >/dev/null 2>&1 parcel_tracking_db
+        rm -rf >/dev/null 2>&1 PersistentOriginTrials
+        rm -rf >/dev/null 2>&1 "Segmentation Platform"
+        rm -rf >/dev/null 2>&1 "Sync Data"
+        rm -rf >/dev/null 2>&1 "Trust Tokens"
+        rm -rf >/dev/null 2>&1 "Trust Tokens-journal"
+        rm -rf >/dev/null 2>&1 SharedStorage*
+        rm -rf >/dev/null 2>&1 PrivateAggregation*
+        rm -rf >/dev/null 2>&1 "Safe Browsing Cookies"
+        rm -rf >/dev/null 2>&1 "Safe Browsing Cookies-journal"
+        rm -rf >/dev/null 2>&1 "SCT Auditing Pending Reports"
+        rm -rf >/dev/null 2>&1 DIPS*
+        rm -rf >/dev/null 2>&1 BrowsingTopics*
+    fi
 fi
 }
 
@@ -312,6 +284,16 @@ clean_chrome google-chrome
 clean_chrome google-chrome-beta
 clean_chrome google-chrome-unstable
 clean_chrome chromium
+
+# Brave Browser
+clean_chrome BraveSoftware/Brave-Browser
+clean_chrome BraveSoftware/Brave-Browser-Beta
+clean_chrome BraveSoftware/Brave-Browser-Nightly
+
+# Opera Browser
+clean_chrome opera
+clean_chrome opera-beta
+clean_chrome opera-developer
 
 function clean_electron_container () {
     if [[ -d ~/.config/$1 ]]; then

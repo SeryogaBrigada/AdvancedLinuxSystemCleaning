@@ -10,12 +10,13 @@ The advanced algorithm helps maintain your privacy when using most common web br
 >
 > This behavior can be changed by using `--clean-only` option to perform only cleaning. See `--help` for details.
 
-### Supported application:
+### Supported application and components:
 
 - [Firefox browser (installed via snap or package manager)](https://www.mozilla.org/en-US/firefox/new/)
 - [Chromium browser](https://www.chromium.org)
 - [Google Chrome browser (release, beta and unstable)](https://www.google.com/chrome/)
-- [Opera browser](https://www.opera.com/)
+- [Brave browser (release, beta, nightly)](https://brave.com)
+- [Opera browser (release, beta, developer)](https://www.opera.com/)
 - Electron-based applications:
   - Skype
   - Microsoft Teams
