@@ -38,9 +38,7 @@ The advanced algorithm helps maintain your privacy when using most common web br
 - [Pamac](https://wiki.manjaro.org/index.php/Pamac)
 - yay (AUR package manager)
 
-Also the application performs the next actions if needed:
-  - update pacman mirrorlist from mirrorlist.pacnew
-  - update Endveavour OS mirrorlist from endeavouros-mirrorlist.pacnew
+Also the application performs the next actions if necessary:
   - unlock blocked pacman database
   - remove old PPA after release upgrade (Ubuntu)
   - remove old kernels (Ubuntu)
