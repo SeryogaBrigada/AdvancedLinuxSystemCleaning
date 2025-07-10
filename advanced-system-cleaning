@@ -4,7 +4,7 @@
 ## Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ## SPDX-License-Identifier: MIT
 ##**************************************************************************
-VERSION=1.0.5
+VERSION=1.0.6
 
 # The command line help
 function display_help () {
@@ -56,6 +56,14 @@ done
 echo "######################################################################"
 echo "                    Advanced Linux System Cleaning"
 echo "######################################################################"
+
+function clean_directory () {
+    for TO_REMOVE in $(sudo ls "${1}")
+    do
+        echo "Deleting ${1}/$TO_REMOVE"
+        sudo rm -rf >/dev/null 2>&1 "${1}/$TO_REMOVE"
+    done
+}
 
 function get_free_space () {
     local LIST_OF_STORAGES=$(cat /proc/mounts | awk '{print $1}' | grep /dev)
@@ -328,9 +336,6 @@ function clean_electron_container () {
     fi
 }
 
-# Skype
-clean_electron_container skypeforlinux
-
 # Microsoft Teams
 clean_electron_container "Microsoft/Microsoft Teams"
 
@@ -341,19 +346,21 @@ clean_electron_container "Code"
 
 # Simple Screen Recorder
 if [[ -d ~/.ssr/logs ]]; then
-    rm -rf >/dev/null 2>&1 ~/.ssr/logs/*
+    clean_directory ~/.ssr/logs
 fi
 
 # Kodi media center
 if [[ -d ~/.kodi ]]; then
-    rm -rf >/dev/null 2>&1 ~/.kodi/temp/*
+    clean_directory ~/.kodi/temp
+
     rm -rf >/dev/null 2>&1 ~/kodi_crashlog*.log
     rm -rf >/dev/null 2>&1 ~/core
 fi
 
 # HandBrake
 if [[ -d ~/.config/ghb ]]; then
-    rm -rf >/dev/null 2>&1 ~/.config/ghb/EncodeLogs/*
+    clean_directory ~/.config/ghb/EncodeLogs
+
     rm -rf >/dev/null 2>&1 ~/.config/ghb/Activity.log.*
 fi
 
@@ -368,8 +375,8 @@ fi
 
 # Wine
 if [[ -d ~/.wine ]]; then
-    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/users/$USER/Temp/*
-    rm -rf >/dev/null 2>&1 ~/.wine/drive_c/windows/temp/*
+    clean_directory ~/.wine/drive_c/users/$USER/Temp
+    clean_directory ~/.wine/drive_c/windows/temp
 fi
 
 # ccache
@@ -379,40 +386,24 @@ fi
 
 # Optimus manager
 if sudo ls /var/log/optimus-manager >/dev/null 2>&1; then
-    sudo rm -rf >/dev/null 2>&1 /var/log/optimus-manager/*
+    clean_directory /var/log/optimus-manager
 fi
 
 # System cache
-for USER_CACHE in $(sudo ls ~/.cache)
-do
-    echo "Deleting ~/.cache/$USER_CACHE"
-    sudo rm -rf ~/.cache/$USER_CACHE
-done
-
-for ROOT_CACHE in $(sudo ls /root/.cache)
-do
-    echo "Deleting /root/.cache/$ROOT_CACHE"
-    sudo rm -rf /root/.cache/$ROOT_CACHE
-done
+clean_directory ~/.cache
+clean_directory /root/.cache
 
 # System journal
 if which journalctl >/dev/null 2>&1; then
     sudo journalctl --vacuum-time=1s
 fi
 
-# System temp
-for TMP_FILE in $(sudo ls /tmp)
-do
-    echo "Deleting /tmp/$TMP_FILE"
-    sudo rm -rf /tmp/$TMP_FILE
-done
-
 # Old logs
 sudo find /var/log -type f -name *.old -print0 | xargs -0 sudo rm -- >/dev/null 2>&1
 
 # Error messages
 if [[ -d /var/crash ]]; then
-    sudo rm -rf >/dev/null 2>&1 /var/crash/*
+    clean_directory /var/crash
 fi
 
 

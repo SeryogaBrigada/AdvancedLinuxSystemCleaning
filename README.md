@@ -18,7 +18,6 @@ The advanced algorithm helps maintain your privacy when using most common web br
 - [Brave browser (release, beta, nightly)](https://brave.com)
 - [Opera browser (release, beta, developer)](https://www.opera.com/)
 - Electron-based applications:
-  - Skype
   - Microsoft Teams
   - Visual Studio Code (also OSS, Insiders versions)
 - [Simple Screen Recorder](https://github.com/MaartenBaert/ssr)
@@ -31,7 +30,6 @@ The advanced algorithm helps maintain your privacy when using most common web br
 - GNU parallel (sshlogin cache)
 - System cache
 - System journal
-- System temp (/tmp)
 - System old logs (/var/log)
 - Error messages (/var/crash)
 - pacman
