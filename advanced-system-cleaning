@@ -4,7 +4,7 @@
 ## Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ## SPDX-License-Identifier: MIT
 ##**************************************************************************
-VERSION=1.0.6
+VERSION=1.0.7
 
 # The command line help
 function display_help () {
@@ -58,10 +58,10 @@ echo "                    Advanced Linux System Cleaning"
 echo "######################################################################"
 
 function clean_directory () {
-    for TO_REMOVE in $(sudo ls "${1}")
+    for TO_REMOVE in ${1}/*
     do
-        echo "Deleting ${1}/$TO_REMOVE"
-        sudo rm -rf >/dev/null 2>&1 "${1}/$TO_REMOVE"
+        echo "Deleting ${TO_REMOVE}"
+        sudo rm -rf >/dev/null 2>&1 "${TO_REMOVE}"
     done
 }
 
@@ -375,7 +375,7 @@ fi
 
 # Wine
 if [[ -d ~/.wine ]]; then
-    clean_directory ~/.wine/drive_c/users/$USER/Temp
+    clean_directory ~/.wine/drive_c/users/$USER/AppData/Local/Temp
     clean_directory ~/.wine/drive_c/windows/temp
 fi
 
