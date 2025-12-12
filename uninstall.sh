@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##**************************************************************************
-## Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>
+## Copyright (C) 2016-2026 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ## SPDX-License-Identifier: MIT
 ##**************************************************************************
 

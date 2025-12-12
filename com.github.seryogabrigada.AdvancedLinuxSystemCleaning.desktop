@@ -1,16 +1,16 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Advanced System Cleaning
-Name[ru]=Продвинутая очистка системы
-Comment=Clean the system and shutdown
-Comment[ru]=Очистка системы и выключение
-GenericName=Advanced System Cleaning
-GenericName[ru]=Продвинутая очистка системы
+Name=Clean & Shutdown
+Name[ru]=Очистка и выключение
+Comment=Advanced system cleaning and shutdown
+Comment[ru]=Продвинутая очистка системы и выключение
+GenericName=Clean & Shutdown
+GenericName[ru]=Продвинутая очистка системы и выключение
 TryExec=/usr/bin/advanced-system-cleaning
 Exec=/usr/bin/advanced-system-cleaning
 Icon=com.github.seryogabrigada.AdvancedLinuxSystemCleaning
-Categories=GTK;System;
+Categories=System;
 Keywords=clean;performance;free;privacy;
 StartupNotify=true
 Terminal=true

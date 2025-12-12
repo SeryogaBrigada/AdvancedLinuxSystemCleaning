@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ##**************************************************************************
-## Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>
+## Copyright (C) 2016-2026 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ## SPDX-License-Identifier: MIT
 ##**************************************************************************
-VERSION=1.0.7
+VERSION=1.0.8
 
 # The command line help
 function display_help () {
@@ -19,7 +19,7 @@ function display_help () {
 
 function display_version () {
     echo "advanced-system-cleaning (Advanced Linux System Cleaning) version $VERSION"
-    echo "Copyright (C) 2016-2025 Sergey Kovalenko <seryoga.engineering@gmail.com>"
+    echo "Copyright (C) 2016-2026 Sergey Kovalenko <seryoga.engineering@gmail.com>"
     echo "This is free software under MIT license."
     echo "In case of issue please report to <https://github.com/SeryogaBrigada/AdvancedLinuxSystemCleaning/issues>"
     exit
@@ -141,13 +141,14 @@ function clean_firefox {
 
 # Mozilla Firefox
 clean_firefox ~/.mozilla/firefox ~/.cache
+clean_firefox $XDG_CONFIG_HOME/mozilla/firefox ~/.cache
 clean_firefox ~/snap/firefox/common/.mozilla/firefox ~/snap/firefox/common/.cache
 
 # Chromium and derivatives
 function clean_chrome () {
-if [[ -d ~/.config/$1 ]]; then
+if [[ -d $XDG_CONFIG_HOME/$1 ]]; then
     echo "Cleaning $1"
-    cd ~/.config/$1
+    cd $XDG_CONFIG_HOME/$1
     rm -rf >/dev/null 2>&1 AmountExtractionHeuristicRegexes
     rm -rf >/dev/null 2>&1 AutofillRegex
     rm -rf >/dev/null 2>&1 AutofillStates
@@ -304,8 +305,8 @@ clean_chrome opera-beta
 clean_chrome opera-developer
 
 function clean_electron_container () {
-    if [[ -d ~/.config/$1 ]]; then
-        cd ~/.config
+    if [[ -d $XDG_CONFIG_HOME/$1 ]]; then
+        cd $XDG_CONFIG_HOME
         cd "${1}"
         rm -rf >/dev/null 2>&1 "Application Cache"
         rm -rf >/dev/null 2>&1 blob_storage
@@ -358,10 +359,10 @@ if [[ -d ~/.kodi ]]; then
 fi
 
 # HandBrake
-if [[ -d ~/.config/ghb ]]; then
-    clean_directory ~/.config/ghb/EncodeLogs
+if [[ -d $XDG_CONFIG_HOME/ghb ]]; then
+    clean_directory $XDG_CONFIG_HOME/ghb/EncodeLogs
 
-    rm -rf >/dev/null 2>&1 ~/.config/ghb/Activity.log.*
+    rm -rf >/dev/null 2>&1 $XDG_CONFIG_HOME/ghb/Activity.log.*
 fi
 
 # Nvidia
