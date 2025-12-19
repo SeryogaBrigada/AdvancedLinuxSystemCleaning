@@ -4,7 +4,7 @@
 ## Copyright (C) 2016-2026 Sergey Kovalenko <seryoga.engineering@gmail.com>
 ## SPDX-License-Identifier: MIT
 ##**************************************************************************
-VERSION=1.0.8
+VERSION=1.0.9
 
 # The command line help
 function display_help () {
@@ -428,9 +428,16 @@ if which pacman >/dev/null 2>&1; then
     if which yay >/dev/null 2>&1; then
         yay -Yc --noconfirm
     fi
-    #sudo pacman -Rs $(pacman -Qtdq) --noconfirm
+
+    # Cleaning unused dependencies
+    for item in $(pacman -Qtdq); do
+        echo "Removing unused package: $item"
+        sudo pacman -Rsnc $item --noconfirm
+    done
+
     sudo pacman -Sc --noconfirm
     sudo paccache -rk 0
+    clean_directory /var/cache/pacman/pkg
 fi
 
 
